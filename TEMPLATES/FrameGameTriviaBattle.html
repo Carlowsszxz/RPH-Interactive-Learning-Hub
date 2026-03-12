@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Trivia Battle</title>
+  <link rel="stylesheet" href="../CSS/theme.css">
+  <link rel="stylesheet" href="../CSS/gameplay.css">
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '../JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+
+  <script type="module" src="../JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '../JS/navigation-loader.js';
+    
+    loadNavigation('nav-container').then(() => {
+      setupLogout();
+    });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+      const signOut = document.getElementById('signOut');
+      if (signOut) {
+        signOut.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <main class="trivia-container">
+    <!-- Back Button -->
+    <button id="backBtn" class="back-btn">← Back to Games</button>
+
+    <!-- Game Hub / Selection Screen -->
+    <div id="gameHub" class="trivia-hub">
+      <header class="trivia-hub-header">
+        <h1 class="trivia-hub-title">🧠 Trivia Battle</h1>
+        <p class="trivia-hub-subtitle">Challenge yourself with course-related questions</p>
+      </header>
+
+      <div class="game-modes-grid">
+        <div class="game-mode-card">
+          <div class="mode-icon">⚡</div>
+          <h3>Quick Match</h3>
+          <p>5 questions, earn points instantly</p>
+          <button class="mode-btn" data-mode="quick">Play Now</button>
+        </div>
+        <div class="game-mode-card">
+          <div class="mode-icon">🏆</div>
+          <h3>Ranked Match</h3>
+          <p>10 questions, compete on leaderboard</p>
+          <button class="mode-btn" data-mode="ranked">Play Now</button>
+        </div>
+        <div class="game-mode-card">
+          <div class="mode-icon">🎯</div>
+          <h3>Practice</h3>
+          <p>Unlimited questions, no time limit</p>
+          <button class="mode-btn" data-mode="practice">Play Now</button>
+        </div>
+      </div>
+
+      <div class="recent-scores" id="recentScores">
+        <h3>Recent Scores</h3>
+        <ul id="scoresList" class="scores-list"></ul>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="trivia-game hidden">
+      <div class="game-header">
+        <div class="game-info">
+          <div class="score-badge">
+            <span class="score-label">Score:</span>
+            <span id="currentScore" class="score-value">0</span>
+          </div>
+          <div class="timer-badge">
+            <span class="timer-label">Time:</span>
+            <span id="timer" class="timer-value">30s</span>
+          </div>
+        </div>
+        <button id="quitBtn" class="quit-btn">Quit</button>
+      </div>
+
+      <div class="question-container">
+        <div class="question-progress">
+          <span id="questionNumber">Question 1 of 5</span>
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+        </div>
+
+        <h2 id="questionText" class="question-text"></h2>
+
+        <div id="answersContainer" class="answers-grid">
+          <!-- Answer buttons will be inserted here -->
+        </div>
+
+        <div id="feedbackMessage" class="feedback-message hidden"></div>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="trivia-results hidden">
+      <div class="results-card">
+        <div class="results-header">
+          <h2>Game Over!</h2>
+          <p id="resultMessage" class="result-message"></p>
+        </div>
+
+        <div class="results-stats">
+          <div class="stat">
+            <div class="stat-label">Final Score</div>
+            <div id="finalScore" class="stat-value">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Correct Answers</div>
+            <div id="correctCount" class="stat-value">0/5</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Accuracy</div>
+            <div id="accuracy" class="stat-value">0%</div>
+          </div>
+        </div>
+
+        <div class="results-actions">
+          <button id="playAgainBtn" class="btn btn-primary">Play Again</button>
+          <button id="leaderboardBtn" class="btn btn-secondary">View Leaderboard</button>
+          <button id="homeBtn" class="btn btn-text">Back to Games</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="../JS/trivia-battle.js"></script>
+</body>
+</html>

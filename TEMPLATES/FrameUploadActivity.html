@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Create Activity</title>
+  <link rel="stylesheet" href="../CSS/theme.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <script type="module">
+    // Load supabase globally so navigation fragment can use it
+    import { supabase } from '../JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <script type="module" src="../JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <div id="content" class="hidden">
+  <!-- Content starts here -->
+  <script type="module">
+    import { loadNavigation, clearUserRole } from '../JS/navigation-loader.js';
+    import { supabase } from '../JS/supabase-auth.js';
+    
+    // Load navigation and setup logout
+    loadNavigation('nav-container').then(() => {
+      setupLogout();
+    });
+    
+    // Check if user is an instructor
+    async function checkInstructorRole() {
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const user = sessionData?.session?.user;
+        
+        if (!user) {
+          window.location.href = '/TEMPLATES/FrameLogin.html';
+          return;
+        }
+        
+        console.log('Checking role for user:', user.email);
+        
+        // First check sessionStorage cache (set by navigation-loader)
+        const cachedRole = sessionStorage.getItem('userRole');
+        if (cachedRole) {
+          console.log('Found cached role:', cachedRole);
+          if (cachedRole === 'instructor') {
+            document.getElementById('content').classList.remove('hidden');
+            return;
+          } else {
+            alert('Access denied. This page is only for instructors.');
+            window.location.href = '/TEMPLATES/FrameHome.html';
+            return;
+          }
+        }
+        
+        // If not cached, fetch from database using email (same as navigation-loader)
+        const email = (user.email || '').toLowerCase();
+        const { data: profile, error: profileError } = await supabase
+          .from('user_profiles')
+          .select('role')
+          .eq('user_email', email)
+          .single();
+        
+        console.log('Profile data:', profile);
+        console.log('Profile error:', profileError);
+        
+        if (profileError) {
+          console.error('Error fetching profile:', profileError);
+        }
+        
+        if (!profile || !profile.role) {
+          console.warn('No profile or role found');
+          alert('Access denied. No role assigned to your account.');
+          window.location.href = '/TEMPLATES/FrameHome.html';
+          return;
+        }
+        
+        if (profile.role !== 'instructor') {
+          console.warn('User role is:', profile.role, '- not instructor');
+          alert('Access denied. This page is only for instructors.');
+          window.location.href = '/TEMPLATES/FrameHome.html';
+          return;
+        }
+        
+        // Cache the role and show content
+        sessionStorage.setItem('userRole', 'instructor');
+        console.log('User verified as instructor');
+        document.getElementById('content').classList.remove('hidden');
+      } catch (error) {
+        console.error('Error checking role:', error);
+        alert('Error verifying instructor status: ' + error.message);
+        window.location.href = '/TEMPLATES/FrameLogin.html';
+      }
+    }
+    
+    checkInstructorRole();
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            clearUserRole();
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+
+      const signOut = document.getElementById('signOut');
+      if (signOut) {
+        signOut.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            clearUserRole();
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <main class="max-w-4xl mx-auto p-6">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold mb-2">Create Activity</h1>
+      <p class="text-gray-600">Add a new activity to your course</p>
+    </header>
+
+    <!-- Activity Type Selector -->
+    <div class="bg-white p-6 rounded shadow mb-6">
+      <label for="activityType" class="block text-lg font-semibold mb-4">Activity Type</label>
+      <div class="flex flex-wrap gap-3">
+        <button type="button" class="activity-type-btn px-4 py-2 border rounded hover:bg-blue-50 transition" data-type="assignment">
+          📝 Assignment
+        </button>
+        <button type="button" class="activity-type-btn px-4 py-2 border rounded hover:bg-blue-50 transition" data-type="quiz">
+          ❓ Quiz
+        </button>
+        <button type="button" class="activity-type-btn px-4 py-2 border rounded hover:bg-blue-50 transition" data-type="reflection">
+          💭 Reflection Prompt
+        </button>
+        <button type="button" class="activity-type-btn px-4 py-2 border rounded hover:bg-blue-50 transition" data-type="discussion">
+          💬 Discussion
+        </button>
+      </div>
+      <input type="hidden" id="selectedActivityType" value="assignment">
+    </div>
+
+    <!-- Form Container -->
+    <form id="activityForm" class="bg-white p-6 rounded shadow">
+      <!-- Assignment Form -->
+      <div id="assignmentForm" class="activity-form">
+        <h2 class="text-2xl font-semibold mb-4">New Assignment</h2>
+        
+        <div class="mb-4">
+          <label for="assignTitle" class="block font-semibold mb-2">Assignment Title</label>
+          <input id="assignTitle" name="assignTitle" type="text" placeholder="Enter assignment title" class="w-full border rounded p-2" required>
+        </div>
+
+        <div class="mb-4">
+          <label for="assignDesc" class="block font-semibold mb-2">Description</label>
+          <textarea id="assignDesc" name="assignDesc" placeholder="Enter assignment description" class="w-full border rounded p-2 h-32" required></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="assignDueDate" class="block font-semibold mb-2">Due Date</label>
+            <input id="assignDueDate" name="assignDueDate" type="datetime-local" class="w-full border rounded p-2" required>
+          </div>
+          <div>
+            <label for="assignPoints" class="block font-semibold mb-2">Points</label>
+            <input id="assignPoints" name="assignPoints" type="number" placeholder="100" class="w-full border rounded p-2" value="100">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="assignFile" class="block font-semibold mb-2">Upload Instructions/Materials</label>
+          <input id="assignFile" name="assignFile" type="file" class="w-full border rounded p-2" accept=".pdf,.doc,.docx,.txt,.zip">
+          <p class="text-sm text-gray-500 mt-1">Optional: Upload assignment instructions or supporting materials</p>
+        </div>
+      </div>
+
+      <!-- Quiz Form (hidden by default) -->
+      <div id="quizForm" class="activity-form hidden">
+        <h2 class="text-2xl font-semibold mb-4">New Quiz</h2>
+        
+        <div class="mb-4">
+          <label for="quizTitle" class="block font-semibold mb-2">Quiz Title</label>
+          <input id="quizTitle" name="quizTitle" type="text" placeholder="Enter quiz title" class="w-full border rounded p-2">
+        </div>
+
+        <div class="mb-4">
+          <label for="quizDesc" class="block font-semibold mb-2">Description</label>
+          <textarea id="quizDesc" name="quizDesc" placeholder="Enter quiz description" class="w-full border rounded p-2 h-32"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="quizDueDate" class="block font-semibold mb-2">Due Date</label>
+            <input id="quizDueDate" name="quizDueDate" type="datetime-local" class="w-full border rounded p-2">
+          </div>
+          <div>
+            <label for="quizTimeLimit" class="block font-semibold mb-2">Time Limit (minutes)</label>
+            <input id="quizTimeLimit" name="quizTimeLimit" type="number" placeholder="60" class="w-full border rounded p-2" value="60">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="quizPoints" class="block font-semibold mb-2">Total Points</label>
+          <input id="quizPoints" name="quizPoints" type="number" placeholder="100" class="w-full border rounded p-2" value="100">
+        </div>
+
+        <div class="mb-4">
+          <label for="quizFile" class="block font-semibold mb-2">Upload Quiz Questions</label>
+          <input id="quizFile" name="quizFile" type="file" class="w-full border rounded p-2" accept=".pdf,.doc,.docx,.txt,.csv">
+          <p class="text-sm text-gray-500 mt-1">Optional: Upload quiz questions file</p>
+        </div>
+      </div>
+
+      <!-- Reflection Prompt Form (hidden by default) -->
+      <div id="reflectionForm" class="activity-form hidden">
+        <h2 class="text-2xl font-semibold mb-4">New Reflection Prompt</h2>
+        
+        <div class="mb-4">
+          <label for="reflectTitle" class="block font-semibold mb-2">Prompt Title</label>
+          <input id="reflectTitle" name="reflectTitle" type="text" placeholder="Enter prompt title" class="w-full border rounded p-2">
+        </div>
+
+        <div class="mb-4">
+          <label for="reflectPrompt" class="block font-semibold mb-2">Reflection Prompt</label>
+          <textarea id="reflectPrompt" name="reflectPrompt" placeholder="Enter the reflection prompt/question" class="w-full border rounded p-2 h-32"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="reflectDueDate" class="block font-semibold mb-2">Due Date</label>
+            <input id="reflectDueDate" name="reflectDueDate" type="datetime-local" class="w-full border rounded p-2">
+          </div>
+          <div>
+            <label for="reflectMinWords" class="block font-semibold mb-2">Minimum Words</label>
+            <input id="reflectMinWords" name="reflectMinWords" type="number" placeholder="100" class="w-full border rounded p-2" value="100">
+          </div>
+        </div>
+      </div>
+
+      <!-- Discussion Form (hidden by default) -->
+      <div id="discussionForm" class="activity-form hidden">
+        <h2 class="text-2xl font-semibold mb-4">New Discussion</h2>
+        
+        <div class="mb-4">
+          <label for="discTitle" class="block font-semibold mb-2">Discussion Title</label>
+          <input id="discTitle" name="discTitle" type="text" placeholder="Enter discussion title" class="w-full border rounded p-2">
+        </div>
+
+        <div class="mb-4">
+          <label for="discPrompt" class="block font-semibold mb-2">Discussion Prompt</label>
+          <textarea id="discPrompt" name="discPrompt" placeholder="Enter the discussion prompt/topic" class="w-full border rounded p-2 h-32"></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label for="discDueDate" class="block font-semibold mb-2">Due Date</label>
+          <input id="discDueDate" name="discDueDate" type="datetime-local" class="w-full border rounded p-2">
+        </div>
+
+        <div class="mb-4">
+          <label class="flex items-center">
+            <input id="discRequireReply" name="discRequireReply" type="checkbox" class="mr-2">
+            <span class="font-semibold">Require replies to other posts</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Common Options (shown for all types) -->
+      <div class="border-t pt-6 mt-6">
+        <h3 class="text-xl font-semibold mb-4">Publishing Options</h3>
+        
+        <div class="mb-4">
+          <label class="flex items-center">
+            <input id="publishNow" name="publishNow" type="checkbox" class="mr-2" checked>
+            <span class="font-semibold">Publish immediately</span>
+          </label>
+        </div>
+
+        <div id="scheduleDiv" class="mb-4 hidden">
+          <label for="scheduleDate" class="block font-semibold mb-2">Schedule for later</label>
+          <input id="scheduleDate" name="scheduleDate" type="datetime-local" class="w-full border rounded p-2">
+        </div>
+
+        <div class="mb-4">
+          <label for="classSelect" class="block font-semibold mb-2">Select Class</label>
+          <select id="classSelect" name="classSelect" class="w-full border rounded p-2" required>
+            <option value="">-- Loading classes --</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="topicSelect" class="block font-semibold mb-2">Select Topic/Subject (Optional)</label>
+          <select id="topicSelect" name="topicSelect" class="w-full border rounded p-2">
+            <option value="">-- Select a topic or leave blank --</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="flex items-center">
+            <input id="notifyStudents" name="notifyStudents" type="checkbox" class="mr-2" checked>
+            <span class="font-semibold">Notify students of new activity</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex gap-3 mt-6 pt-6 border-t">
+        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+          Create Activity
+        </button>
+        <a href="/TEMPLATES/FrameInstructorDashboard.html" class="px-6 py-2 border rounded hover:bg-gray-50 transition">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </main>
+  </div> <!-- End of content div -->
+
+  <script type="module" src="../JS/uploadactivity.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enroll in Class</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/enroll.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <script type="module">
+    // Load supabase globally so navigation fragment can use it
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <script type="module" src="/JS/auth.js"></script>
+
+  <!-- Navigation Container -->
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    loadNavigation('nav-container').then(() => { setupLogout(); });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="enroll-container">
+      <!-- Page Title -->
+      <div class="page-title">
+        <h1>Enroll in a Class</h1>
+        <p>Join a class by code or select from available courses</p>
+      </div>
+
+      <!-- User Info Verification -->
+      <div class="enroll-user-info">
+        <div class="info-header">
+          <i data-lucide="user-check"></i>
+          <span>You're enrolling as:</span>
+        </div>
+        <div class="info-content">
+          <p class="info-name" id="displayName">Loading...</p>
+          <p class="info-email" id="displayEmail">—</p>
+        </div>
+      </div>
+
+      <!-- Enrollment Form -->
+      <div class="enroll-card">
+        <h2 class="enroll-card-title">Enrollment Options</h2>
+        
+        <form id="enrollForm" class="enroll-form">
+          <div class="form-group">
+            <label for="joinCode" class="form-label">
+              <i data-lucide="code"></i>
+              Join by Class Code
+            </label>
+            <input 
+              id="joinCode" 
+              type="text" 
+              class="form-input" 
+              placeholder="Enter the class code (e.g., HIST-2024-001)"
+              autocomplete="off">
+          </div>
+
+          <div class="form-divider">or</div>
+
+          <div class="form-group">
+            <label for="selectClass" class="form-label">
+              <i data-lucide="book-open"></i>
+              Select from Available Classes
+            </label>
+            <select id="selectClass" class="form-select">
+              <option value="">Choose a class...</option>
+            </select>
+          </div>
+
+          <div id="selectedClassInfo" class="selected-class-info" style="display: none;">
+            <div class="selected-class-header">
+              <div class="selected-class-title" id="selectedClassName">—</div>
+              <div class="selected-class-instructor" id="selectedClassInstructor">—</div>
+            </div>
+            <p class="selected-class-description" id="selectedClassDesc">—</p>
+          </div>
+
+          <div class="form-group">
+            <label for="notes" class="form-label">
+              <i data-lucide="message-square"></i>
+              Notes (Optional)
+            </label>
+            <textarea 
+              id="notes" 
+              rows="3" 
+              class="form-textarea" 
+              placeholder="Why are you taking this class? (optional)"></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" id="confirmEnroll" class="btn btn-primary">
+              <i data-lucide="plus-circle"></i>
+              Confirm Enrollment
+            </button>
+            <button type="button" id="cancelEnroll" class="btn btn-secondary">
+              <i data-lucide="x-circle"></i>
+              Cancel
+            </button>
+          </div>
+
+          <div id="enrollMsg" class="enroll-message"></div>
+
+          <input type="hidden" id="classId" name="classId" value="">
+        </form>
+      </div>
+
+      <!-- Available Classes Grid -->
+      <div class="enroll-classes-section">
+        <h2 class="enroll-section-title">Available Classes</h2>
+        <div id="availableClasses" class="enroll-classes-grid"></div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/JS/enroll.js"></script>
+</body>
+</html>

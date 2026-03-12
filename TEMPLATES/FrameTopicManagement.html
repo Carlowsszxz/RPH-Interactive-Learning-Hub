@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage course topics">
+  <title>Manage Topics</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/home.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .management-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .filters-section {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .filter-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .form-label {
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .form-select {
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      min-width: 250px;
+    }
+    .form-select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 768px) {
+      .topics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .topic-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #f5f7ff;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .topic-card:hover {
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+      border-color: #667eea;
+    }
+    .topic-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .topic-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .topic-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 0;
+      word-break: break-word;
+      flex: 1;
+    }
+    .topic-description {
+      color: #718096;
+      font-size: 14px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .topic-meta {
+      font-size: 12px;
+      color: #a0aec0;
+      margin-bottom: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #f5f7ff;
+    }
+    .topic-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .btn-edit {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .btn-edit:hover {
+      background: #bfdbfe;
+    }
+    .btn-delete {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .btn-delete:hover {
+      background: #fecaca;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #a0aec0;
+    }
+    .empty-state-icon {
+      width: 64px;
+      height: 64px;
+      color: #cbd5e0;
+      margin: 0 auto 16px;
+    }
+    .empty-state h3 {
+      color: #718096;
+      font-size: 18px;
+      margin: 0 0 8px 0;
+    }
+    .message {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-weight: 500;
+      z-index: 1000;
+      align-items: center;
+      gap: 12px;
+      max-width: 400px;
+    }
+    .success-message {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      color: #166534;
+    }
+    .error-message {
+      background: #fef2f2;
+      border-left: 4px solid #ef4444;
+      color: #991b1b;
+    }
+    .message.show {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '../JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+
+  <script type="module" src="../JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <div id="content" class="hidden">
+    <!-- Content starts here -->
+    <script type="module">
+      import { loadNavigation } from '../JS/navigation-loader.js';
+      import { supabase } from '../JS/supabase-auth.js';
+      
+      const setupLogout = () => {
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          });
+        }
+      };
+      
+      loadNavigation('nav-container').then(() => {
+        setupLogout();
+      });
+
+      // Check if user is an instructor
+      async function checkInstructorRole() {
+        try {
+          const { data: sessionData } = await supabase.auth.getSession();
+          const user = sessionData?.session?.user;
+          
+          if (!user) {
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+            return;
+          }
+          
+          // Check cached role
+          const cachedRole = sessionStorage.getItem('userRole');
+          if (cachedRole) {
+            if (cachedRole === 'instructor') {
+              document.getElementById('content').classList.remove('hidden');
+              return;
+            } else {
+              alert('Access denied. This page is only for instructors.');
+              window.location.href = '/TEMPLATES/FrameHome.html';
+              return;
+            }
+          }
+          
+          // If not cached, fetch from database
+          const email = (user.email || '').toLowerCase();
+          const { data: profile, error: profileError } = await supabase
+            .from('user_profiles')
+            .select('role')
+            .eq('user_email', email)
+            .single();
+          
+          if (profileError || !profile?.role || profile.role !== 'instructor') {
+            alert('Access denied. This page is only for instructors.');
+            window.location.href = '/TEMPLATES/FrameHome.html';
+            return;
+          }
+          
+          sessionStorage.setItem('userRole', 'instructor');
+          document.getElementById('content').classList.remove('hidden');
+        } catch (error) {
+          console.error('Error checking role:', error);
+          alert('Error verifying instructor status: ' + error.message);
+          window.location.href = '/TEMPLATES/FrameLogin.html';
+        }
+      }
+      
+      checkInstructorRole();
+    </script>
+
+    <main class="main-content">
+      <div class="home-container">
+        <!-- Page Header -->
+        <div class="page-title">
+          <h1 class="home-title">Manage Topics</h1>
+          <p class="home-subtitle">View and manage course topics in your classes</p>
+        </div>
+
+        <div class="management-container">
+          <!-- Filter Section -->
+          <div class="filters-section">
+            <div class="filter-group">
+              <label class="form-label">Filter by Class:</label>
+              <select id="classFilter" class="form-select">
+                <option value="">-- All Classes --</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Success/Error Messages -->
+          <div id="successMessage" class="message success-message">
+            <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i>
+            <span id="successText"></span>
+          </div>
+
+          <div id="errorMessage" class="message error-message">
+            <i data-lucide="alert-circle" style="width: 20px; height: 20px;"></i>
+            <span id="errorText"></span>
+          </div>
+
+          <!-- Topics Grid -->
+          <div id="topicsContainer" class="topics-grid"></div>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">
+              <i data-lucide="inbox"></i>
+            </div>
+            <h3>No topics yet</h3>
+            <p>Create topics to organize your course content</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="../JS/topicmanagement.js"></script>
+</body>
+</html>

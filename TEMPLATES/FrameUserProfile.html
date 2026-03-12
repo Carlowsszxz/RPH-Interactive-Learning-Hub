@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <link rel="stylesheet" href="/CSS/userprofile.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+  <script type="module" src="/JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    loadNavigation('nav-container').then(() => { setupLogout(); });
+
+    function setupLogout() {
+      // Setup profile dropdown toggle
+      const profileBtn = document.getElementById('profileBtn');
+      const profileDropdown = document.getElementById('profileDropdown');
+      
+      if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          profileDropdown.toggleAttribute('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('#profileMenu')) {
+            profileDropdown.setAttribute('hidden', '');
+          }
+        });
+      }
+
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Error: Authentication system not initialized');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+      const signOut = document.getElementById('signOut');
+      if (signOut) {
+        signOut.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Error: Authentication system not initialized');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <main class="main-content">
+    <div class="profile-container">
+      <div class="page-title">
+        <i data-lucide="user" class="page-title-icon"></i>
+        <h1>My Profile</h1>
+      </div>
+
+      <div class="profile-grid">
+        <aside class="profile-card-summary">
+          <div class="avatar-section">
+            <div id="avatarDisplay" class="avatar-container"></div>
+            <div id="avatarImg" style="display: none;"></div>
+          </div>
+          <div class="profile-info">
+            <div id="fullNameDisplay" class="profile-name">Full Name</div>
+            <div id="memberSinceDisplay" class="profile-date">Member since —</div>
+          </div>
+
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="stat-label">Classes</span>
+              <span id="statClasses" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Assignments</span>
+              <span id="statAssignments" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Avg Quiz</span>
+              <span id="statQuiz" class="stat-value">—</span>
+            </div>
+          </div>
+        </aside>
+
+        <section class="profile-card-main">
+          <h2 class="section-title">Edit Profile</h2>
+          <form id="profileForm" class="profile-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full name</label>
+                <input id="fullName" name="fullName" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label>Email (read-only)</label>
+                <input id="email" name="email" class="form-input" readonly>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Username</label>
+                <input id="username" name="username" class="form-input">
+              </div>
+              <div class="form-group">
+                <label>Student ID</label>
+                <input id="studentId" name="studentId" class="form-input">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Bio / About me</label>
+              <textarea id="bio" name="bio" rows="4" class="form-input form-textarea" placeholder="Tell us about yourself..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Avatar (upload)</label>
+              <div class="file-input-wrapper">
+                <input id="avatarFile" type="file" accept="image/*">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button id="saveProfile" type="button" class="btn-primary">
+                <i data-lucide="save"></i>
+                Save Profile
+              </button>
+              <button id="changePassword" type="button" class="btn-secondary">
+                <i data-lucide="key"></i>
+                Change Password
+              </button>
+              <button id="logoutBtn" type="button" class="btn-danger">
+                <i data-lucide="log-out"></i>
+                Log out
+              </button>
+            </div>
+
+            <div id="profileMsg" class="status-message"></div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/JS/userprofile.js"></script>
+</body>
+</html>

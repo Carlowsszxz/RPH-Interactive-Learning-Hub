@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Upload images and resources for your class">
+  <title>Upload Resources</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/home.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .upload-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .upload-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 768px) {
+      .upload-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .form-section {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f5f7ff;
+    }
+    .section-title h2 {
+      margin: 0;
+      color: #2d3748;
+      font-size: 20px;
+    }
+    .section-title i {
+      color: #667eea;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #2d3748;
+      font-size: 14px;
+    }
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .upload-area {
+      border: 2px dashed #cbd5e0;
+      border-radius: 8px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #f9fafb;
+    }
+    .upload-area:hover {
+      border-color: #667eea;
+      background: #f5f7ff;
+    }
+    .upload-area.dragover {
+      border-color: #667eea;
+      background: #eef2ff;
+    }
+    .upload-icon {
+      width: 48px;
+      height: 48px;
+      color: #667eea;
+      margin: 0 auto 12px;
+    }
+    .upload-text {
+      color: #718096;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .upload-subtext {
+      color: #a0aec0;
+      font-size: 12px;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    .image-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .preview-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      aspect-ratio: 1 / 1;
+    }
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .preview-item .remove-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(239, 68, 68, 0.9);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+    .preview-item .remove-btn:hover {
+      background: rgba(239, 68, 68, 1);
+    }
+    .button-group {
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      flex: 1;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+    }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-secondary {
+      background: #f5f7ff;
+      color: #667eea;
+      border: 1px solid #e2d5c2;
+    }
+    .btn-secondary:hover {
+      background: #eef2ff;
+    }
+    .message {
+      display: none;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      align-items: center;
+      gap: 12px;
+    }
+    .success-message {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      color: #166534;
+    }
+    .error-message {
+      background: #fef2f2;
+      border-left: 4px solid #ef4444;
+      color: #991b1b;
+    }
+    .message.show {
+      display: flex;
+    }
+    .resources-list {
+      margin-top: 32px;
+    }
+    .resources-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f5f7ff;
+    }
+    .resources-title h2 {
+      margin: 0;
+      color: #2d3748;
+      font-size: 20px;
+    }
+    .resources-title i {
+      color: #667eea;
+    }
+    .resource-item {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .resource-item:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .resource-info {
+      flex: 1;
+    }
+    .resource-title {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 4px;
+    }
+    .resource-meta {
+      font-size: 12px;
+      color: #a0aec0;
+    }
+    .resource-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .resource-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .delete-btn {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .delete-btn:hover {
+      background: #fecaca;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #a0aec0;
+    }
+    .empty-state-icon {
+      width: 48px;
+      height: 48px;
+      color: #cbd5e0;
+      margin: 0 auto 16px;
+    }
+  </style>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '../JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+
+  <script type="module" src="../JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <div id="content" class="hidden">
+    <!-- Content starts here -->
+    <script type="module">
+      import { loadNavigation } from '../JS/navigation-loader.js';
+      import { supabase } from '../JS/supabase-auth.js';
+      
+      loadNavigation('nav-container').then(() => {
+        setupLogout();
+      });
+
+      // Check if user is an instructor
+      async function checkInstructorRole() {
+        try {
+          const { data: sessionData } = await supabase.auth.getSession();
+          const user = sessionData?.session?.user;
+          
+          if (!user) {
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+            return;
+          }
+          
+          // Check cached role
+          const cachedRole = sessionStorage.getItem('userRole');
+          if (cachedRole) {
+            if (cachedRole === 'instructor') {
+              document.getElementById('content').classList.remove('hidden');
+              return;
+            } else {
+              alert('Access denied. This page is only for instructors.');
+              window.location.href = '/TEMPLATES/FrameHome.html';
+              return;
+            }
+          }
+          
+          // If not cached, fetch from database
+          const email = (user.email || '').toLowerCase();
+          const { data: profile, error: profileError } = await supabase
+            .from('user_profiles')
+            .select('role')
+            .eq('user_email', email)
+            .single();
+          
+          if (profileError || !profile?.role || profile.role !== 'instructor') {
+            alert('Access denied. This page is only for instructors.');
+            window.location.href = '/TEMPLATES/FrameHome.html';
+            return;
+          }
+          
+          sessionStorage.setItem('userRole', 'instructor');
+          document.getElementById('content').classList.remove('hidden');
+        } catch (error) {
+          console.error('Error checking role:', error);
+          alert('Error verifying instructor status: ' + error.message);
+          window.location.href = '/TEMPLATES/FrameLogin.html';
+        }
+      }
+      
+      checkInstructorRole();
+    </script>
+
+    <main class="main-content">
+      <div class="home-container">
+        <!-- Page Header -->
+        <div class="page-title">
+          <h1 class="home-title">Upload Resources</h1>
+          <p class="home-subtitle">Share images and documents with your students</p>
+        </div>
+
+        <div class="upload-container">
+          <!-- Upload Form -->
+          <div class="upload-grid">
+            <div class="form-section">
+              <div class="section-title">
+                <i data-lucide="image" style="width: 24px; height: 24px;"></i>
+                <h2>Upload Images</h2>
+              </div>
+
+              <div id="successMessage" class="message success-message">
+                <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i>
+                <span id="successText"></span>
+              </div>
+
+              <div id="errorMessage" class="message error-message">
+                <i data-lucide="alert-circle" style="width: 20px; height: 20px;"></i>
+                <span id="errorText"></span>
+              </div>
+
+              <form id="uploadForm">
+                <!-- Class Selection -->
+                <div class="form-group">
+                  <label for="classSelect" class="form-label">Select Class *</label>
+                  <select id="classSelect" class="form-select" required>
+                    <option value="">-- Loading classes --</option>
+                  </select>
+                </div>
+
+                <!-- Topic Selection -->
+                <div class="form-group">
+                  <label for="topicSelect" class="form-label">Select Topic (Optional)</label>
+                  <select id="topicSelect" class="form-select">
+                    <option value="">-- No specific topic --</option>
+                  </select>
+                </div>
+
+                <!-- Image Title -->
+                <div class="form-group">
+                  <label for="imageTitle" class="form-label">Resource Title *</label>
+                  <input 
+                    type="text" 
+                    id="imageTitle" 
+                    class="form-input" 
+                    placeholder="e.g., Chapter 3 Diagrams"
+                    maxlength="100"
+                    required
+                  >
+                </div>
+
+                <!-- Image Description -->
+                <div class="form-group">
+                  <label for="imageDescription" class="form-label">Description (Optional)</label>
+                  <textarea 
+                    id="imageDescription" 
+                    class="form-textarea" 
+                    placeholder="Add details about this resource..."
+                    maxlength="500"
+                  ></textarea>
+                </div>
+
+                <!-- File Upload -->
+                <div class="form-group">
+                  <label for="imageFile" class="form-label">Select Images *</label>
+                  <div class="upload-area" id="uploadArea">
+                    <i data-lucide="cloud-upload" class="upload-icon"></i>
+                    <p class="upload-text">Click to upload or drag and drop</p>
+                    <p class="upload-subtext">PNG, JPG, GIF (Max 5MB per file)</p>
+                  </div>
+                  <input 
+                    type="file" 
+                    id="imageFile" 
+                    accept="image/*" 
+                    multiple
+                    required
+                  >
+                  <div id="imagePreview" class="image-preview"></div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-group">
+                  <button type="button" class="btn btn-secondary" onclick="history.back()">
+                    <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <i data-lucide="upload" style="width: 18px; height: 18px;"></i>
+                    Upload Images
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Class Resources List -->
+            <div class="form-section">
+              <div class="resources-title">
+                <i data-lucide="folder" style="width: 24px; height: 24px;"></i>
+                <h2>Class Resources</h2>
+              </div>
+              <div id="resourcesList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="../JS/uploadimages.js"></script>
+</body>
+</html>

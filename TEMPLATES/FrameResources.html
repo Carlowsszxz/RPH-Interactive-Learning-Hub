@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Class resources and materials">
+  <title>Class Resources</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/home.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .resources-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 32px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .resources-header h1 {
+      margin: 0 0 8px 0;
+      font-size: 32px;
+    }
+    .resources-header p {
+      margin: 0;
+      opacity: 0.9;
+    }
+    .filter-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: #667eea;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .resource-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+    .resource-card-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #f5f7ff 0%, #eef2ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .resource-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .resource-card-image.no-image {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .resource-card-image.no-image i {
+      width: 48px;
+      height: 48px;
+    }
+    .resource-card-content {
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .resource-card-title {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .resource-card-desc {
+      font-size: 13px;
+      color: #718096;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+    .resource-card-meta {
+      font-size: 11px;
+      color: #a0aec0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .resource-card-action {
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #a0aec0;
+    }
+    .empty-state-icon {
+      width: 64px;
+      height: 64px;
+      color: #cbd5e0;
+      margin: 0 auto 20px;
+    }
+    .empty-state-text {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #718096;
+    }
+    .empty-state-subtext {
+      font-size: 14px;
+    }
+    .class-selector {
+      margin-bottom: 32px;
+    }
+    .class-selector label {
+      display: block;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+    .class-selector select {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .class-selector select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '../JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+
+  <script type="module" src="../JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+
+  <main class="main-content">
+    <div class="home-container">
+      <!-- Header -->
+      <div class="resources-header">
+        <h1>Class Resources</h1>
+        <p>Access materials shared by your instructors</p>
+      </div>
+
+      <!-- Class Selector -->
+      <div class="class-selector">
+        <label for="classSelect">Select a Class</label>
+        <select id="classSelect">
+          <option value="">-- Loading classes --</option>
+        </select>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all">All Resources</button>
+        <button class="filter-btn" data-filter="image">Images</button>
+        <button class="filter-btn" data-filter="document">Documents</button>
+        <button class="filter-btn" data-filter="video">Videos</button>
+      </div>
+
+      <!-- Resources Grid -->
+      <div id="resourcesGrid" class="resources-grid"></div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">
+          <i data-lucide="inbox"></i>
+        </div>
+        <div class="empty-state-text">No resources available</div>
+        <div class="empty-state-subtext">Check back later for new materials</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Navigation Loading Script -->
+  <script type="module">
+    import { loadNavigation, setupLogout } from '/JS/navigation-loader.js';
+    
+    loadNavigation('nav-container').then(() => {
+      setupLogout();
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+  </script>
+
+  <script type="module" src="../JS/resources.js"></script>
+</body>
+</html>

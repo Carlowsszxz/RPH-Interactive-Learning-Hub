@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse and explore available classes. Find courses that match your interests and learning goals.">
+    <title>Class Browser - Readings in Philippine History</title>
+    <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/CSS/classbrowser.css">
+    <link rel="stylesheet" href="/CSS/games-layout.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <script type="module">
+        // Load supabase globally so navigation fragment can use it
+        import { supabase } from '/JS/supabase-auth.js';
+        window.supabase = supabase;
+        console.log('Supabase loaded globally');
+    </script>
+
+    <script type="module" src="/JS/auth.js"></script>
+
+    <!-- Navigation Container -->
+    <div id="nav-container"></div>
+
+    <script type="module">
+        import { loadNavigation } from '/JS/navigation-loader.js';
+        
+        loadNavigation('nav-container').then(() => {
+            // Navigation loaded
+        });
+    </script>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="browser-container">
+            <div class="page-title">
+                <h1>Browse Classes</h1>
+                <p>Discover and enroll in courses that match your learning goals</p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="browser-filters">
+                <div class="filter-box">
+                    <div class="search-box">
+                        <input id="classSearch" placeholder="Search classes..." aria-label="Search classes">
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Subject</label>
+                        <select id="filterCategory" class="filter-select">
+                            <option value="">All Subjects</option>
+                            <option value="math">Math</option>
+                            <option value="science">Science</option>
+                            <option value="language">Language</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Level</label>
+                        <select id="filterLevel" class="filter-select">
+                            <option value="">All Levels</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Instructor</label>
+                        <select id="filterInstructor" class="filter-select">
+                            <option value="">All Instructors</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Sort By</label>
+                        <select id="sortBy" class="filter-select">
+                            <option value="created">Newest</option>
+                            <option value="name">Name (A–Z)</option>
+                            <option value="popularity">Popularity</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classes Grid -->
+            <div id="classesGrid" class="classes-grid"></div>
+
+            <!-- Pagination -->
+            <div class="pagination-section">
+                <div class="pagination-buttons">
+                    <button id="prevPage" class="pagination-btn">← Prev</button>
+                    <button id="nextPage" class="pagination-btn">Next →</button>
+                </div>
+                <div class="pagination-info">
+                    Page <span id="pageInfo">1</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="/JS/classes-data.js"></script>
+    <script type="module" src="/JS/classbrowser.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Login</title>
+	<link rel="stylesheet" href="../CSS/theme.css">
+	<link rel="stylesheet" href="../CSS/login.css">
+	<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+	<div class="login-container">
+		<form id="loginForm" class="login-form" action="#" method="post" novalidate>
+			<h1 class="login-title">Sign in</h1>
+
+			<div id="alertContainer"></div>
+
+<div class="input-group">
+			<label for="username">Username</label>
+			<input id="username" name="username" type="text" required autocomplete="username">
+		</div>
+
+		<div class="input-group with-trailing-icon">
+			<label for="password">Password</label>
+			<input id="password" name="password" type="password" required autocomplete="current-password">
+			<button type="button" class="password-toggle" id="passwordToggle" title="Show/hide password">
+				<i data-lucide="eye"></i>
+			</button>
+		</div>
+
+			<div class="options">
+				<label class="remember"><input type="checkbox" id="remember" name="remember"> Remember me</label>
+			</div>
+
+			<button type="submit" id="loginBtn" class="btn">Login</button>
+
+		<p class="form-foot">Don't have an account? <a href="FrameSignup.html">Sign up</a></p>
+
+		<div class="oauth-row">
+			<button id="googleSignIn" class="oauth-btn">Sign in with Google</button>
+		</div>
+	</form>
+	</div>
+
+	<script type="module" src="../JS/login.js"></script>
+</body>
+</html>

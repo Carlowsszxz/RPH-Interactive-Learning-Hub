@@ -1,0 +1,405 @@
+/* =============================================
+   KHAKI THEME - Color System & Components
+   ============================================= */
+
+:root {
+  /* PRIMARY KHAKI PALETTE */
+  --khaki-primary: #D4A574;      /* Main brand color */
+  --khaki-primary-dark: #C19560;  /* Hover state */
+  --khaki-primary-light: #E5B88B; /* Light variant */
+  
+  /* BACKGROUND COLORS */
+  --khaki-bg-darkest: #8B7355;    /* Dark khaki - headers, text */
+  --khaki-bg-light: #F5F1E8;      /* Light khaki - main backgrounds */
+  --khaki-bg-lighter: #F9F7F4;    /* Lighter - card backgrounds */
+  --khaki-bg-lightest: #FBF9F6;   /* Lightest - alternate rows */
+  
+  /* BORDER & ACCENT COLORS */
+  --khaki-border: #E8E4DE;        /* Subtle borders */
+  --khaki-border-dark: #D4C4B0;   /* Stronger borders */
+  --khaki-accent: #A68968;        /* Secondary accent */
+  
+  /* NEUTRAL GRAYS (for text) */
+  --text-primary: #3D3D3D;        /* Main text */
+  --text-secondary: #666666;      /* Secondary text */
+  --text-disabled: #999999;       /* Disabled text */
+  --text-light: #F5F1E8;          /* Light text on dark bg */
+  
+  /* STATUS COLORS (complementary) */
+  --status-success: #6B8E23;      /* Olive green */
+  --status-warning: #D2691E;      /* Burnt orange */
+  --status-danger: #A0522D;       /* Sienna */
+  --status-info: #4682B4;         /* Steel blue */
+  
+  /* SPACING SCALE */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* SHADOWS & EFFECTS */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+  --shadow-hover: 0 8px 12px rgba(212,165,116,0.2);
+  
+  /* BORDER RADIUS */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* =============================================
+   TYPOGRAPHY
+   ============================================= */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--khaki-bg-light);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--khaki-bg-darkest);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1 { font-size: 2rem; margin-bottom: var(--spacing-lg); }
+h2 { font-size: 1.5rem; margin-bottom: var(--spacing-md); }
+h3 { font-size: 1.25rem; margin-bottom: var(--spacing-sm); }
+
+a {
+  color: var(--khaki-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--khaki-primary-dark);
+  text-decoration: underline;
+}
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+
+.btn, button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary, button {
+  background-color: var(--khaki-primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover, button:hover {
+  background-color: var(--khaki-primary-dark);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--khaki-bg-lighter);
+  color: var(--khaki-bg-darkest);
+  border: 1px solid var(--khaki-border-dark);
+}
+
+.btn-secondary:hover {
+  background-color: var(--khaki-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-danger {
+  background-color: var(--status-danger);
+  color: white;
+}
+
+.btn-danger:hover {
+  opacity: 0.9;
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-success {
+  background-color: var(--status-success);
+  color: white;
+}
+
+.btn-success:hover {
+  opacity: 0.9;
+  box-shadow: var(--shadow-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =============================================
+   CARDS & CONTAINERS
+   ============================================= */
+
+.card, section {
+  background-color: var(--khaki-bg-lighter);
+  border: 1px solid var(--khaki-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--khaki-border-dark);
+}
+
+.card-header {
+  border-bottom: 2px solid var(--khaki-border);
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.card-body {
+  padding: var(--spacing-md) 0;
+}
+
+.card-footer {
+  border-top: 1px solid var(--khaki-border);
+  padding-top: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+/* =============================================
+   FORMS
+   ============================================= */
+
+input, textarea, select {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--khaki-border-dark);
+  border-radius: var(--radius-md);
+  background-color: white;
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--khaki-primary);
+  box-shadow: 0 0 0 3px rgba(212,165,116,0.1);
+  background-color: #FFFBF8;
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--khaki-bg-darkest);
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+/* =============================================
+   BADGES & STATUS
+   ============================================= */
+
+.badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-success {
+  background-color: rgba(107, 142, 35, 0.1);
+  color: var(--status-success);
+  border: 1px solid var(--status-success);
+}
+
+.badge-warning {
+  background-color: rgba(210, 105, 30, 0.1);
+  color: var(--status-warning);
+  border: 1px solid var(--status-warning);
+}
+
+.badge-danger {
+  background-color: rgba(160, 82, 45, 0.1);
+  color: var(--status-danger);
+  border: 1px solid var(--status-danger);
+}
+
+.badge-info {
+  background-color: rgba(70, 130, 180, 0.1);
+  color: var(--status-info);
+  border: 1px solid var(--status-info);
+}
+
+.badge-khaki {
+  background-color: rgba(212, 165, 116, 0.15);
+  color: var(--khaki-primary-dark);
+  border: 1px solid var(--khaki-primary);
+}
+
+/* =============================================
+   NAVIGATION & LISTS
+   ============================================= */
+
+nav {
+  background-color: var(--khaki-bg-darkest);
+  color: var(--text-light);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-md);
+}
+
+nav a {
+  color: var(--text-light);
+  margin-right: var(--spacing-lg);
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--khaki-primary-light);
+  text-decoration: none;
+}
+
+.nav-active {
+  color: var(--khaki-primary-light);
+  border-bottom: 2px solid var(--khaki-primary-light);
+  padding-bottom: var(--spacing-xs);
+}
+
+ul, ol {
+  margin-left: var(--spacing-md);
+}
+
+li {
+  margin-bottom: var(--spacing-xs);
+}
+
+/* =============================================
+   TABLES
+   ============================================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+thead {
+  background-color: var(--khaki-primary);
+  color: white;
+  font-weight: 600;
+}
+
+th, td {
+  padding: var(--spacing-md);
+  text-align: left;
+  border-bottom: 1px solid var(--khaki-border);
+}
+
+tbody tr:hover {
+  background-color: var(--khaki-bg-lightest);
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--khaki-bg-lighter);
+}
+
+/* =============================================
+   ALERTS & MESSAGES
+   ============================================= */
+
+.alert {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+  border-left: 4px solid;
+}
+
+.alert-success {
+  background-color: rgba(107, 142, 35, 0.1);
+  border-color: var(--status-success);
+  color: var(--status-success);
+}
+
+.alert-warning {
+  background-color: rgba(210, 105, 30, 0.1);
+  border-color: var(--status-warning);
+  color: var(--status-warning);
+}
+
+.alert-danger {
+  background-color: rgba(160, 82, 45, 0.1);
+  border-color: var(--status-danger);
+  color: var(--status-danger);
+}
+
+.alert-info {
+  background-color: rgba(70, 130, 180, 0.1);
+  border-color: var(--status-info);
+  color: var(--status-info);
+}
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-khaki { color: var(--khaki-primary); }
+.text-dark-khaki { color: var(--khaki-bg-darkest); }
+
+.bg-khaki-light { background-color: var(--khaki-bg-light); }
+.bg-khaki-lighter { background-color: var(--khaki-bg-lighter); }
+.bg-khaki-primary { background-color: var(--khaki-primary); }
+
+.border-khaki { border: 1px solid var(--khaki-border); }
+.border-khaki-dark { border: 1px solid var(--khaki-border-dark); }
+
+.shadow { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+
+/* =============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================= */
+
+@media (max-width: 768px) {
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.1rem; }
+  
+  .card, section {
+    padding: var(--spacing-sm);
+  }
+  
+  button {
+    width: 100%;
+    padding: var(--spacing-md);
+  }
+}

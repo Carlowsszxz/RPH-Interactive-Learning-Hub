@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard for managing classes, assignments, and quiz progress">
+  <title>Home - Readings in Philippine History</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/home.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <script type="module" src="/JS/auth.js"></script>
+
+  <!-- Navigation Container -->
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    loadNavigation('nav-container').then(() => { setupLogout(); });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="home-container">
+      <!-- Welcome Header -->
+      <div class="page-title">
+        <h1 id="welcomeMsg" class="home-title">Welcome, User</h1>
+        <p id="subMsg" class="home-subtitle">Here's your overview.</p>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="home-header-actions">
+        <button id="btnBrowse" class="home-btn home-btn-primary">
+          <i data-lucide="compass"></i>
+          Browse Classes
+        </button>
+        <button id="btnAssignments" class="home-btn">
+          <i data-lucide="clipboard-list"></i>
+          View Assignments
+        </button>
+        <button id="btnQuiz" class="home-btn">
+          <i data-lucide="help-circle"></i>
+          Take Quiz
+        </button>
+      </div>
+
+      <!-- Stats Section -->
+      <section class="home-stats">
+        <div class="home-stat-card">
+          <div class="home-stat-icon"><i data-lucide="book-open"></i></div>
+          <div class="home-stat-label">Classes Enrolled</div>
+          <div id="statClasses" class="home-stat-value">0</div>
+        </div>
+        <div class="home-stat-card">
+          <div class="home-stat-icon"><i data-lucide="clipboard"></i></div>
+          <div class="home-stat-label">Assignments Due</div>
+          <div id="statDue" class="home-stat-value">0</div>
+        </div>
+        <div class="home-stat-card">
+          <div class="home-stat-icon"><i data-lucide="check-circle"></i></div>
+          <div class="home-stat-label">Quiz Average</div>
+          <div id="statQuiz" class="home-stat-value">—</div>
+        </div>
+      </section>
+
+      <!-- Main Content Grid -->
+      <section class="home-content">
+        <!-- Left Column (Main Content) -->
+        <div class="home-main">
+          <!-- My Classes -->
+          <div class="home-card">
+            <div class="home-card-header">
+              <h2 class="home-card-title">My Classes</h2>
+              <a href="/TEMPLATES/FrameClassBrowser.html" class="home-card-link">View All</a>
+            </div>
+            <div id="myClasses" class="home-classes-grid"></div>
+          </div>
+
+          <!-- Upcoming Assignments -->
+          <div class="home-card">
+            <div class="home-card-header">
+              <h2 class="home-card-title">Upcoming Assignments</h2>
+              <a href="#" class="home-card-link">View All</a>
+            </div>
+            <ul id="upcomingAssignments" class="home-list"></ul>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="home-card">
+            <h2 class="home-card-title">Recent Activity</h2>
+            <ul id="recentList" class="home-list"></ul>
+          </div>
+        </div>
+
+        <!-- Right Column (Sidebar) -->
+        <aside class="home-sidebar">
+          <!-- Announcements -->
+          <div class="home-card">
+            <h2 class="home-card-title">Announcements</h2>
+            <div id="announcements" class="home-sidebar-content">No announcements</div>
+          </div>
+
+          <!-- Leaderboard -->
+          <div class="home-card">
+            <h2 class="home-card-title">Leaderboard</h2>
+            <ol id="leaderboard" class="home-list home-list-numbered"></ol>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/JS/home.js"></script>
+</body>
+</html>

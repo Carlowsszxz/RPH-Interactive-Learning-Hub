@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <link rel="stylesheet" href="/CSS/leaderboard.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+  <script type="module" src="/JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    loadNavigation('nav-container').then(() => { setupLogout(); });
+
+    function setupLogout() {
+      // Setup profile dropdown toggle
+      const profileBtn = document.getElementById('profileBtn');
+      const profileDropdown = document.getElementById('profileDropdown');
+      
+      if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          profileDropdown.toggleAttribute('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('#profileMenu')) {
+            profileDropdown.setAttribute('hidden', '');
+          }
+        });
+      }
+
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+      const signOut = document.getElementById('signOut');
+      if (signOut) {
+        signOut.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <main class="main-content">
+    <div class="leaderboard-container">
+      <div class="page-title">
+        <i data-lucide="trophy" class="page-title-icon"></i>
+        <h1>Leaderboard</h1>
+      </div>
+
+      <div class="leaderboard-controls">
+        <div class="control-group">
+          <select id="filterGameType" class="form-input">
+            <option value="">All Games</option>
+            <option value="timeline">Timeline</option>
+            <option value="trivia">Trivia</option>
+            <option value="other">Other</option>
+          </select>
+          <select id="timeRange" class="form-input">
+            <option value="all">All time</option>
+            <option value="30">Last 30 days</option>
+            <option value="7">Last 7 days</option>
+          </select>
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input id="searchPlayer" placeholder="Search player name">
+          </div>
+        </div>
+        <div class="leaderboard-count">Top players — <span id="lbCount">0</span></div>
+      </div>
+
+      <div id="leaderboard" class="leaderboard-table">
+        <div class="leaderboard-header">
+          <div class="header-rank">#</div>
+          <div class="header-avatar">Avatar</div>
+          <div class="header-player">Player</div>
+          <div class="header-game">Game</div>
+          <div class="header-score">Score</div>
+        </div>
+        <div id="leaderRows"></div>
+      </div>
+
+      <div class="pagination">
+        <button id="prevPage" class="btn-secondary">
+          <i data-lucide="chevron-left"></i>
+          Previous
+        </button>
+        <div id="pageInfo" class="page-number">1</div>
+        <button id="nextPage" class="btn-secondary">
+          Next
+          <i data-lucide="chevron-right"></i>
+        </button>
+      </div>
+
+      <section class="my-rank-section" id="myRankSection">
+        <h3 class="section-title">Your Rank</h3>
+        <div id="myRank" class="rank-display">Sign in to see your rank.</div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/JS/leaderboard.js"></script>
+</body>
+</html>

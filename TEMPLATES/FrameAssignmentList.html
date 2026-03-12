@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage your assignments. Track due dates, submit your work, and check grades.">
+  <title>Assignments - Readings in Philippine History</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/assignments.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <script type="module">
+    // Load supabase globally so navigation fragment can use it
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <script type="module" src="/JS/auth.js"></script>
+
+  <!-- Navigation Container -->
+  <div id="nav-container"></div>
+  
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    
+    loadNavigation('nav-container').then(() => {
+      // Navigation loaded
+    });
+  </script>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="assignments-container">
+      <!-- Page Header -->
+      <div class="page-title">
+        <h1>Assignments</h1>
+        <p>View and manage your assignments. Track due dates and check your progress.</p>
+      </div>
+
+      <!-- Filters and Controls -->
+      <div class="assignments-controls">
+        <div class="filter-group">
+          <label for="filterStatus">Status</label>
+          <select id="filterStatus" class="filter-select">
+            <option value="">All</option>
+            <option value="draft">Draft</option>
+            <option value="open">Open</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="sortBy">Sort By</label>
+          <select id="sortBy" class="filter-select">
+            <option value="due_asc">Due date (Earliest)</option>
+            <option value="due_desc">Due date (Latest)</option>
+            <option value="title">Title A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Assignments List -->
+      <section class="assignments-list-container">
+        <div id="assignmentsList" class="assignments-grid"></div>
+      </section>
+
+      <!-- Pagination -->
+      <div class="pagination-controls">
+        <button id="prevPage" class="pagination-btn">
+          <i data-lucide="chevron-left"></i> Prev
+        </button>
+        <span id="pageInfo" class="pagination-info">Page 1</span>
+        <button id="nextPage" class="pagination-btn">
+          Next <i data-lucide="chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/JS/assignments.js"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

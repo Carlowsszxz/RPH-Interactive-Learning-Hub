@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Games</title>
+  <link rel="stylesheet" href="../CSS/theme.css">
+  <link rel="stylesheet" href="../CSS/gameplay.css">
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '../JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+
+  <script type="module" src="../JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '../JS/navigation-loader.js';
+    
+    loadNavigation('nav-container').then(() => {
+      setupLogout();
+    });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+      const signOut = document.getElementById('signOut');
+      if (signOut) {
+        signOut.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <main class="game-hub">
+    <header class="game-hub-header">
+      <div>
+        <h1 class="game-hub-title">Games</h1>
+        <p class="game-hub-subtitle">Choose a game to play and test your skills</p>
+      </div>
+    </header>
+
+    <div class="game-cards-grid" id="gameCardsGrid">
+      <!-- Game cards loaded via JavaScript -->
+    </div>
+  </main>
+
+  <script type="module" src="../JS/gameplay.js"></script>
+</body>
+</html>

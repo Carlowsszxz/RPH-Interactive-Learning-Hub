@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Reflection Prompts</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <link rel="stylesheet" href="/CSS/reflection.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="/JS/auth.js"></script>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+  <script type="module" src="/JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    
+    loadNavigation('nav-container').then(() => {
+      setupLogout();
+    });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+      const signOut = document.getElementById('signOut');
+      if (signOut) {
+        signOut.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+  </script>
+
+  <main class="main-content">
+    <div class="container">
+      <header class="reflection-header">
+        <div class="header-left">
+          <h1 class="page-title">
+            <i data-lucide="lightbulb" style="display:inline-block; width:24px; height:24px; margin-right:8px; vertical-align:middle;"></i>
+            Reflection Prompts
+          </h1>
+          <p class="page-subtitle">Short reflection activities for students.</p>
+        </div>
+        <div class="header-right">
+          <button id="btnNewPrompt" class="btn-primary">
+            <i data-lucide="plus" style="display:inline-block; width:16px; height:16px; margin-right:6px; vertical-align:middle;"></i>
+            New Prompt
+          </button>
+        </div>
+      </header>
+
+      <section class="reflection-grid">
+        <aside class="reflection-list">
+          <div class="list-container">
+            <h3 class="list-title">Prompts</h3>
+            <div id="promptList" class="list-items"></div>
+          </div>
+        </aside>
+
+        <section class="reflection-view">
+          <div id="promptView" class="content-card">
+            <div id="promptPlaceholder" class="placeholder-text">Select a prompt to view details and submit your reflection.</div>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <!-- New prompt modal -->
+    <div id="newPromptModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Create Reflection Prompt</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Title</label>
+            <input id="promptTitle" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prompt</label>
+            <textarea id="promptBody" rows="6" class="form-textarea"></textarea>
+          </div>
+          <div id="createPromptStatus" class="status-message"></div>
+        </div>
+        <div class="modal-actions">
+          <button id="createPromptBtn" class="btn-primary">Create</button>
+          <button id="cancelCreatePrompt" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/JS/reflection.js"></script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create and manage course topics">
+  <title>Create Topic</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/home.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .topic-form-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #2d3748;
+      font-size: 14px;
+    }
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      flex: 1;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+    }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-secondary {
+      background: #f5f7ff;
+      color: #667eea;
+      border: 1px solid #e2d5c2;
+    }
+    .btn-secondary:hover {
+      background: #eef2ff;
+    }
+    .success-message {
+      display: none;
+      padding: 16px;
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      border-radius: 8px;
+      color: #166534;
+      margin-bottom: 16px;
+      align-items: center;
+      gap: 12px;
+    }
+    .success-message.show {
+      display: flex;
+    }
+    .error-message {
+      display: none;
+      padding: 16px;
+      background: #fef2f2;
+      border-left: 4px solid #ef4444;
+      border-radius: 8px;
+      color: #991b1b;
+      margin-bottom: 16px;
+      align-items: center;
+      gap: 12px;
+    }
+    .error-message.show {
+      display: flex;
+    }
+    .form-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f5f7ff;
+    }
+    .form-title h2 {
+      margin: 0;
+      color: #2d3748;
+      font-size: 24px;
+    }
+    .form-title i {
+      color: #667eea;
+    }
+    .upload-area {
+      border: 2px dashed #cbd5e0;
+      border-radius: 8px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #f9fafb;
+    }
+    .upload-area:hover {
+      border-color: #667eea;
+      background: #f5f7ff;
+    }
+    .upload-area.dragover {
+      border-color: #667eea;
+      background: #eef2ff;
+    }
+    .image-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .preview-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background: white;
+    }
+    .preview-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .preview-caption-input {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-top: 1px solid #e2e8f0;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+    .preview-caption-input::placeholder {
+      color: #a0aec0;
+    }
+    .preview-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(239, 68, 68, 0.9);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .preview-remove:hover {
+      background: rgba(239, 68, 68, 1);
+    }
+  </style>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '../JS/supabase-auth.js';
+    window.supabase = supabase;
+  </script>
+
+  <script type="module" src="../JS/auth.js"></script>
+
+  <div id="nav-container"></div>
+  <div id="content" class="hidden">
+    <!-- Content starts here -->
+    <script type="module">
+      import { loadNavigation, setupLogout } from '../JS/navigation-loader.js';
+      import { supabase } from '../JS/supabase-auth.js';
+      
+      loadNavigation('nav-container').then(() => {
+        if (setupLogout) setupLogout();
+      });
+
+      // Check if user is an instructor
+      async function checkInstructorRole() {
+        try {
+          const { data: sessionData } = await supabase.auth.getSession();
+          const user = sessionData?.session?.user;
+          
+          if (!user) {
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+            return;
+          }
+          
+          // Check cached role
+          const cachedRole = sessionStorage.getItem('userRole');
+          if (cachedRole) {
+            if (cachedRole === 'instructor') {
+              document.getElementById('content').classList.remove('hidden');
+              return;
+            } else {
+              alert('Access denied. This page is only for instructors.');
+              window.location.href = '/TEMPLATES/FrameHome.html';
+              return;
+            }
+          }
+          
+          // If not cached, fetch from database
+          const email = (user.email || '').toLowerCase();
+          const { data: profile, error: profileError } = await supabase
+            .from('user_profiles')
+            .select('role')
+            .eq('user_email', email)
+            .single();
+          
+          if (profileError || !profile?.role || profile.role !== 'instructor') {
+            alert('Access denied. This page is only for instructors.');
+            window.location.href = '/TEMPLATES/FrameHome.html';
+            return;
+          }
+          
+          sessionStorage.setItem('userRole', 'instructor');
+          document.getElementById('content').classList.remove('hidden');
+        } catch (error) {
+          console.error('Error checking role:', error);
+          alert('Error verifying instructor status: ' + error.message);
+          window.location.href = '/TEMPLATES/FrameLogin.html';
+        }
+      }
+      
+      checkInstructorRole();
+    </script>
+
+    <main class="main-content">
+      <div class="home-container">
+        <!-- Page Header -->
+        <div class="page-title">
+          <h1 class="home-title">Create Topic</h1>
+          <p class="home-subtitle">Add a new topic/unit to your course to organize content and activities</p>
+        </div>
+
+        <!-- Form -->
+        <div class="topic-form-container">
+          <div class="form-title">
+            <i data-lucide="bookmark" style="width: 24px; height: 24px;"></i>
+            <h2>New Topic</h2>
+          </div>
+
+          <div id="successMessage" class="success-message">
+            <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i>
+            <span id="successText"></span>
+          </div>
+
+          <div id="errorMessage" class="error-message">
+            <i data-lucide="alert-circle" style="width: 20px; height: 20px;"></i>
+            <span id="errorText"></span>
+          </div>
+
+          <form id="topicForm">
+            <!-- Class Selection -->
+            <div class="form-group">
+              <label for="classSelect" class="form-label">Select Class *</label>
+              <select id="classSelect" class="form-select" required>
+                <option value="">-- Loading classes --</option>
+              </select>
+            </div>
+
+            <!-- Topic Title -->
+            <div class="form-group">
+              <label for="topicTitle" class="form-label">Topic Title *</label>
+              <input 
+                type="text" 
+                id="topicTitle" 
+                class="form-input" 
+                placeholder="e.g., Introduction to Chemistry"
+                maxlength="100"
+                required
+              >
+            </div>
+
+            <!-- Topic Description -->
+            <div class="form-group">
+              <label for="topicDescription" class="form-label">Description</label>
+              <textarea 
+                id="topicDescription" 
+                class="form-textarea" 
+                placeholder="Brief description of what this topic covers..."
+                maxlength="500"
+              ></textarea>
+            </div>
+
+            <!-- Topic Content -->
+            <div class="form-group">
+              <label for="topicContent" class="form-label">Content/Notes</label>
+              <textarea 
+                id="topicContent" 
+                class="form-textarea" 
+                placeholder="Add lecture notes, key points, or learning objectives..."
+                maxlength="5000"
+              ></textarea>
+            </div>
+
+            <!-- Display Order -->
+            <div class="form-group">
+              <label for="displayOrder" class="form-label">Display Order (Optional)</label>
+              <input 
+                type="number" 
+                id="displayOrder" 
+                class="form-input" 
+                placeholder="1"
+                min="1"
+              >
+              <small style="color: #718096; margin-top: 4px; display: block;">Topics will be sorted by this number (lowest first)</small>
+            </div>
+
+            <!-- Image Upload Section -->
+            <div class="form-group">
+              <label class="form-label">Upload Images (Optional)</label>
+              <div class="upload-area" id="uploadArea">
+                <i data-lucide="cloud-upload" style="width: 32px; height: 32px; color: #667eea; margin: 0 auto 12px; display: block;"></i>
+                <p style="margin: 0 0 4px 0; color: #718096;">Click to upload or drag and drop</p>
+                <p style="margin: 0; font-size: 12px; color: #a0aec0;">PNG, JPG, GIF (Max 5MB per file)</p>
+              </div>
+              <input 
+                type="file" 
+                id="imageFile" 
+                accept="image/*" 
+                multiple
+                style="display: none;"
+              >
+              <div id="imagePreview" class="image-preview"></div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+              <button type="button" class="btn btn-secondary" onclick="history.back()">
+                <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+                Back
+              </button>
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
+                Create Topic
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="../JS/uploadtopic.js"></script>
+</body>
+</html>

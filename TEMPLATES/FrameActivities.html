@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activities</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/activities.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="/JS/auth.js"></script>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <!-- Navigation Container -->
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    loadNavigation('nav-container').then(() => { setupLogout(); });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+<!-- Main Content -->
+<main class="main-content">
+  <div class="activities-container">
+    <!-- Page Title -->
+    <div class="page-title">
+      <h1>Activities</h1>
+      <p>View your assignments, quizzes, reflections, and discussions</p>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="activities-filters">
+      <div class="filter-chips">
+        <button class="activity-filter active" data-type="all">
+          <i data-lucide="list"></i>
+          All Activities
+        </button>
+        <button class="activity-filter" data-type="assignment">
+          <i data-lucide="clipboard"></i>
+          Assignments
+        </button>
+        <button class="activity-filter" data-type="quiz">
+          <i data-lucide="help-circle"></i>
+          Quizzes
+        </button>
+        <button class="activity-filter" data-type="reflection">
+          <i data-lucide="lightbulb"></i>
+          Reflections
+        </button>
+        <button class="activity-filter" data-type="discussion">
+          <i data-lucide="message-circle"></i>
+          Discussions
+        </button>
+      </div>
+    </div>
+
+    <!-- Search and Filter Row -->
+    <div class="activities-controls">
+      <div class="search-box">
+        <i data-lucide="search"></i>
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Search activities..."
+          class="search-input"
+        >
+      </div>
+      <select id="classFilter" class="filter-select">
+        <option value="">All Classes</option>
+      </select>
+    </div>
+
+    <!-- Activities List -->
+    <div id="activitiesList" class="activities-list">
+      <div class="activities-loading">
+        <i data-lucide="loader"></i>
+        <p>Loading activities...</p>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="activities-empty" style="display: none;">
+      <i data-lucide="inbox"></i>
+      <p>No activities found</p>
+      <span>Try adjusting your filters or search terms</span>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="/JS/activities-page.js"></script>
+</body>
+</html>

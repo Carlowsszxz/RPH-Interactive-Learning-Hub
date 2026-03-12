@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View assignment details and submit your work.">
+  <title>Assignment Details - Readings in Philippine History</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/assignmentdetail.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="/JS/auth.js"></script>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <!-- Navigation Container -->
+  <div id="nav-container"></div>
+  
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    
+    loadNavigation('nav-container').then(() => {
+      // Navigation loaded
+    });
+  </script>
+
+  <main class="main-content">
+    <div class="assignment-detail-container">
+      <div id="assignmentContainer" class="assignment-content">
+        <!-- Header -->
+        <div class="assignment-header-card">
+          <div class="assignment-header-content">
+            <div>
+              <h1 id="assignmentTitle" class="assignment-detail-title">Assignment Title</h1>
+              <div class="assignment-class-link">for <a id="assignmentClassLink" href="#" class="class-link">Class</a></div>
+            </div>
+            <div class="assignment-header-meta">
+              <div class="meta-badge">
+                <svg data-lucide="calendar" width="16" height="16"></svg>
+                <span><strong>Due:</strong> <span id="assignmentDue">TBD</span></span>
+              </div>
+              <div class="meta-badge">
+                <svg data-lucide="star" width="16" height="16"></svg>
+                <span><strong>Points:</strong> <span id="assignmentPoints">—</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instructions Section -->
+        <section class="assignment-section">
+          <div class="section-header">
+            <svg data-lucide="file-text" width="20" height="20"></svg>
+            <h2>Instructions</h2>
+          </div>
+          <div id="assignmentInstructions" class="section-content">Loading...</div>
+        </section>
+
+        <!-- Attachments Section -->
+        <section class="assignment-section">
+          <div class="section-header">
+            <svg data-lucide="paperclip" width="20" height="20"></svg>
+            <h2>Attachments</h2>
+          </div>
+          <div id="assignmentAttachments" class="section-content attachments-list">No attachments.</div>
+        </section>
+
+        <!-- Submissions Section -->
+        <section class="assignment-section">
+          <div class="section-header">
+            <svg data-lucide="check-circle" width="20" height="20"></svg>
+            <h2>Submissions</h2>
+          </div>
+          <div id="submissionsList" class="section-content">Loading...</div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="assignment-actions">
+          <button id="btnSubmitAssignment" class="action-btn action-btn-primary">
+            <svg data-lucide="upload" width="16" height="16"></svg>
+            Submit Assignment
+          </button>
+          <button id="btnBackAssignments" class="action-btn action-btn-secondary">
+            <svg data-lucide="arrow-left" width="16" height="16"></svg>
+            Back to Assignments
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/JS/assignmentdetail.js"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create and manage quizzes for your classes.">
+  <title>Quiz Builder - Readings in Philippine History</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/quizbuilder.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <script type="module" src="/JS/auth.js"></script>
+
+  <!-- Navigation Container -->
+  <div id="nav-container"></div>
+
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    
+    loadNavigation('nav-container').then(() => {
+      setupLogout();
+    });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+      const signOut = document.getElementById('signOut');
+      if (signOut) {
+        signOut.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="quiz-builder-container">
+      <!-- Page Header -->
+      <div class="page-title">
+        <h1>Quiz Builder</h1>
+        <p>Create questions and build custom quizzes for your students.</p>
+      </div>
+
+      <!-- Quiz Metadata Section -->
+      <section class="metadata-card">
+        <h2 class="section-title">Quiz Details</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="quizTitle">Quiz Title *</label>
+            <input type="text" id="quizTitle" class="form-input" placeholder="e.g., Chapter 3 Assessment" required>
+          </div>
+          <div class="form-group">
+            <label for="quizClass">Assign to Class</label>
+            <select id="quizClass" class="form-input">
+              <option value="">Select a class...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quizTimeLimit">Time Limit (minutes)</label>
+            <input type="number" id="quizTimeLimit" class="form-input" placeholder="No limit" min="1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="quizDescription">Description</label>
+          <textarea id="quizDescription" class="form-input form-textarea" rows="3" placeholder="Instructions or context for students..."></textarea>
+        </div>
+      </section>
+
+      <!-- Questions Section -->
+      <section class="questions-section">
+        <div class="section-header">
+          <h2 class="section-title">Questions</h2>
+          <button id="addQuestionBtn" class="btn-primary">
+            <svg data-lucide="plus" width="16" height="16"></svg>
+            Add Question
+          </button>
+        </div>
+
+        <div id="questionsList" class="questions-list">
+          <div class="empty-state">
+            <svg data-lucide="file-question" width="48" height="48"></svg>
+            <p>No questions yet. Add one to get started!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz Actions -->
+      <div class="quiz-actions">
+        <button id="previewBtn" class="action-btn action-btn-secondary">
+          <svg data-lucide="eye" width="16" height="16"></svg>
+          Preview
+        </button>
+        <button id="saveBtn" class="action-btn action-btn-primary">
+          <svg data-lucide="save" width="16" height="16"></svg>
+          Save Quiz
+        </button>
+        <button id="publishBtn" class="action-btn action-btn-primary">
+          <svg data-lucide="send" width="16" height="16"></svg>
+          Publish
+        </button>
+        <button id="deleteBtn" class="action-btn action-btn-danger">
+          <svg data-lucide="trash-2" width="16" height="16"></svg>
+          Delete
+        </button>
+      </div>
+
+      <div id="statusMessage" class="status-message"></div>
+    </div>
+  </main>
+
+  <!-- Question Template Modal -->
+  <div id="questionModal" class="modal" hidden>
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Question</h3>
+        <button id="closeModalBtn" class="close-btn">
+          <svg data-lucide="x" width="20" height="20"></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="questionType">Question Type *</label>
+          <select id="questionType" class="form-input">
+            <option value="">Select a type...</option>
+            <option value="multiple-choice">Multiple Choice</option>
+            <option value="checkboxes">Checkboxes (Multiple Select)</option>
+            <option value="dropdown">Dropdown</option>
+            <option value="short-answer">Short Answer</option>
+            <option value="essay">Essay / Long Answer</option>
+            <option value="rating">Rating Scale</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="questionText">Question Text *</label>
+          <textarea id="questionText" class="form-input form-textarea" rows="3" placeholder="Enter your question..."></textarea>
+        </div>
+
+        <!-- Options for MC/Checkboxes/Dropdown -->
+        <div id="optionsSection" class="form-group" hidden>
+          <label>Options</label>
+          <div id="optionsList" class="options-list"></div>
+          <button type="button" id="addOptionBtn" class="btn-secondary btn-small">
+            <svg data-lucide="plus" width="14" height="14"></svg>
+            Add Option
+          </button>
+        </div>
+
+        <!-- Rating Scale Config -->
+        <div id="ratingSection" class="form-group" hidden>
+          <label>Rating Scale</label>
+          <div class="rating-config">
+            <div class="form-subgroup">
+              <label for="ratingMin">Min (Label)</label>
+              <input type="text" id="ratingMin" class="form-input" placeholder="e.g., Poor" value="Poor">
+            </div>
+            <div class="form-subgroup">
+              <label for="ratingMax">Max (Label)</label>
+              <input type="text" id="ratingMax" class="form-input" placeholder="e.g., Excellent" value="Excellent">
+            </div>
+            <div class="form-subgroup">
+              <label for="ratingScale">Scale</label>
+              <select id="ratingScale" class="form-input">
+                <option value="5">1-5 Stars</option>
+                <option value="3">1-3 Stars</option>
+                <option value="10">1-10 Scale</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="questionRequired">
+            <span>Required question</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="cancelModalBtn" class="btn-secondary">Cancel</button>
+        <button type="button" id="saveQuestionBtn" class="btn-primary">Add Question</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/JS/quizbuilder.js"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

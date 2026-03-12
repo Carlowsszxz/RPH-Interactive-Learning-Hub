@@ -1,0 +1,125 @@
+<!--
+  Global navigation fragment (FrameNavigation.html)
+  Usage (recommended):
+    <div id="nav-container"></div>
+    <script>
+      fetch('/TEMPLATES/FrameNavigation.html')
+        .then(r => r.text())
+        .then(html => document.getElementById('nav-container').innerHTML = html);
+    </script>
+
+  This file is an HTML fragment (not a full document). It contains inline styles
+  so you can inject it into any frame without additional CSS files.
+-->
+
+<!-- Student-focused navigation fragment: includes both sidebar and optional top-header.
+     Pages can opt for the top header by adding `body.use-top-nav` or keep the sidebar via
+     `body.has-global-sidebar` + `main.with-global-sidebar` as before.
+-->
+
+<link rel="stylesheet" href="/CSS/navigation.css">
+
+<!-- Top header (visible when body.use-top-nav is set) -->
+<header class="global-header" role="banner">
+  <div class="header-inner">
+    <div class="header-actions">
+      <a href="/TEMPLATES/FrameActivities.html" class="nav-link">📚 Activities</a>
+      <a href="/TEMPLATES/FrameQuizList.html" class="nav-link">✅ Quizzes</a>
+      <a href="/TEMPLATES/FrameForumBrowser.html" class="nav-link">Forum</a>
+      <a href="/TEMPLATES/FrameLeaderboard.html" class="nav-link">Leaderboard</a>
+      <a href="/TEMPLATES/FrameGames.html" class="nav-link">Game Play</a>
+      <a href="/TEMPLATES/FrameResources.html" class="nav-link">📁 Resources</a>
+
+      <button id="notifBtn" class="icon-btn" aria-label="Notifications">🔔<span id="notifCount" class="badge">0</span></button>
+
+      <div class="profile-menu" id="profileMenu">
+        <button id="profileBtn" class="profile-btn">
+          <img id="headerProfileAvatar" src="/IMAGES/avatar.png" alt="Profile" class="profile-avatar-small" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23FF6B35%22/%3E%3Ctext x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22 font-weight=%22bold%22%3EU%3C/text%3E%3C/svg%3E'">
+          <span id="headerProfileName">Profile</span>
+          <span>▾</span>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown" hidden>
+          <a href="/TEMPLATES/FrameUserProfile.html">My Profile</a>
+          <a href="/TEMPLATES/FrameClassBrowser.html">My Classes</a>
+          <a href="/TEMPLATES/FrameClassEnroll.html">Enroll</a>
+          <a href="#" id="signOut">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Backdrop (for closing mobile sidebar) -->
+<div class="nav-backdrop" id="navBackdrop"></div>
+
+<!-- Mobile-only header (visible on small screens) -->
+<header class="mobile-header" role="banner">
+  <div class="mobile-header-inner">
+    <div class="mobile-brand-wrap">
+      <button id="sidebarToggle" class="nav-btn" aria-label="Toggle menu">☰</button>
+      <a class="mobile-brand" href="/TEMPLATES/FrameHome.html">URS</a>
+    </div>
+    <div class="mobile-header-actions">
+      <button id="notifBtnMobile" class="icon-btn" aria-label="Notifications">🔔<span id="notifCountMobile" class="badge">0</span></button>
+      <div class="profile-menu" id="profileMenuMobile">
+        <button id="profileBtnMobile" class="profile-btn-mobile">
+          <img id="headerProfileAvatarMobile" src="/IMAGES/avatar.png" alt="Profile" class="profile-avatar-small" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23FF6B35%22/%3E%3Ctext x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22 font-weight=%22bold%22%3EU%3C/text%3E%3C/svg%3E'">
+        </button>
+        <div class="profile-dropdown" id="profileDropdownMobile" hidden>
+          <a href="/TEMPLATES/FrameUserProfile.html">My Profile</a>
+          <a href="/TEMPLATES/FrameClassBrowser.html">My Classes</a>
+          <a href="/TEMPLATES/FrameClassEnroll.html">Enroll</a>
+          <a href="#" id="signOutMobile">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Left sidebar (kept for wide layouts / instructor view) -->
+<aside class="global-sidebar" id="globalSidebar" role="navigation" aria-label="Main Navigation">
+  <a class="brand" href="/TEMPLATES/FrameHome.html">URS</a>
+  
+  <!-- Profile Card -->
+  <div class="sidebar-profile" id="sidebarProfile">
+    <img id="sidebarProfileAvatar" src="/IMAGES/avatar.png" alt="Profile" class="profile-avatar-large" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23FF6B35%22/%3E%3Ctext x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22 font-weight=%22bold%22%3EU%3C/text%3E%3C/svg%3E'">
+    <div class="profile-info">
+      <h3 id="sidebarProfileName">Loading...</h3>
+      <p id="sidebarProfileRole" class="profile-role">Student</p>
+    </div>
+  </div>
+  
+  <nav class="sidebar-nav">
+    <!-- Main Navigation Section -->
+    <div class="nav-section">
+      <p class="nav-section-title">Learning</p>
+      <ul>
+        <li><a href="/TEMPLATES/FrameHome.html" class="nav-link-with-icon"><span class="nav-icon">Home</span></a></li>
+        <li><a href="/TEMPLATES/FrameClassBrowser.html" class="nav-link-with-icon"><span class="nav-icon">My Classes</span></a></li>
+        <li><a href="/TEMPLATES/FrameClassEnroll.html" class="nav-link-with-icon"><span class="nav-icon">Enroll</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Activities & Community Section -->
+    <div class="nav-section">
+      <p class="nav-section-title">Engage</p>
+      <ul>
+        <li><a href="/TEMPLATES/FrameActivities.html" class="nav-link-with-icon"><span class="nav-icon">Activities</span></a></li>
+        <li><a href="/TEMPLATES/FrameQuizList.html" class="nav-link-with-icon"><span class="nav-icon">Quizzes</span></a></li>
+        <li><a href="/TEMPLATES/FrameForumBrowser.html" class="nav-link-with-icon"><span class="nav-icon">Forum</span></a></li>
+        <li><a href="/TEMPLATES/FrameGames.html" class="nav-link-with-icon"><span class="nav-icon">Game Play</span></a></li>
+        <li><a href="/TEMPLATES/FrameLeaderboard.html" class="nav-link-with-icon"><span class="nav-icon">Leaderboard</span></a></li>
+        <li><a href="/TEMPLATES/FrameResources.html" class="nav-link-with-icon"><span class="nav-icon">Resources</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Account Section -->
+    <div class="nav-section">
+      <p class="nav-section-title">Account</p>
+      <ul>
+        <li><a href="/TEMPLATES/FrameUserProfile.html" class="nav-link-with-icon"><span class="nav-icon">Profile</span></a></li>
+        <li><button type="button" id="logoutBtn" class="logout-btn"><span class="nav-icon">Logout</span></button></li>
+      </ul>
+    </div>
+  </nav>
+</aside>

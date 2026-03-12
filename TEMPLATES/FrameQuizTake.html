@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Take Quiz</title>
+  <link rel="stylesheet" href="/CSS/theme.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <link rel="stylesheet" href="/CSS/quiztake.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div id="nav-container"></div>
+
+  <main>
+    <div class="quiz-container">
+      <!-- Quiz Header -->
+      <div class="quiz-header-card">
+        <div class="quiz-header-title">
+          <h1 id="quizTitle">Loading...</h1>
+          <p id="quizDescription" class="quiz-description"></p>
+        </div>
+        <div class="quiz-header-meta">
+          <div class="meta-item">
+            <i data-lucide="clock"></i>
+            <span id="timerDisplay">--:--</span>
+          </div>
+          <div class="meta-item">
+            <i data-lucide="list"></i>
+            <span id="progressDisplay">0 / 0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Content -->
+      <div class="quiz-content">
+        <div id="questionsContainer" class="questions-container">
+          <!-- Questions will be rendered here -->
+        </div>
+      </div>
+
+      <!-- Quiz Actions -->
+      <div class="quiz-actions">
+        <button id="backBtn" class="btn btn-secondary">
+          <i data-lucide="arrow-left"></i> Back
+        </button>
+        <div id="statusMessage" class="status-message"></div>
+        <button id="submitBtn" class="btn btn-primary">
+          <i data-lucide="send"></i> Submit Quiz
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/JS/quiztake.js"></script>
+</body>
+</html>

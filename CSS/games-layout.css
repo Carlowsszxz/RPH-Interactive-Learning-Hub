@@ -1,0 +1,16 @@
+/* Main Layout - Ensure navigation doesn't block content */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 60px); /* Account for fixed nav */
+    padding-top: 20px;
+}
+
+/* Difficulty milestone positioning */
+.difficulty-milestone[data-position="40"] {
+    left: 40%;
+}
+
+.difficulty-milestone[data-position="80"] {
+    left: 80%;
+}

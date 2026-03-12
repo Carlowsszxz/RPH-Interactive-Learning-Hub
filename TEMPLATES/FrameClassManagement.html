@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Manage Classes</title>
+  <link rel="stylesheet" href="../CSS/theme.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <script type="module">
+    // Load supabase globally so navigation fragment can use it
+    import { supabase } from '../JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <script type="module" src="../JS/auth.js"></script>
+
+  <!-- Navigation Container -->
+  <div id="nav-container"></div>
+  <script type="module">
+    import { loadNavigation } from '../JS/navigation-loader.js';
+    loadNavigation('nav-container').then(() => { setupLogout(); });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+          e.preventDefault();
+          if (!window.supabase) {
+            alert('Supabase not available');
+            return;
+          }
+          try {
+            const { error } = await window.supabase.auth.signOut();
+            if (error) {
+              alert('Failed to log out');
+              return;
+            }
+            window.location.href = '/TEMPLATES/FrameLogin.html';
+          } catch (err) {
+            alert('Error logging out');
+          }
+        });
+      }
+    }
+  </script>
+
+  <div id="content" class="hidden">
+  <!-- Content starts here -->
+
+  <main class="max-w-6xl mx-auto p-6">
+    <header class="flex items-center justify-between mb-8 gap-4">
+      <div>
+        <h1 class="text-3xl font-bold">Manage Classes</h1>
+        <p class="text-gray-600">Create and manage your classes</p>
+      </div>
+      <button id="btnCreateClass" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+        + Create New Class
+      </button>
+    </header>
+
+    <!-- Create Class Modal (Hidden by default) -->
+    <div id="createClassModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded shadow-lg max-w-md w-full p-6">
+        <h2 class="text-2xl font-semibold mb-4">Create New Class</h2>
+        
+        <form id="createClassForm" class="space-y-4">
+          <div>
+            <label for="className" class="block font-semibold mb-2">Class Name</label>
+            <input id="className" type="text" placeholder="e.g., Introduction to Biology" class="w-full border rounded p-2" required>
+          </div>
+
+          <div>
+            <label for="classDesc" class="block font-semibold mb-2">Description</label>
+            <textarea id="classDesc" placeholder="Brief description of your class" class="w-full border rounded p-2 h-24"></textarea>
+          </div>
+
+          <div>
+            <label for="classCode" class="block font-semibold mb-2">Class Code (for enrollment)</label>
+            <input id="classCode" type="text" placeholder="Auto-generated if left blank" class="w-full border rounded p-2" maxlength="10">
+            <p class="text-sm text-gray-500 mt-1">Students use this code to join your class</p>
+          </div>
+
+          <div class="flex gap-3 pt-4 border-t">
+            <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+              Create Class
+            </button>
+            <button type="button" id="cancelCreateBtn" class="flex-1 px-4 py-2 border rounded hover:bg-gray-50 transition">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Classes Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div id="classesContainer">
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading your classes...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  </div> <!-- End of content div -->
+
+  <script type="module" src="../JS/classmanagement.js"></script>
+</body>
+</html>
