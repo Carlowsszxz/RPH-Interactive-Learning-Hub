@@ -1,8 +1,6 @@
 {
   "name": "rph-interactive-learning-hub",
-  "version": 2,
   "buildCommand": "echo 'Static site - no build needed'",
-  "framework": "static",
   "regions": ["auto"],
   "headers": [
     {
