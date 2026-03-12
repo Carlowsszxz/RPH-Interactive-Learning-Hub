@@ -16,8 +16,5 @@
     "supabase"
   ],
   "author": "",
-  "license": "MIT",
-  "engines": {
-    "node": "24"
-  }
+  "license": "MIT"
 }
