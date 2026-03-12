@@ -1,0 +1,23 @@
+{
+  "name": "rph-interactive-learning-hub",
+  "version": "1.0.0",
+  "description": "Interactive Learning Hub - A comprehensive educational platform with topics, resources, quizzes, and gamification",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server -p 3000 -c-1",
+    "build": "echo 'No build step needed - static site'",
+    "start": "npx http-server -p 3000"
+  },
+  "keywords": [
+    "education",
+    "learning",
+    "interactive",
+    "supabase"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  }
+}
