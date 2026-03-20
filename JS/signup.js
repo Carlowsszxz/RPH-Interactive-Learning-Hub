@@ -224,17 +224,35 @@ document.addEventListener('DOMContentLoaded', function(){
           showAlert('Registration submitted. Please check your email to confirm your account. Your profile will be created after confirmation.', 'success');
         }
 
-        // Redirect or inform success
-        showAlert('Sign up successful. Please check your email to confirm.', 'success');
+        // Show confirmation message and hide form
+        const form = document.getElementById('signupForm');
+        const confirmationMsg = document.getElementById('confirmationMessage');
+        const confirmationEmail = document.getElementById('confirmationEmail');
         
-        // Redirect based on role after a delay
+        if (form && confirmationMsg) {
+          form.style.display = 'none';
+          confirmationMsg.style.display = 'block';
+          if (confirmationEmail) {
+            confirmationEmail.textContent = payload.email;
+          }
+          
+          // Setup back to login button
+          const backBtn = document.getElementById('backToLoginBtn');
+          if (backBtn) {
+            backBtn.addEventListener('click', () => {
+              window.location.href = '/TEMPLATES/FrameLogin.html';
+            });
+          }
+        }
+        
+        // Optional: Auto-redirect after 5 seconds if user doesn't click button
         setTimeout(() => {
           if (payload.role === 'instructor') {
             window.location.href = window.location.origin + '/TEMPLATES/FrameInstructorDashboard.html';
           } else {
             window.location.href = window.location.origin + '/TEMPLATES/FrameHome.html';
           }
-        }, 2000);
+        }, 5000);
       } catch (err) {
         console.error('Unexpected signup error', err);
         signupBtn.classList.remove('loading');

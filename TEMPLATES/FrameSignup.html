@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Sign Up</title>
+  <title>Sign Up - Readings in Philippine History</title>
+  <link rel="icon" href="../IMAGES/favicon.png" type="image/png">
   <link rel="stylesheet" href="../CSS/theme.css">
   <link rel="stylesheet" href="../CSS/signup.css">
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -73,6 +74,16 @@
 
       <p class="form-foot">Already have an account? <a href="FrameLogin.html">Log in</a></p>
     </form>
+
+    <div id="confirmationMessage" class="confirmation-message" style="display: none;">
+      <div class="confirmation-icon">
+        <i data-lucide="mail-check"></i>
+      </div>
+      <h2 class="confirmation-title">Check your email</h2>
+      <p class="confirmation-text">We've sent a confirmation link to <strong id="confirmationEmail"></strong></p>
+      <p class="confirmation-subtitle">Please click the link in your email to verify your account and complete the signup process.</p>
+      <button type="button" id="backToLoginBtn" class="btn btn-secondary">Back to Login</button>
+    </div>
 
   <script type="module" src="../JS/signup.js"></script>
 </body>

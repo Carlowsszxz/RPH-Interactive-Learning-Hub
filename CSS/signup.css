@@ -453,4 +453,82 @@ body {
 	box-shadow: 0 4px 12px rgba(212, 165, 116, 0.1);
 }
 
+/* Confirmation Message */
+.confirmation-message {
+	background: var(--card);
+	border-radius: 12px;
+	padding: 40px 28px;
+	box-shadow: 0 10px 25px rgba(139, 115, 85, 0.12);
+	border: 1px solid #E8E4DE;
+	text-align: center;
+	animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.confirmation-icon {
+	width: 80px;
+	height: 80px;
+	background: rgba(107, 142, 35, 0.1);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto 24px;
+}
+
+.confirmation-icon svg {
+	width: 48px;
+	height: 48px;
+	color: #6B8E23;
+	stroke-width: 1.5;
+}
+
+.confirmation-title {
+	font-size: 24px;
+	font-weight: 700;
+	color: #8B7355;
+	margin: 0 0 12px 0;
+}
+
+.confirmation-text {
+	font-size: 16px;
+	color: #3D3D3D;
+	margin: 0 0 8px 0;
+	line-height: 1.6;
+}
+
+.confirmation-text strong {
+	color: #D4A574;
+	font-weight: 600;
+}
+
+.confirmation-subtitle {
+	font-size: 14px;
+	color: #8B7355;
+	opacity: 0.8;
+	margin: 0 0 32px 0;
+	line-height: 1.6;
+}
+
+.btn-secondary {
+	background: #E8E4DE !important;
+	color: #8B7355 !important;
+	border: 1px solid #D4A574 !important;
+}
+
+.btn-secondary:hover {
+	background: #D4A574 !important;
+	color: white !important;
+}
+
 
