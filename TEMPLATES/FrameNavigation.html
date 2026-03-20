@@ -23,11 +23,39 @@
 <header class="global-header" role="banner">
   <div class="header-inner">
     <div class="header-actions">
-      <a href="/TEMPLATES/FrameActivities.html" class="nav-link">📚 Activities</a>
-      <a href="/TEMPLATES/FrameQuizList.html" class="nav-link">✅ Quizzes</a>
-      <a href="/TEMPLATES/FrameForumBrowser.html" class="nav-link">Forum</a>
-      <a href="/TEMPLATES/FrameLeaderboard.html" class="nav-link">Leaderboard</a>
-      <a href="/TEMPLATES/FrameGames.html" class="nav-link">Game Play</a>
+      <a href="/TEMPLATES/FrameHome.html" class="nav-link">Home</a>
+      
+      <!-- Coursework Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-link dropdown-toggle">📚 Coursework <span class="dropdown-arrow">▾</span></button>
+        <div class="dropdown-menu" hidden>
+          <a href="/TEMPLATES/FrameActivities.html" class="dropdown-item">Activities</a>
+          <a href="/TEMPLATES/FrameTasks.html" class="dropdown-item">Tasks</a>
+          <a href="/TEMPLATES/FrameQuizList.html" class="dropdown-item">Quizzes</a>
+        </div>
+      </div>
+      
+      <!-- Community Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-link dropdown-toggle">🎮 Community <span class="dropdown-arrow">▾</span></button>
+        <div class="dropdown-menu" hidden>
+          <a href="/TEMPLATES/FrameForumBrowser.html" class="dropdown-item">Forum</a>
+          <a href="/TEMPLATES/FrameGames.html" class="dropdown-item">Game Play</a>
+          <a href="/TEMPLATES/FrameLeaderboard.html" class="dropdown-item">Leaderboard</a>
+        </div>
+      </div>
+      
+      <!-- Topics Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-link dropdown-toggle">📚 Topics <span class="dropdown-arrow">▾</span></button>
+        <div class="dropdown-menu" hidden>
+          <a href="/TEMPLATES/FrameFirstMassDetail.html" class="dropdown-item">First Mass</a>
+          <a href="/TEMPLATES/FrameCaviteMutinyDetail.html" class="dropdown-item">Cavite Mutiny</a>
+          <a href="/TEMPLATES/FrameRizalRetractionDetail.html" class="dropdown-item">Rizal's Retraction</a>
+          <a href="/TEMPLATES/FrameCryofRebellionDetail.html" class="dropdown-item">Cry of Rebellion</a>
+        </div>
+      </div>
+      
       <a href="/TEMPLATES/FrameResources.html" class="nav-link">📁 Resources</a>
 
       <button id="notifBtn" class="icon-btn" aria-label="Notifications">🔔<span id="notifCount" class="badge">0</span></button>
@@ -102,13 +130,39 @@
 
     <!-- Activities & Community Section -->
     <div class="nav-section">
-      <p class="nav-section-title">Engage</p>
+      <p class="nav-section-title">Coursework</p>
       <ul>
         <li><a href="/TEMPLATES/FrameActivities.html" class="nav-link-with-icon"><span class="nav-icon">Activities</span></a></li>
+        <li><a href="/TEMPLATES/FrameTasks.html" class="nav-link-with-icon"><span class="nav-icon">Tasks</span></a></li>
         <li><a href="/TEMPLATES/FrameQuizList.html" class="nav-link-with-icon"><span class="nav-icon">Quizzes</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Community Section -->
+    <div class="nav-section">
+      <p class="nav-section-title">Community</p>
+      <ul>
         <li><a href="/TEMPLATES/FrameForumBrowser.html" class="nav-link-with-icon"><span class="nav-icon">Forum</span></a></li>
         <li><a href="/TEMPLATES/FrameGames.html" class="nav-link-with-icon"><span class="nav-icon">Game Play</span></a></li>
         <li><a href="/TEMPLATES/FrameLeaderboard.html" class="nav-link-with-icon"><span class="nav-icon">Leaderboard</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Topics Section -->
+    <div class="nav-section">
+      <p class="nav-section-title">Topics</p>
+      <ul>
+        <li><a href="/TEMPLATES/FrameFirstMassDetail.html" class="nav-link-with-icon"><span class="nav-icon">First Mass</span></a></li>
+        <li><a href="/TEMPLATES/FrameCaviteMutinyDetail.html" class="nav-link-with-icon"><span class="nav-icon">Cavite Mutiny</span></a></li>
+        <li><a href="/TEMPLATES/FrameRizalRetractionDetail.html" class="nav-link-with-icon"><span class="nav-icon">Rizal's Retraction</span></a></li>
+        <li><a href="/TEMPLATES/FrameCryofRebellionDetail.html" class="nav-link-with-icon"><span class="nav-icon">Cry of Rebellion</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Resources Section -->
+    <div class="nav-section">
+      <p class="nav-section-title">Resources</p>
+      <ul>
         <li><a href="/TEMPLATES/FrameResources.html" class="nav-link-with-icon"><span class="nav-icon">Resources</span></a></li>
       </ul>
     </div>

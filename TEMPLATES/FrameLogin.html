@@ -3,12 +3,284 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Login</title>
+	<title>Login - Readings in Philippine History</title>
+	<link rel="icon" href="../IMAGES/favicon.png" type="image/png">
 	<link rel="stylesheet" href="../CSS/theme.css">
 	<link rel="stylesheet" href="../CSS/login.css">
 	<script src="https://unpkg.com/lucide@latest"></script>
+	<style>
+		body {
+			display: grid !important;
+			grid-template-columns: 1fr 1fr;
+			align-items: stretch !important;
+			justify-content: stretch !important;
+			min-height: 100vh;
+		}
+
+		.hero-section {
+			background: linear-gradient(135deg, #8B7355 0%, #6B5344 100%);
+			color: white;
+			padding: 60px 40px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-start;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.hero-section::before {
+			content: '';
+			position: absolute;
+			top: -50%;
+			right: -50%;
+			width: 500px;
+			height: 500px;
+			background: radial-gradient(circle, rgba(212, 165, 116, 0.15) 0%, transparent 70%);
+			border-radius: 50%;
+			pointer-events: none;
+		}
+
+		.hero-content {
+			position: relative;
+			z-index: 1;
+			max-width: 400px;
+		}
+
+		.hero-logo {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 24px;
+			border-radius: 12px;
+			overflow: hidden;
+			background: rgba(212, 165, 116, 0.15);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.hero-logo img {
+			width: 85%;
+			height: 85%;
+			object-fit: contain;
+		}
+
+		.hero-icon {
+			width: 64px;
+			height: 64px;
+			background: rgba(212, 165, 116, 0.2);
+			border-radius: 12px;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 24px;
+		}
+
+		.hero-icon svg {
+			width: 40px;
+			height: 40px;
+			color: #D4A574;
+			stroke-width: 1.5;
+		}
+
+		.hero-title {
+			font-size: 36px;
+			font-weight: 800;
+			margin: 0 0 16px 0;
+			line-height: 1.2;
+			color: white;
+		}
+
+		.hero-subtitle {
+			font-size: 16px;
+			margin: 0 0 32px 0;
+			opacity: 0.9;
+			line-height: 1.6;
+		}
+
+		.hero-features {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+			margin-top: 40px;
+		}
+
+		.hero-feature {
+			display: flex;
+			gap: 12px;
+			align-items: flex-start;
+		}
+
+		.hero-feature svg {
+			width: 20px;
+			height: 20px;
+			flex-shrink: 0;
+			margin-top: 2px;
+			color: #D4A574;
+		}
+
+		.hero-feature-text {
+			font-size: 14px;
+			opacity: 0.95;
+		}
+
+		.login-container {
+			width: 100%;
+			max-width: 100%;
+			padding: 60px 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: var(--bg);
+		}
+
+		.login-form {
+			width: 100%;
+			max-width: 380px;
+			background: linear-gradient(135deg, #6B5344 0%, #5A453A 100%) !important;
+			color: white;
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+		}
+
+		.login-form .login-title {
+			color: white !important;
+		}
+
+		.login-form input {
+			background: rgba(255, 255, 255, 0.95) !important;
+			color: #3D3D3D !important;
+			border-color: rgba(255, 255, 255, 0.3) !important;
+		}
+
+		.login-form input::placeholder {
+			color: #8B7355 !important;
+		}
+
+		.login-form label {
+			color: white !important;
+		}
+
+		.login-form .remember {
+			color: white !important;
+			opacity: 0.95;
+		}
+
+		.login-form .form-foot {
+			color: rgba(255, 255, 255, 0.9) !important;
+		}
+
+		.login-form .form-foot a {
+			color: #D4A574 !important;
+		}
+
+		.login-form .btn {
+			background: #D4A574 !important;
+			color: #6B5344 !important;
+			border: none !important;
+			font-weight: 600;
+		}
+
+		.login-form .btn:hover {
+			background: #E8C5A0 !important;
+		}
+
+		.login-form .oauth-btn {
+			background: rgba(255, 255, 255, 0.15) !important;
+			color: white !important;
+			border: 1px solid rgba(255, 255, 255, 0.3) !important;
+		}
+
+		.login-form .oauth-btn:hover {
+			background: rgba(255, 255, 255, 0.25) !important;
+		}
+
+		.login-form .password-toggle {
+			color: #8B7355 !important;
+		}
+
+		/* Responsive */
+		@media (max-width: 1024px) {
+			body {
+				grid-template-columns: 1fr !important;
+			}
+
+			.hero-section {
+				min-height: 300px;
+				padding: 40px 30px;
+			}
+
+			.hero-title {
+				font-size: 28px;
+			}
+
+			.login-container {
+				padding: 40px 20px;
+			}
+		}
+
+		@media (max-width: 640px) {
+			body {
+				grid-template-columns: 1fr !important;
+			}
+
+			.hero-section {
+				min-height: 250px;
+				padding: 30px 20px;
+			}
+
+			.hero-title {
+				font-size: 24px;
+			}
+
+			.hero-subtitle {
+				font-size: 14px;
+			}
+
+			.hero-features {
+				margin-top: 24px;
+			}
+
+			.login-container {
+				padding: 30px 20px;
+			}
+
+			.login-form {
+				max-width: 100%;
+			}
+		}
+	</style>
 </head>
 <body>
+	<div class="hero-section">
+		<div class="hero-content">
+			<div class="hero-logo">
+				<img src="../IMAGES/favicon.png" alt="Logo" />
+			</div>
+			
+			<h1 class="hero-title">Explore Philippine History</h1>
+			<p class="hero-subtitle">Master the pivotal moments that shaped our nation. Learn, engage, and grow with interactive lessons and challenges.</p>
+			
+			<div class="hero-features">
+				<div class="hero-feature">
+					<i data-lucide="zap"></i>
+					<span class="hero-feature-text">Interactive lessons and gamified learning</span>
+				</div>
+				<div class="hero-feature">
+					<i data-lucide="users"></i>
+					<span class="hero-feature-text">Compete and collaborate with peers</span>
+				</div>
+				<div class="hero-feature">
+					<i data-lucide="award"></i>
+					<span class="hero-feature-text">Track progress and earn achievements</span>
+				</div>
+				<div class="hero-feature">
+					<i data-lucide="book"></i>
+					<span class="hero-feature-text">Comprehensive resources at your fingertips</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="login-container">
 		<form id="loginForm" class="login-form" action="#" method="post" novalidate>
 			<h1 class="login-title">Sign in</h1>

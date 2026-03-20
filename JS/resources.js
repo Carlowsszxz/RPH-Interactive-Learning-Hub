@@ -1,11 +1,13 @@
 import { supabase } from './supabase-auth.js';
 
 const classSelect = document.getElementById('classSelect');
+const topicSelect = document.getElementById('topicSelect');
 const resourcesGrid = document.getElementById('resourcesGrid');
 const emptyState = document.getElementById('emptyState');
 const filterButtons = document.querySelectorAll('.filter-btn');
 
 let userEnrolledClasses = [];
+let classTopics = [];
 let allResources = [];
 let currentFilter = 'all';
 
@@ -50,9 +52,57 @@ async function loadEnrolledClasses() {
   }
 }
 
-// Load resources for selected class
+// Load topics for selected class
+async function loadTopics() {
+  const selectedClassId = classSelect.value;
+  
+  if (!selectedClassId) {
+    topicSelect.innerHTML = '<option value="">-- Choose a topic --</option>';
+    topicSelect.disabled = true;
+    classTopics = [];
+    return;
+  }
+  
+  try {
+    const { data: topics, error } = await supabase
+      .from('topics')
+      .select('*')
+      .eq('class_id', selectedClassId)
+      .order('display_order', { ascending: true });
+    
+    if (error) {
+      console.error('Error loading topics:', error);
+      return;
+    }
+    
+    classTopics = topics || [];
+    
+    if (classTopics.length === 0) {
+      topicSelect.innerHTML = '<option value="">No topics available</option>';
+      topicSelect.disabled = true;
+    } else {
+      topicSelect.innerHTML = '<option value="">-- All topics --</option>';
+      classTopics.forEach(topic => {
+        const option = document.createElement('option');
+        option.value = topic.id;
+        option.textContent = topic.title;
+        topicSelect.appendChild(option);
+      });
+      topicSelect.disabled = false;
+    }
+    
+    // Reset topic selection when class changes
+    topicSelect.value = '';
+    loadResources();
+  } catch (err) {
+    console.error('Error:', err);
+  }
+}
+
+// Load resources for selected class and topic
 async function loadResources() {
   const selectedClassId = classSelect.value;
+  const selectedTopicId = topicSelect.value;
   
   if (!selectedClassId) {
     resourcesGrid.innerHTML = '';
@@ -61,11 +111,16 @@ async function loadResources() {
   }
   
   try {
-    const { data: resources, error } = await supabase
+    let query = supabase
       .from('class_resources')
       .select('*')
-      .eq('class_id', selectedClassId)
-      .order('display_order', { ascending: false });
+      .eq('class_id', selectedClassId);
+    
+    if (selectedTopicId) {
+      query = query.eq('topic_id', selectedTopicId);
+    }
+    
+    const { data: resources, error } = await query.order('display_order', { ascending: false });
     
     if (error) {
       console.error('Error loading resources:', error);
@@ -103,7 +158,6 @@ function renderResources() {
           ${isImage ? `<img src="${resource.resource_url}" alt="${escapeHTML(resource.title)}" onerror="this.style.display='none'">` : `<i data-lucide="file"></i>`}
         </div>
         <div class="resource-card-content">
-          <div class="resource-card-title">${escapeHTML(resource.title)}</div>
           ${resource.description ? `<div class="resource-card-desc">${escapeHTML(resource.description)}</div>` : ''}
           <div class="resource-card-meta" style="margin-top: auto;">
             <span><i data-lucide="calendar" style="width: 12px; height: 12px;"></i> ${uploadDate}</span>
@@ -144,7 +198,8 @@ function escapeHTML(s) {
 }
 
 // Event listeners
-classSelect.addEventListener('change', loadResources);
+classSelect.addEventListener('change', loadTopics);
+topicSelect.addEventListener('change', loadResources);
 
 filterButtons.forEach(btn => {
   btn.addEventListener('click', (e) => {

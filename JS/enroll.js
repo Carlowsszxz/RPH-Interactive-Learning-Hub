@@ -8,6 +8,8 @@ async function loadClasses(){
     const { data, error } = await supabase.from('classes').select('id,class_name,class_code,description').order('class_name');
     if (error) throw error;
     data.forEach(c=>{
+      // Skip the General class (forum only)
+      if (c.class_code === 'GENERAL') return;
       const o = document.createElement('option'); o.value = c.id; o.textContent = `${c.class_name} — ${c.class_code}`; o.dataset.desc = c.description || '';
       sel.appendChild(o);
     });

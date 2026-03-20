@@ -43,6 +43,7 @@ export async function loadNavigation(containerId = 'nav-container') {
       await loadStudentNavigation(containerId);
     }
     setupMobileMenuToggle();
+    setupDropdowns();
   } catch (err) {
     console.error('Error loading navigation:', err);
     // Default to student nav on error
@@ -157,6 +158,96 @@ function setupProfileMenuToggle() {
     }
   });
 }
+
+/**
+ * Setup header navigation dropdowns (Coursework, Community)
+ */
+function setupDropdowns() {
+  console.log('📍 setupDropdowns called');
+  
+  // Wait a tick to ensure DOM is ready
+  setTimeout(() => {
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+    console.log('📍 Found dropdowns:', dropdowns.length);
+    
+    if (dropdowns.length === 0) {
+      console.warn('⚠️ No .nav-dropdown elements found. Checking DOM...');
+      console.log('Header actions:', document.querySelector('.header-actions'));
+      return;
+    }
+    
+    dropdowns.forEach((dropdown, idx) => {
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      const menu = dropdown.querySelector('.dropdown-menu');
+      
+      console.log(`📍 Dropdown ${idx}:`, {toggle: !!toggle, menu: !!menu});
+      
+      if (!toggle || !menu) {
+        console.warn(`⚠️ Dropdown ${idx} missing toggle or menu`);
+        return;
+      }
+      
+      // Remove any existing listeners by cloning
+      const newToggle = toggle.cloneNode(true);
+      toggle.parentNode.replaceChild(newToggle, toggle);
+      
+      // Add click listener
+      newToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        console.log('🎯 Dropdown clicked, current hidden state:', menu.hidden);
+        
+        // Close other dropdowns
+        document.querySelectorAll('.nav-dropdown').forEach(d => {
+          const m = d.querySelector('.dropdown-menu');
+          const t = d.querySelector('.dropdown-toggle');
+          if (m && m !== menu) {
+            m.hidden = true;
+            console.log('🔄 Closing other menu');
+          }
+          if (t && t !== newToggle) {
+            const arrow = t.querySelector('.dropdown-arrow');
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+          }
+        });
+        
+        // Toggle current dropdown
+        const arrow = newToggle.querySelector('.dropdown-arrow');
+        if (menu.hidden) {
+          menu.hidden = false;
+          if (arrow) {
+            arrow.style.transform = 'rotate(180deg)';
+            console.log('👇 Dropdown opened');
+          }
+        } else {
+          menu.hidden = true;
+          if (arrow) {
+            arrow.style.transform = 'rotate(0deg)';
+            console.log('👆 Dropdown closed');
+          }
+        }
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-dropdown')) {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+          if (!menu.hidden) {
+            menu.hidden = true;
+            const arrow = menu.parentElement.querySelector('.dropdown-arrow');
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+            console.log('❌ Closed dropdown on outside click');
+          }
+        });
+      }
+    });
+    
+    console.log('✅ Dropdowns initialized successfully');
+  }, 100); // Small delay to ensure DOM is ready
+}
+
 export function clearUserRole() {
   // Clear ALL sessionStorage to ensure clean state on logout
   sessionStorage.clear();

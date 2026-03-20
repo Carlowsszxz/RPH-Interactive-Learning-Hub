@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cavite Mutiny - URS</title>
+    <link rel="stylesheet" href="/CSS/theme.css">
+    <link rel="stylesheet" href="/CSS/navigation.css">
+      <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+
+    <style>
+        body {
+            background: var(--bg-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        main.main-content {
+            padding: 2rem 1rem;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+        }
+
+        .topic-container {
+            min-width: 0;
+        }
+
+        .topic-header {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 5px solid #FF6B35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .topic-subtitle {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .topic-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+            color: #5C3422;
+            font-weight: 500;
+        }
+
+        .educational-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .educational-content h3 {
+            margin: 0 0 2rem 0;
+            font-size: 1.8rem;
+            color: #5C3422;
+            font-weight: 700;
+        }
+
+        .content-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .content-section h4 {
+            margin: 0 0 1rem 0;
+            font-size: 1.35rem;
+            color: #5C3422;
+            font-weight: 600;
+            border-bottom: 2px solid #F4A460;
+            padding-bottom: 0.75rem;
+        }
+
+        .content-section p {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            text-align: justify;
+        }
+
+        .content-section ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            margin: 0.5rem 0;
+        }
+
+        .key-term {
+            font-weight: 600;
+            color: #FF6B35;
+        }
+
+        .emphasis {
+            font-style: italic;
+            color: #5C3422;
+            font-weight: 500;
+        }
+
+        .highlight {
+            background: #FFF3E0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .fact-callout {
+            background: #FAF3F0;
+            border-left: 4px solid #FF6B35;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .fact-callout strong {
+            color: #5C3422;
+        }
+
+        .fact-callout.importance-high {
+            background: #FFF8F0;
+            border-left-color: #D84315;
+        }
+
+        .fact-callout.conclusion-box {
+            background: #F0F8FF;
+            border-left-color: #1976D2;
+        }
+
+        blockquote {
+            font-style: italic;
+            border-left: 4px solid #FF6B35;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            background: #FAFAFA;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        blockquote footer {
+            font-style: normal;
+            text-align: right;
+            margin-top: 0.75rem;
+            color: #5C3422;
+            font-weight: 600;
+        }
+
+        .perspective-section {
+            background: #F9F5F2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid #EDD5C5;
+        }
+
+        .perspective-label {
+            display: inline-block;
+            background: #5C3422;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .spanish-perspective .perspective-label {
+            background: #8B5A3C;
+        }
+
+        .filipino-perspective .perspective-label {
+            background: #6B7A5C;
+        }
+
+        .topic-image {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .topic-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #E0E0E0;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .topic-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .topic-image figcaption {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .right-sidebar {
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .widget-header {
+            background: #FAF3F0;
+            padding: 1.25rem;
+            border-bottom: 1px solid #EDD5C5;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .widget-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #5C3422;
+            font-weight: 600;
+        }
+
+        .widget-content {
+            padding: 1.25rem;
+        }
+
+        .idea-card {
+            padding: 1rem;
+            background: #FAFAFA;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid #FF6B35;
+        }
+
+        .idea-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .idea-card strong {
+            color: #5C3422;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .idea-card p {
+            margin: 0;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .related-topic {
+            margin-bottom: 0.75rem;
+        }
+
+        .related-topic a {
+            color: #FF6B35;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .related-topic a:hover {
+            text-decoration: underline;
+            color: #D84315;
+        }
+
+        /* Image Zoom Modal - Professional Lightbox */
+        .image-zoom-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleInImage {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .image-zoom-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .zoom-modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: scaleInImage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .zoom-modal-image {
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            pointer-events: auto;
+            cursor: grab;
+            transition: transform 0.1s ease;
+            transform-origin: center center;
+        }
+
+        .zoom-modal-image.dragging {
+            cursor: grabbing;
+        }
+
+        .zoom-modal-image-container {
+            width: 100%;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Zoom Controls */
+        .zoom-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 2002;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .zoom-controls.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .zoom-percentage {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .zoom-gauge-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zoom-gauge {
+            width: 150px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background 0.2s ease;
+        }
+
+        .zoom-gauge:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .zoom-gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35, #FFA566);
+            border-radius: 3px;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 8px rgba(255, 107, 53, 0.5);
+        }
+
+        .zoom-gauge-handle {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+            border: 2px solid #FF6B35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s ease;
+            z-index: 10;
+        }
+
+        .zoom-gauge-handle:active {
+            cursor: grabbing;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .zoom-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .zoom-modal-caption {
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 100%;
+            font-style: italic;
+            line-height: 1.5;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Close Button */
+        .zoom-close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: white;
+            backdrop-filter: blur(8px);
+        }
+
+        .zoom-close-btn:hover {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Navigation Buttons */
+        .zoom-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+            z-index: 2001;
+        }
+
+        .zoom-nav-btn:hover {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .zoom-nav-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .zoom-prev-btn {
+            left: 10px;
+        }
+
+        .zoom-next-btn {
+            right: 10px;
+        }
+
+        /* Image Counter */
+        .zoom-counter {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .right-sidebar {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .widget {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main.main-content {
+                padding: 1rem;
+            }
+
+            .topic-header {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .topic-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .educational-content {
+                padding: 1.5rem;
+            }
+
+            .topic-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .right-sidebar {
+                display: block;
+            }
+
+            .widget {
+                margin-bottom: 1.5rem;
+            }
+
+            .zoom-close-btn {
+                top: 10px;
+                right: 10px;
+                background: rgba(255, 255, 255, 0.2);
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+
+            .zoom-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .zoom-prev-btn {
+                left: 10px;
+            }
+
+            .zoom-next-btn {
+                right: 10px;
+            }
+
+            .zoom-modal-image {
+                max-height: 70vh;
+            }
+
+            .zoom-modal-caption {
+                margin-top: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .zoom-counter {
+                bottom: -40px;
+                font-size: 0.8rem;
+            }
+
+            .zoom-controls {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                gap: 10px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+            }
+
+            .zoom-controls.visible {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .zoom-gauge {
+                width: 100px;
+            }
+
+            .zoom-percentage {
+                font-size: 0.85rem;
+                min-width: 40px;
+            }
+        }
+    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="has-global-sidebar">
+    <!-- Navigation -->
+    <div id="nav-container"></div>
+
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Left Content Area -->
+            <div class="topic-container">
+                <!-- Header -->
+                <header class="topic-header">
+                    <div class="topic-header-content">
+                        <h1>What Happened in the Cavite Mutiny?</h1>
+                        <p class="topic-subtitle">A historical examination of perspectives during 1872</p>
+                        <div class="topic-meta">
+                            <span class="topic-date">📅 February 17, 1872</span>
+                            <span class="topic-location">📍 Cavite Arsenal</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Educational Content Section -->
+                <div class="educational-content">
+                    <h3>The Year 1872: A Historic Turning Point</h3>
+                    
+                    <section class="content-section">
+                        <h4>Historical Context</h4>
+                        <div class="fact-callout">
+                            <strong>Key Historical Event:</strong> <span class="highlight">February 17, 1872</span> — The execution of <span class="key-term">GOMBURZA</span>
+                        </div>
+                        <p>The year <span class="highlight">1872</span> is a historic year marked by two significant events: the <span class="key-term">Cavite Mutiny</span> and the martyrdom of the three priests <strong>Mariano Gómez</strong>, <strong>José Burgos</strong>, and <strong>Jacinto Zamora</strong>, later immortalized as <span class="key-term">GOMBURZA</span>. These events are important milestones in Philippine history and have caused ripples throughout time, directly influencing the decisive events of the <span class="key-term">Philippine Revolution</span> toward the end of the nineteenth century.</p>
+                        <p>While their historical significance is unquestioned, what made this year controversial were the <span class="emphasis">different sides to the story</span>—a battle of perspectives supported by primary sources. In this case study, we zoom in on the events of the <span class="key-term">Cavite Mutiny</span>, a major factor in the awakening of nationalism among Filipinos during this period.</p>
+                    </section>
+
+                    <!-- Images Section -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cavite Mutiny/14.png" alt="Cavite Mutiny Historical Document 1">
+                        <figcaption>Cavite Mutiny Historical Document - Image 1</figcaption>
+                    </figure>
+
+                    <section class="content-section perspective-section spanish-perspective">
+                        <div class="perspective-label">SPANISH PERSPECTIVE</div>
+                        <h4>Spanish Accounts of the Cavite Mutiny</h4>
+                        <p>The documentation of Spanish historian <strong>José Montero y Vidal</strong> centered on the interpretation that the <span class="key-term">Cavite Mutiny</span> was an <span class="emphasis">attempt to overthrow</span> the Spanish government in the Philippines. Although regarded as a historian, his account of the mutiny was criticized as <strong>woefully biased</strong> and rabid for a scholar.</p>
+                        <p>Another account, taken from the official report of <strong>Governor-General Rafael Izquierdo</strong>, implicated the <span class="emphasis">native clergy</span>, who were then active in the movement toward the <span class="key-term">secularization</span> of parishes. These two Spanish accounts <strong>corroborated each other</strong> in presenting the mutiny as part of a <span class="emphasis">broader revolutionary conspiracy</span>.</p>
+                    </section>
+
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cavite Mutiny/15.png" alt="Cavite Mutiny Historical Document 2">
+                        <figcaption>Cavite Mutiny Historical Document - Image 2</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Primary Source: Montero y Vidal's Account</h4>
+                        <blockquote>
+                            <p>"The abolition of privileges enjoyed by the laborers of the <span class="key-term">Cavite arsenal</span> of exemption from the tribute was, according to some, the cause of the insurrection. There were, however, <span class="emphasis">other causes</span>. Spanish revolution which overthrew a secular throne; the propaganda carried on by an unbridled press against monarchical principles... were the <span class="emphasis">determining circumstances</span> which gave rise, among certain Filipinos, to the idea of attaining their independence."</p>
+                            <footer>— José Montero y Vidal, <em>Spanish Version of the Cavite Mutiny of 1872</em></footer>
+                        </blockquote>
+                    </section>
+
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cavite Mutiny/16.png" alt="Cavite Mutiny Historical Document 3">
+                        <figcaption>Cavite Mutiny Historical Document - Image 3</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Primary Source: Governor-General Izquierdo's Report</h4>
+                        <blockquote>
+                            <p>"It seems definite that the insurrection was <span class="emphasis">motivated and prepared by the native clergy</span>, by the mestizos and native lawyers, and by those known here as <strong>abogadillos</strong>. The instigators... protested against the injustice of the government in not paying the provinces for their <span class="key-term">tobacco crop</span>... They encouraged the rebellion by protesting what they called the injustice of having obliged the workers in the <span class="key-term">Cavite arsenal</span> to pay tribute."</p>
+                            <footer>— Rafael Izquierdo, <em>Official Report on the Cavite Mutiny</em></footer>
+                        </blockquote>
+                    </section>
+
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cavite Mutiny/17.png" alt="Cavite Mutiny Historical Document 4">
+                        <figcaption>Cavite Mutiny Historical Document - Image 4</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Analysis of the Spanish Accounts</h4>
+                        <p>The Spanish accounts underscore the reason for the alleged "revolution": the <span class="emphasis">abolition of privileges</span> enjoyed by the workers of the <span class="key-term">Cavite arsenal</span>, such as exemption from the payment of <span class="key-term">tribute</span> and from <span class="key-term">polos y servicios</span> (forced labor). They also identified <span class="emphasis">other causes</span> which made the issue appear more serious, including the involvement of the <span class="emphasis">native clergy</span>, who—out of spite against the <span class="emphasis">Spanish friars</span>—were said to have conspired and supported the rebels.</p>
+                        <p>In the Spanish narrative, the events of <span class="highlight">1872</span> were <span class="emphasis">premeditated and part of a large conspiracy</span> involving educated Filipinos, mestizos, lawyers, and residents of Manila and Cavite. They allegedly planned to <strong>liquidate high-ranking Spanish officers</strong> and kill the friars. The supposed signal among the conspirators was the firing of <span class="key-term">rockets from Intramuros</span>.</p>
+                    </section>
+
+                    <section class="content-section perspective-section filipino-perspective">
+                        <div class="perspective-label">FILIPINO & FOREIGN PERSPECTIVE</div>
+                        <h4>Differing Accounts: Filipino and Foreign Perspectives</h4>
+                        <p>Two other primary accounts <span class="emphasis">counter</span> the versions presented by Izquierdo and Montero. <strong>Trinidad H. Pardo de Tavera</strong>, a Filipino perspective, argued that the uprising was <span class="emphasis">merely a mutiny</span> by Filipino soldiers and laborers arising from dissatisfaction with <span class="emphasis">Izquierdo's draconian policies</span>, including the abolition of privileges and the prohibition of establishing a <span class="key-term">school of arts and trades</span> for Filipinos.</p>
+                        <p>According to Pardo de Tavera, up to that time there had been <span class="emphasis">no intention of secession from Spain</span>, and the only aspiration of the people was to secure the <span class="emphasis">material and educational advancement</span> of the country. Tavera argued that the <span class="emphasis">Spanish friars and Izquierdo blew the mutiny out of proportion</span> to address other issues, particularly the impending plans of the Spanish central government to deprive friars of power in <span class="key-term">civil governance and education</span>.</p>
+                    </section>
+
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cavite Mutiny/18.png" alt="Cavite Mutiny Historical Document 5">
+                        <figcaption>Cavite Mutiny Historical Document - Image 5</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>The Martyrdom of GOMBURZA and Its Legacy</h4>
+                        <div class="fact-callout importance-high">
+                            <strong>The Three Martyrs:</strong> <span class="highlight">GOMBURZA</span> — Fathers Mariano Gómez, José Burgos & Jacinto Zamora
+                        </div>
+                        <p><span class="key-term">GOMBURZA</span> refers to Fathers <strong>Mariano Gómez</strong>, <strong>José Burgos</strong>, and <strong>Jacinto Zamora</strong>, who were accused as the <span class="emphasis">masterminds of the Cavite Mutiny</span>. They were prominent Filipino priests charged with <span class="key-term">treason and sedition</span>. It is believed that the Spanish clergy linked them to the mutiny to <span class="emphasis">suppress the secularization movement</span>.</p>
+                        <p>They were publicly executed by <span class="key-term">garrote</span> on <span class="highlight">February 17, 1872</span>, a scene reportedly witnessed by a young <strong>José Rizal</strong>. Their martyrdom is widely regarded as the <span class="emphasis">dawn of Philippine nationalism</span>. Rizal later dedicated <span class="key-term">El Filibusterismo</span> to their memory, affirming the widespread belief in their innocence and the injustice of their trial.</p>
+                    </section>
+
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cavite Mutiny/19.png" alt="Cavite Mutiny Historical Document 6">
+                        <figcaption>Cavite Mutiny Historical Document - Image 6</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Conclusion: Understanding Competing Narratives</h4>
+                        <div class="fact-callout conclusion-box">
+                            <strong>Key Takeaway:</strong> The same events told through <span class="emphasis">different perspectives</span> create fundamentally different historical narratives.
+                        </div>
+                        <p>The <span class="key-term">Cavite Mutiny</span> of <span class="highlight">1872</span> demonstrates how historical events are shaped by <span class="emphasis">perspective, power, and purpose</span>. <span class="emphasis">Spanish officials framed</span> the mutiny as a <span class="key-term">revolutionary conspiracy</span>, while <span class="emphasis">Filipino and foreign observers</span> interpreted it as an <span class="emphasis">exaggerated labor dispute</span> exploited for political and ecclesiastical ends. Understanding these <span class="emphasis">competing narratives</span> highlights the importance of <strong>critical analysis of primary sources</strong> and underscores the mutiny's role in the emergence of <span class="key-term">Philippine nationalism</span>.</p>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <aside class="right-sidebar">
+                <!-- Key Facts Section -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <i data-lucide="lightbulb" style="width: 20px; height: 20px; color: #FF6B35;"></i>
+                        <h3>Key Facts</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        <div class="idea-card">
+                            <strong>📅 Date</strong>
+                            <p>February 17, 1872</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>📍 Location</strong>
+                            <p>Cavite Arsenal</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>👥 Key Figures</strong>
+                            <p>GOMBURZA, Gov. General Izquierdo</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>⚖️ The Accused</strong>
+                            <p>Mariano Gómez, José Burgos, Jacinto Zamora</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>📊 Perspectives</strong>
+                            <p>Spanish vs. Filipino Accounts</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Topics Section -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <i data-lucide="bookmark" style="width: 20px; height: 20px; color: #FF6B35;"></i>
+                        <h3>Related Topics</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameFirstMassDetail.html">The First Mass</a>
+                        </div>
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameCryofRebellionDetail.html">Cry of Rebellion</a>
+                        </div>
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameRizalRetractionDetail.html">Rizal's Retraction</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Image Zoom Modal -->
+    <div class="image-zoom-modal" id="imageZoomModal">
+        <div class="zoom-modal-content">
+            <button class="zoom-close-btn" id="zoomCloseBtn" aria-label="Close image">✕</button>
+            <button class="zoom-nav-btn zoom-prev-btn" id="zoomPrevBtn" aria-label="Previous image">❮</button>
+            <div class="zoom-modal-image-container" id="zoomImageContainer">
+                <img class="zoom-modal-image" id="zoomModalImage" src="" alt="" draggable="false">
+            </div>
+            <button class="zoom-nav-btn zoom-next-btn" id="zoomNextBtn" aria-label="Next image">❯</button>
+            <div class="zoom-controls">
+                <span class="zoom-label">Zoom</span>
+                <div class="zoom-gauge-container">
+                    <div class="zoom-gauge" id="zoomGauge">
+                        <div class="zoom-gauge-fill" id="zoomGaugeFill"></div>
+                        <div class="zoom-gauge-handle" id="zoomGaugeHandle"></div>
+                    </div>
+                </div>
+                <span class="zoom-percentage" id="zoomPercentage">100%</span>
+            </div>
+            <div class="zoom-counter" id="zoomCounter"></div>
+        </div>
+    </div>
+
+    <!-- Navigation & Auth Scripts -->
+    <script type="module">
+        import { loadNavigation } from '/JS/navigation-loader.js';
+        loadNavigation('nav-container');
+    </script>
+
+    <script>
+        // Professional Lightbox Implementation with Zoom Controls
+        const imageZoomModal = document.getElementById('imageZoomModal');
+        const zoomModalImage = document.getElementById('zoomModalImage');
+        const zoomImageContainer = document.getElementById('zoomImageContainer');
+        const zoomCloseBtn = document.getElementById('zoomCloseBtn');
+        const zoomPrevBtn = document.getElementById('zoomPrevBtn');
+        const zoomNextBtn = document.getElementById('zoomNextBtn');
+        const zoomCounter = document.getElementById('zoomCounter');
+        const zoomGauge = document.getElementById('zoomGauge');
+        const zoomGaugeFill = document.getElementById('zoomGaugeFill');
+        const zoomGaugeHandle = document.getElementById('zoomGaugeHandle');
+        const zoomPercentage = document.getElementById('zoomPercentage');
+        const topicImages = Array.from(document.querySelectorAll('.topic-image img'));
+
+        let currentImageIndex = 0;
+        let currentZoom = 100;
+        const minZoom = 100;
+        const maxZoom = 300;
+        let isDraggingGauge = false;
+        let isDraggingImage = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+        let hideControlsTimeout;
+
+        const updateZoomGauge = () => {
+            const zoomPercent = ((currentZoom - minZoom) / (maxZoom - minZoom)) * 100;
+            zoomGaugeFill.style.width = zoomPercent + '%';
+            zoomGaugeHandle.style.left = zoomPercent + '%';
+            zoomPercentage.textContent = currentZoom + '%';
+            
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (currentZoom > 100) {
+                zoomControls.classList.add('visible');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            } else {
+                zoomControls.classList.remove('visible');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            }
+            
+            const scale = currentZoom / 100;
+            zoomModalImage.style.transform = `scale(${scale}) translate(${dragOffsetX}px, ${dragOffsetY}px)`;
+        };
+
+        const setZoom = (percent) => {
+            currentZoom = Math.max(minZoom, Math.min(maxZoom, percent));
+            updateZoomGauge();
+        };
+
+        const openZoomModal = (index) => {
+            currentImageIndex = index;
+            currentZoom = 100;
+            dragOffsetX = 0;
+            dragOffsetY = 0;
+            
+            const img = topicImages[index];
+            zoomModalImage.src = img.src;
+            zoomModalImage.alt = img.alt;
+            
+            zoomCounter.textContent = `${index + 1} / ${topicImages.length}`;
+            
+            imageZoomModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            updateZoomGauge();
+            updateNavButtonVisibility();
+        };
+
+        const closeZoomModal = () => {
+            imageZoomModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        const updateNavButtonVisibility = () => {
+            zoomPrevBtn.style.opacity = currentImageIndex === 0 ? '0.3' : '1';
+            zoomPrevBtn.disabled = currentImageIndex === 0;
+            zoomNextBtn.style.opacity = currentImageIndex === topicImages.length - 1 ? '0.3' : '1';
+            zoomNextBtn.disabled = currentImageIndex === topicImages.length - 1;
+        };
+
+        const showNextImage = () => {
+            if (currentImageIndex < topicImages.length - 1) {
+                openZoomModal(currentImageIndex + 1);
+            }
+        };
+
+        const showPrevImage = () => {
+            if (currentImageIndex > 0) {
+                openZoomModal(currentImageIndex - 1);
+            }
+        };
+
+        topicImages.forEach((img, index) => {
+            img.addEventListener('click', () => openZoomModal(index));
+        });
+
+        zoomCloseBtn.addEventListener('click', closeZoomModal);
+        zoomNextBtn.addEventListener('click', showNextImage);
+        zoomPrevBtn.addEventListener('click', showPrevImage);
+
+        imageZoomModal.addEventListener('click', (e) => {
+            if (e.target === imageZoomModal) {
+                closeZoomModal();
+            }
+        });
+
+        const handleGaugeDrag = (e) => {
+            if (!isDraggingGauge) return;
+            const gaugeRect = zoomGauge.getBoundingClientRect();
+            const percentage = Math.max(0, Math.min(100, ((e.clientX - gaugeRect.left) / gaugeRect.width) * 100));
+            const newZoom = minZoom + (percentage / 100) * (maxZoom - minZoom);
+            setZoom(newZoom);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+        };
+
+        zoomGaugeHandle.addEventListener('mousedown', () => {
+            isDraggingGauge = true;
+            zoomGaugeHandle.style.transform = 'translateY(-50%) scale(1.2)';
+        });
+
+        document.addEventListener('mousemove', handleGaugeDrag);
+
+        document.addEventListener('mouseup', () => {
+            isDraggingGauge = false;
+            zoomGaugeHandle.style.transform = 'translateY(-50%)';
+        });
+
+        zoomGauge.addEventListener('click', (e) => {
+            const gaugeRect = zoomGauge.getBoundingClientRect();
+            const percentage = ((e.clientX - gaugeRect.left) / gaugeRect.width) * 100;
+            const newZoom = minZoom + (percentage / 100) * (maxZoom - minZoom);
+            setZoom(newZoom);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            hideControlsTimeout = setTimeout(() => {
+                zoomControls.classList.remove('visible');
+            }, 2000);
+        });
+
+        zoomImageContainer.addEventListener('wheel', (e) => {
+            if (!imageZoomModal.classList.contains('active')) return;
+            e.preventDefault();
+            const zoomDelta = e.deltaY > 0 ? -10 : 10;
+            setZoom(currentZoom + zoomDelta);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            if (currentZoom > 100) {
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            }
+        }, { passive: false });
+
+        zoomModalImage.addEventListener('mousedown', (e) => {
+            if (currentZoom === 100) return;
+            isDraggingImage = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            zoomModalImage.classList.add('dragging');
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDraggingImage) return;
+            const deltaX = e.clientX - dragStartX;
+            const deltaY = e.clientY - dragStartY;
+            dragOffsetX += deltaX / (currentZoom / 100);
+            dragOffsetY += deltaY / (currentZoom / 100);
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            updateZoomGauge();
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingImage = false;
+            zoomModalImage.classList.remove('dragging');
+            if (currentZoom > 100) {
+                const zoomControls = document.querySelector('.zoom-controls');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!imageZoomModal.classList.contains('active')) return;
+            switch(e.key) {
+                case 'Escape':
+                    closeZoomModal();
+                    break;
+                case 'ArrowRight':
+                    showNextImage();
+                    break;
+                case 'ArrowLeft':
+                    showPrevImage();
+                    break;
+                case '+':
+                case '=':
+                    setZoom(currentZoom + 10);
+                    break;
+                case '-':
+                case '_':
+                    setZoom(currentZoom - 10);
+                    break;
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+
+</body>
+</html>

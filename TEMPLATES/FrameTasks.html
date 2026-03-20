@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete interactive learning tasks to test your understanding">
+  <title>Learning Tasks - Readings in Philippine History</title>
+  <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/assignmentdetail.css">
+  <link rel="stylesheet" href="/CSS/games-layout.css">
+  <link rel="stylesheet" href="/CSS/tasks.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="/JS/auth.js"></script>
+</head>
+<body>
+  <script type="module">
+    import { supabase } from '/JS/supabase-auth.js';
+    window.supabase = supabase;
+    console.log('Supabase loaded globally');
+  </script>
+
+  <!-- Navigation Container -->
+  <div id="nav-container"></div>
+  
+  <!-- Toast Notifications -->
+  <div id="toastContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;"></div>
+  
+  <script type="module">
+    import { loadNavigation } from '/JS/navigation-loader.js';
+    
+    loadNavigation('nav-container').then(() => {
+      // Navigation loaded
+    });
+  </script>
+
+  <main class="main-content">
+    <div class="assignment-detail-container">
+      <!-- Page Header -->
+      <div class="assignment-header-card">
+        <div class="assignment-header-content">
+          <div>
+            <h1 class="assignment-detail-title">Learning Tasks</h1>
+            <div class="assignment-class-link">Complete interactive tasks to deepen your understanding of Philippine History</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Section -->
+      <section class="assignment-section">
+        <div class="section-header">
+          <svg data-lucide="trending-up" width="20" height="20"></svg>
+          <h2>Your Progress</h2>
+        </div>
+        <div style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 8px 24px rgba(68, 41, 19, 0.08); border: 2px solid #E2D5C2;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 13px; color: #5C3422; font-weight: 600;">Tasks Completed</span>
+            <span style="font-size: 16px; font-weight: 700; color: #FF6B35;" id="progressText">0 / 10</span>
+          </div>
+          <div style="width: 100%; height: 8px; background: #E2D5C2; border-radius: 4px; overflow: hidden;">
+            <div id="progressFill" style="height: 100%; background: linear-gradient(90deg, #FF6B35 0%, #FDC830 100%); width: 0%; transition: width 0.5s ease;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tasks Section -->
+      <section class="assignment-section">
+        <div class="section-header">
+          <svg data-lucide="list-checks" width="20" height="20"></svg>
+          <h2>Available Tasks</h2>
+        </div>
+        
+        <div class="quiz-grid-layout">
+          <!-- Tasks List -->
+          <div class="quiz-list-container" id="tasksContainer" style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="padding: 32px 16px; text-align: center; color: #A0826D; font-size: 14px;">
+              <svg data-lucide="loader" width="24" height="24" style="display: inline; margin-bottom: 8px; opacity: 0.5; animation: spin 1s linear infinite;"></svg>
+              <div>Loading tasks...</div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="quiz-sidebar">
+            <div style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 8px 24px rgba(68, 41, 19, 0.08); border: 2px solid #FDC830; font-size: 13px; color: #7A5B47;">
+              <div style="margin-bottom: 12px; font-weight: 700; color: #51513E; font-size: 14px;">Total Tasks</div>
+              <div style="font-size: 32px; font-weight: 800; color: #FF6B35;"><span id="taskCount">10</span></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Task Modal -->
+  <div class="quiz-modal" id="taskModal">
+    <div class="quiz-modal-content">
+      <div class="quiz-modal-header">
+        <div>
+          <h2 class="quiz-modal-title" id="modalTitle"></h2>
+          <div class="task-info-bar" id="taskInfoBar"></div>
+        </div>
+        <button class="quiz-modal-close" onclick="closeTaskModal()">×</button>
+      </div>
+      
+      <!-- Task Instructions -->
+      <div class="task-instructions" id="taskInstructions"></div>
+      
+      <!-- Task Content -->
+      <div id="modalBody"></div>
+      
+      <!-- Task Results (Hidden by default) -->
+      <div class="task-results" id="taskResults" style="display: none;">
+        <div class="results-content">
+          <div class="results-icon" id="resultsIcon"></div>
+          <h3 id="resultsTitle"></h3>
+          <p id="resultsMessage"></p>
+          <div class="score-display" id="scoreDisplay" style="display: none;">
+            <span class="score-text">Your Score:</span>
+            <span class="score-number" id="scoreValue"></span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 12px; margin-top: 32px; padding-top: 24px; border-top: 2px solid #E2D5C2;" id="actionsContainer">
+        <button style="flex: 1; padding: 12px 24px; background: white; color: #5C3422; border: 2px solid #E2D5C2; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px; transition: all 0.3s ease; font-family: 'Poppins', sans-serif;" onclick="closeTaskModal()">Close</button>
+        <button id="submitBtn" style="flex: 1.5; padding: 12px 24px; background: #FF6B35; color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px; transition: all 0.3s ease; font-family: 'Poppins', sans-serif;" onclick="submitTask()">Submit Answer</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/JS/tasks.js"></script>
+</body>
+</html>

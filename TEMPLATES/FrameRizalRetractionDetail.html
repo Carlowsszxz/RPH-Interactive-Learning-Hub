@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rizal's Retraction - URS</title>
+    <link rel="stylesheet" href="/CSS/theme.css">
+      <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="/CSS/navigation.css">
+    <style>
+        body {
+            background: var(--bg-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        main.main-content {
+            padding: 2rem 1rem;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+        }
+
+        .topic-container {
+            min-width: 0;
+        }
+
+        .topic-header {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 5px solid #FF6B35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .topic-subtitle {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .topic-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+            color: #5C3422;
+            font-weight: 500;
+        }
+
+        .educational-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .content-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .content-section h4 {
+            margin: 0 0 1rem 0;
+            font-size: 1.35rem;
+            color: #5C3422;
+            font-weight: 600;
+            border-bottom: 2px solid #F4A460;
+            padding-bottom: 0.75rem;
+        }
+
+        .content-section p {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            text-align: justify;
+        }
+
+        .content-section ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            margin: 0.5rem 0;
+        }
+
+        .key-term {
+            font-weight: 600;
+            color: #FF6B35;
+        }
+
+        .emphasis {
+            font-style: italic;
+            color: #5C3422;
+            font-weight: 500;
+        }
+
+        .highlight {
+            background: #FFF3E0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .fact-callout {
+            background: #FAF3F0;
+            border-left: 4px solid #FF6B35;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .fact-callout strong {
+            color: #5C3422;
+        }
+
+        .fact-callout.importance-high {
+            background: #FFF8F0;
+            border-left-color: #D84315;
+        }
+
+        .fact-callout.conclusion-box {
+            background: #F0F8FF;
+            border-left-color: #1976D2;
+        }
+
+        blockquote {
+            font-style: italic;
+            border-left: 4px solid #FF6B35;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            background: #FAFAFA;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        blockquote footer {
+            font-style: normal;
+            text-align: right;
+            margin-top: 0.75rem;
+            color: #5C3422;
+            font-weight: 600;
+        }
+
+        .perspective-section {
+            background: #F9F5F2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid #EDD5C5;
+        }
+
+        .perspective-label {
+            display: inline-block;
+            background: #5C3422;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .historians-perspective .perspective-label {
+            background: #8B5A3C;
+        }
+
+        .topic-image {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .topic-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #E0E0E0;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .topic-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .topic-image figcaption {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Image Zoom Modal - Professional Lightbox */
+        .image-zoom-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleInImage {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .image-zoom-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .zoom-modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: scaleInImage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .zoom-modal-image {
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            pointer-events: auto;
+            cursor: grab;
+            transition: transform 0.1s ease;
+            transform-origin: center center;
+        }
+
+        .zoom-modal-image.dragging {
+            cursor: grabbing;
+        }
+
+        .zoom-modal-image-container {
+            width: 100%;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Zoom Controls */
+        .zoom-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 2002;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .zoom-controls.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .zoom-percentage {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .zoom-gauge-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zoom-gauge {
+            width: 150px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background 0.2s ease;
+        }
+
+        .zoom-gauge:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .zoom-gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35, #FFA566);
+            border-radius: 3px;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 8px rgba(255, 107, 53, 0.5);
+        }
+
+        .zoom-gauge-handle {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+            border: 2px solid #FF6B35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s ease;
+            z-index: 10;
+        }
+
+        .zoom-gauge-handle:active {
+            cursor: grabbing;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .zoom-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .zoom-modal-caption {
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 100%;
+            font-style: italic;
+            line-height: 1.5;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Close Button */
+        .zoom-close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: white;
+            backdrop-filter: blur(8px);
+        }
+
+        .zoom-close-btn:hover {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Navigation Buttons */
+        .zoom-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+            z-index: 2001;
+        }
+
+        .zoom-nav-btn:hover {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .zoom-nav-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .zoom-prev-btn {
+            left: 10px;
+        }
+
+        .zoom-next-btn {
+            right: 10px;
+        }
+
+        /* Image Counter */
+        .zoom-counter {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .zoom-close-btn {
+                top: 10px;
+                right: 10px;
+                background: rgba(255, 255, 255, 0.2);
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+
+            .zoom-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .zoom-prev-btn {
+                left: 10px;
+            }
+
+            .zoom-next-btn {
+                right: 10px;
+            }
+
+            .zoom-modal-image {
+                max-height: 70vh;
+            }
+
+            .zoom-modal-caption {
+                margin-top: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .zoom-counter {
+                bottom: -40px;
+                font-size: 0.8rem;
+            }
+
+            .zoom-controls {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                gap: 10px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+            }
+
+            .zoom-controls.visible {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .zoom-gauge {
+                width: 100px;
+            }
+
+            .zoom-percentage {
+                font-size: 0.85rem;
+                min-width: 40px;
+            }
+        }
+
+        .right-sidebar {
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .widget-header {
+            background: #FAF3F0;
+            padding: 1.25rem;
+            border-bottom: 1px solid #EDD5C5;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .widget-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #5C3422;
+            font-weight: 600;
+        }
+
+        .widget-content {
+            padding: 1.25rem;
+        }
+
+        .idea-card {
+            padding: 1rem;
+            background: #FAFAFA;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid #FF6B35;
+        }
+
+        .idea-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .idea-card strong {
+            color: #5C3422;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .idea-card p {
+            margin: 0;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .related-topic {
+            margin-bottom: 0.75rem;
+        }
+
+        .related-topic a {
+            color: #FF6B35;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .related-topic a:hover {
+            text-decoration: underline;
+            color: #D84315;
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .right-sidebar {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .widget {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main.main-content {
+                padding: 1rem;
+            }
+
+            .topic-header {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .topic-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .educational-content {
+                padding: 1.5rem;
+            }
+
+            .topic-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .right-sidebar {
+                display: block;
+            }
+
+            .widget {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="has-global-sidebar">
+    <!-- Navigation -->
+    <div id="nav-container"></div>
+
+    <main class="main-content with-global-sidebar">
+        <div class="content-wrapper">
+            <!-- Left Content Area -->
+            <div class="topic-container">
+                <!-- Header -->
+                <header class="topic-header">
+                    <div class="topic-header-content">
+                        <h1>Rizal's Retraction (1896)</h1>
+                        <p class="topic-subtitle">One of the Most Debated Events in Philippine History</p>
+                        <div class="topic-meta">
+                            <span class="topic-date">📅 December 29-30, 1896</span>
+                            <span class="topic-location">📍 Fort Santiago</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Educational Content Section -->
+                <div class="educational-content">
+                    <h3>Did Rizal Retract?</h3>
+                    
+                    <section class="content-section">
+                        <h4>Rizal's Legacy and the Question of Retraction</h4>
+                        <p><strong>José Rizal</strong> is identified as a hero of the revolution for his writings that centered on <span class="emphasis">ending colonialism</span> and liberating Filipino minds to contribute to the creation of the Filipino nation. A great volume of Rizal's lifework was committed to this end, particularly his most influential novels, <span class="key-term">Noli Me Tangere</span> and <span class="key-term">El Filibusterismo</span>. His essays vilified not the Catholic religion itself, but the <span class="emphasis">friars</span>, who were seen as the main agents of injustice in Philippine society during the Spanish colonial period.</p>
+                        <p>It is understandable, therefore, that any piece of writing attributed to Rizal that <span class="emphasis">recants everything he wrote</span> against the friars and the Catholic Church in the Philippines could deal heavy damage to his image as a prominent Filipino revolutionary. Such a document purportedly exists and was allegedly signed by Rizal a few hours before his <span class="highlight">execution on December 30, 1896</span>. This document, commonly referred to as <span class="key-term">"The Retraction,"</span> declares Rizal's belief in the Catholic faith and retracts everything he wrote against the Church.</p>
+                    </section>
+
+                    <!-- Image 1 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Retraction of Rizal/20.png" alt="Jose Rizal imprisoned at Fort Santiago">
+                        <figcaption>December 29, 1896: Jose Rizal imprisoned at Fort Santiago awaiting execution, with Spanish friars presenting him with a prepared retraction document</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Primary Source: Rizal's Alleged Retraction</h4>
+                        <div class="fact-callout">
+                            <strong>Document Found:</strong> <span class="highlight">May 18, 1935</span> in the archdiocesan archives — Almost four decades after Rizal's execution
+                        </div>
+                        <blockquote>
+                            <p>"I declare myself a <span class="emphasis">catholic</span> and in this Religion in which I was born and educated I wish to live and die. I retract with all my heart whatever in my words, writings, publications and conduct has been <span class="emphasis">contrary to my character as son of the Catholic Church</span>. I believe and I confess whatever she teaches and I submit to whatever she demands. I abominate <span class="key-term">Masonry</span>, as the enemy which is of the Church, and as a Society prohibited by the Church."</p>
+                            <footer>— José Rizal, December 29, 1896</footer>
+                        </blockquote>
+                    </section>
+
+                    <!-- Image 2 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Retraction of Rizal/21.png" alt="The Retraction Document">
+                        <figcaption>The controversial Retraction Document: A prepared text allegedly signed by Rizal, declaring his belief in Catholicism and retracting his anti-colonial writings</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>The Problem of Multiple Versions</h4>
+                        <p>There are <strong>four different iterations</strong> of the text of this retraction:</p>
+                        <ul>
+                            <li><strong>First version:</strong> Published in <span class="key-term">La Voz Española</span> and <span class="key-term">Diario de Manila</span> on the day of Rizal's execution, <span class="highlight">December 30, 1896</span></li>
+                            <li><strong>Second version:</strong> Appeared in Barcelona, Spain, in the magazine <span class="key-term">La Juventud</span> on February 14, 1897, written by <strong>Fr. Vicente Balaguer</strong></li>
+                            <li><strong>"Original" version:</strong> Only found in the archdiocesan archives on <span class="highlight">May 18, 1935</span> — <span class="emphasis">After almost four decades of disappearance</span></li>
+                            <li><strong>Fourth version:</strong> Documented through the <span class="key-term">Cuerpo de Vigilancia</span> report discovered in 2016</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-section perspective-section spanish-perspective">
+                        <div class="perspective-label">SPANISH CHURCH PERSPECTIVE</div>
+                        <h4>The Balaguer Testimony: Supporting the Retraction</h4>
+                        <p>Doubts surrounding the authenticity of the retraction document abound, especially because only one eyewitness account of the writing of the document initially existed—that of the Jesuit friar <strong>Fr. Vicente Balaguer</strong>. According to his testimony, Rizal <span class="emphasis">woke up several times, confessed four times, attended Mass, received Communion, and prayed the rosary</span>, all of which appeared out of character based on Rizal's known beliefs and writings.</p>
+                        <p>Despite these doubts, Balaguer's account has been used to argue for the <span class="emphasis">authenticity of the retraction</span>, as it was long considered the only "primary" eyewitness testimony claiming that Rizal wrote and signed such a document.</p>
+                    </section>
+
+                    <!-- Image 3 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Retraction of Rizal/22.png" alt="Rizal's execution">
+                        <figcaption>December 30, 1896: Jose Rizal is executed by firing squad at Bagumbayan. The authenticity of the retraction remains historically debated to this day</figcaption>
+                    </figure>
+
+                    <section class="content-section perspective-section rizal-scholars">
+                        <div class="perspective-label">HISTORICAL SCHOLARSHIP PERSPECTIVE</div>
+                        <h4>The Cuerpo de Vigilancia Report: Questioning Balaguer's Account</h4>
+                        <p>Another eyewitness account surfaced in <span class="highlight">2016</span> through the research of <strong>Professor René R. Escalante</strong>. In his research, documents from the <span class="key-term">Cuerpo de Vigilancia</span> included a report on the last hours of Rizal, written by <strong>Federico Moreno</strong>. This report details the statements of the Cuerpo de Vigilancia regarding Rizal's final moments.</p>
+                        <blockquote>
+                            <p>"At approximately 9, the Assistant of the Plaza, Señor Maure, asked Rizal if he wanted anything. He replied that at the moment he only wanted a prayer book... Señor Andrade left death row at 10 and Rizal spoke for a long while with the Jesuit fathers, March and Vilaclara, regarding religious matters... It appears that these two <span class="emphasis">presented him with a prepared retraction on his life and deeds that he refused to sign</span>. They argued about the matter until 12:30..."</p>
+                            <footer>— Cuerpo de Vigilancia Report, December 29-30, 1896</footer>
+                        </blockquote>
+                        <p>This account corroborates the existence of a retraction document, thereby giving it additional credence. However, <span class="emphasis">Fr. Balaguer was not mentioned anywhere in this account</span>, which renders him a secondary source to the actual writing of the document rather than a direct eyewitness.</p>
+                    </section>
+
+                    <section class="content-section">
+                        <h4>Key Questions About the Retraction</h4>
+                        <div class="fact-callout importance-high">
+                            <strong>Central Debate:</strong> Did Rizal voluntarily sign, sign under duress, or did the Spanish fabricate the entire document?
+                        </div>
+                        <p>The retraction of Rizal remains a <span class="emphasis">historical controversy to this day</span>. The questions surrounding this document include:</p>
+                        <ul>
+                            <li>Why did it take <span class="highlight">39 years</span> for the "original" document to surface?</li>
+                            <li>Why are there <span class="emphasis">four different versions</span> of the same document?</li>
+                            <li>Why was <span class="emphasis">Fr. Balaguer not mentioned</span> in the official Cuerpo de Vigilancia report?</li>
+                            <li>Did Rizal initially <span class="emphasis">refuse to sign</span> a prepared retraction?</li>
+                        </ul>
+                    </section>
+
+                    <!-- Image 4 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Retraction of Rizal/23.png" alt="Rizal's legacy">
+                        <figcaption>Rizal's Legacy: Whether he retracted or not, his influence on Philippine nationalism and the independence movement remains undeniable and powerful</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Rizal's Historical Significance Despite the Retraction Controversy</h4>
+                        <p>Many scholars, however, agree that the existence of such a document <span class="emphasis">does not tarnish Rizal's heroism</span>. His relevance to Filipinos remained solidified, and his ideas continued to inspire the revolutionary movement that eventually resulted in <span class="key-term">Philippine independence in 1898</span>.</p>
+                        <p>Whether authentic or not, the retraction document cannot erase the profound impact of Rizal's <span class="key-term">Noli Me Tangere</span> and <span class="key-term">El Filibusterismo</span>, which awakened nationalist consciousness among Filipinos and became ideological foundations for the Philippine Revolution.</p>
+                    </section>
+
+                    <section class="content-section">
+                        <h4>Rizal's Connection to the Katipunan</h4>
+                        <p>Rizal's connection to the <span class="key-term">Katipunan</span> is <span class="emphasis">undeniable</span>. In fact, the precursor of the Katipunan as an organization was <span class="key-term">La Liga Filipina</span>, which <strong>Rizal founded</strong>. <strong>Andrés Bonifacio</strong> was among its members. La Liga Filipina, however, was short-lived, as the Spanish authorities <span class="emphasis">exiled Rizal to Dapitan</span> shortly after its establishment on July 7, 1892.</p>
+                        <p>Following Rizal's exile, former members decided to band together and establish the <span class="key-term">Katipunan</span> just a few days later. Although Rizal was not officially part of the Katipunan, the Katipuneros showed great appreciation for his work and shared the same goals of national liberation. Out of the 28 members of the Katipunan's leadership, known as the <span class="key-term">Kataas-taasang Sanggunian ng Katipunan</span>, from 1892 to 1896, <strong>13 were former members of La Liga Filipina</strong>. Katipuneros even used Rizal's name as a <span class="emphasis">password within the organization</span>.</p>
+                    </section>
+
+                    <section class="content-section">
+                        <h4>Conclusion: Rizal's Enduring Legacy</h4>
+                        <div class="fact-callout conclusion-box">
+                            <strong>Key Takeaway:</strong> The authenticity of the retraction is debated, but Rizal's influence on Philippine nationalism is <span class="emphasis">undeniable and unchangeable</span>.
+                        </div>
+                        <p>Whether Rizal retracted or not, his fundamental contributions to Philippine history remain unquestioned. His novels, essays, and ideas <span class="emphasis">inspired generations</span> of Filipinos to pursue independence and national identity. The retraction controversy, rather than diminishing his legacy, exemplifies the <span class="emphasis">complex and contested nature of historical truth</span>—a reminder that primary sources must be critically analyzed and multiple perspectives considered when reconstructing the past.</p>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <aside class="right-sidebar">
+                <!-- Key Facts Section -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <i data-lucide="lightbulb" style="width: 20px; height: 20px; color: #FF6B35;"></i>
+                        <h3>Key Facts</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        <div class="idea-card">
+                            <strong>📅 Date</strong>
+                            <p>December 29-30, 1896</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>📍 Location</strong>
+                            <p>Fort Santiago</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>👤 Subject</strong>
+                            <p>José Rizal and his alleged retraction</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>📜 Document Found</strong>
+                            <p>May 18, 1935 (39 years later)</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>❓ Versions</strong>
+                            <p>Four different iterations exist</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Topics Section -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <i data-lucide="bookmark" style="width: 20px; height: 20px; color: #FF6B35;"></i>
+                        <h3>Related Topics</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameFirstMassDetail.html">The First Mass</a>
+                        </div>
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameCaviteMutinyDetail.html">Cavite Mutiny</a>
+                        </div>
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameCryofRebellionDetail.html">Cry of Rebellion</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Image Zoom Modal -->
+    <div class="image-zoom-modal" id="imageZoomModal">
+        <div class="zoom-modal-content">
+            <button class="zoom-close-btn" id="zoomCloseBtn" aria-label="Close image">✕</button>
+            <button class="zoom-nav-btn zoom-prev-btn" id="zoomPrevBtn" aria-label="Previous image">❮</button>
+            <div class="zoom-modal-image-container" id="zoomImageContainer">
+                <img class="zoom-modal-image" id="zoomModalImage" src="" alt="" draggable="false">
+            </div>
+            <button class="zoom-nav-btn zoom-next-btn" id="zoomNextBtn" aria-label="Next image">❯</button>
+            <div class="zoom-controls">
+                <span class="zoom-label">Zoom</span>
+                <div class="zoom-gauge-container">
+                    <div class="zoom-gauge" id="zoomGauge">
+                        <div class="zoom-gauge-fill" id="zoomGaugeFill"></div>
+                        <div class="zoom-gauge-handle" id="zoomGaugeHandle"></div>
+                    </div>
+                </div>
+                <span class="zoom-percentage" id="zoomPercentage">100%</span>
+            </div>
+            <div class="zoom-counter" id="zoomCounter"></div>
+        </div>
+    </div>
+
+    <!-- Navigation & Auth Scripts -->
+    <script type="module">
+        import { loadNavigation } from '/JS/navigation-loader.js';
+        loadNavigation('nav-container');
+    </script>
+
+    <script>
+        // Professional Lightbox Implementation with Zoom Controls
+        const imageZoomModal = document.getElementById('imageZoomModal');
+        const zoomModalImage = document.getElementById('zoomModalImage');
+        const zoomImageContainer = document.getElementById('zoomImageContainer');
+        const zoomCloseBtn = document.getElementById('zoomCloseBtn');
+        const zoomPrevBtn = document.getElementById('zoomPrevBtn');
+        const zoomNextBtn = document.getElementById('zoomNextBtn');
+        const zoomCounter = document.getElementById('zoomCounter');
+        const zoomGauge = document.getElementById('zoomGauge');
+        const zoomGaugeFill = document.getElementById('zoomGaugeFill');
+        const zoomGaugeHandle = document.getElementById('zoomGaugeHandle');
+        const zoomPercentage = document.getElementById('zoomPercentage');
+        const topicImages = Array.from(document.querySelectorAll('.topic-image img'));
+
+        let currentImageIndex = 0;
+        let currentZoom = 100;
+        const minZoom = 100;
+        const maxZoom = 300;
+        let isDraggingGauge = false;
+        let isDraggingImage = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+        let hideControlsTimeout;
+
+        const updateZoomGauge = () => {
+            const zoomPercent = ((currentZoom - minZoom) / (maxZoom - minZoom)) * 100;
+            zoomGaugeFill.style.width = zoomPercent + '%';
+            zoomGaugeHandle.style.left = zoomPercent + '%';
+            zoomPercentage.textContent = currentZoom + '%';
+            
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (currentZoom > 100) {
+                zoomControls.classList.add('visible');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            } else {
+                zoomControls.classList.remove('visible');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            }
+            
+            const scale = currentZoom / 100;
+            zoomModalImage.style.transform = `scale(${scale}) translate(${dragOffsetX}px, ${dragOffsetY}px)`;
+        };
+
+        const setZoom = (percent) => {
+            currentZoom = Math.max(minZoom, Math.min(maxZoom, percent));
+            updateZoomGauge();
+        };
+
+        const openZoomModal = (index) => {
+            currentImageIndex = index;
+            currentZoom = 100;
+            dragOffsetX = 0;
+            dragOffsetY = 0;
+            
+            const img = topicImages[index];
+            zoomModalImage.src = img.src;
+            zoomModalImage.alt = img.alt;
+            
+            zoomCounter.textContent = `${index + 1} / ${topicImages.length}`;
+            
+            imageZoomModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            updateZoomGauge();
+            updateNavButtonVisibility();
+        };
+
+        const closeZoomModal = () => {
+            imageZoomModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        const updateNavButtonVisibility = () => {
+            zoomPrevBtn.style.opacity = currentImageIndex === 0 ? '0.3' : '1';
+            zoomPrevBtn.disabled = currentImageIndex === 0;
+            zoomNextBtn.style.opacity = currentImageIndex === topicImages.length - 1 ? '0.3' : '1';
+            zoomNextBtn.disabled = currentImageIndex === topicImages.length - 1;
+        };
+
+        const showNextImage = () => {
+            if (currentImageIndex < topicImages.length - 1) {
+                openZoomModal(currentImageIndex + 1);
+            }
+        };
+
+        const showPrevImage = () => {
+            if (currentImageIndex > 0) {
+                openZoomModal(currentImageIndex - 1);
+            }
+        };
+
+        topicImages.forEach((img, index) => {
+            img.addEventListener('click', () => openZoomModal(index));
+        });
+
+        zoomCloseBtn.addEventListener('click', closeZoomModal);
+        zoomNextBtn.addEventListener('click', showNextImage);
+        zoomPrevBtn.addEventListener('click', showPrevImage);
+
+        imageZoomModal.addEventListener('click', (e) => {
+            if (e.target === imageZoomModal) {
+                closeZoomModal();
+            }
+        });
+
+        const handleGaugeDrag = (e) => {
+            if (!isDraggingGauge) return;
+            const gaugeRect = zoomGauge.getBoundingClientRect();
+            const percentage = Math.max(0, Math.min(100, ((e.clientX - gaugeRect.left) / gaugeRect.width) * 100));
+            const newZoom = minZoom + (percentage / 100) * (maxZoom - minZoom);
+            setZoom(newZoom);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+        };
+
+        zoomGaugeHandle.addEventListener('mousedown', () => {
+            isDraggingGauge = true;
+            zoomGaugeHandle.style.transform = 'translateY(-50%) scale(1.2)';
+        });
+
+        document.addEventListener('mousemove', handleGaugeDrag);
+
+        document.addEventListener('mouseup', () => {
+            isDraggingGauge = false;
+            zoomGaugeHandle.style.transform = 'translateY(-50%)';
+        });
+
+        zoomGauge.addEventListener('click', (e) => {
+            const gaugeRect = zoomGauge.getBoundingClientRect();
+            const percentage = ((e.clientX - gaugeRect.left) / gaugeRect.width) * 100;
+            const newZoom = minZoom + (percentage / 100) * (maxZoom - minZoom);
+            setZoom(newZoom);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            hideControlsTimeout = setTimeout(() => {
+                zoomControls.classList.remove('visible');
+            }, 2000);
+        });
+
+        zoomImageContainer.addEventListener('wheel', (e) => {
+            if (!imageZoomModal.classList.contains('active')) return;
+            e.preventDefault();
+            const zoomDelta = e.deltaY > 0 ? -10 : 10;
+            setZoom(currentZoom + zoomDelta);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            if (currentZoom > 100) {
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            }
+        }, { passive: false });
+
+        zoomModalImage.addEventListener('mousedown', (e) => {
+            if (currentZoom === 100) return;
+            isDraggingImage = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            zoomModalImage.classList.add('dragging');
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDraggingImage) return;
+            const deltaX = e.clientX - dragStartX;
+            const deltaY = e.clientY - dragStartY;
+            dragOffsetX += deltaX / (currentZoom / 100);
+            dragOffsetY += deltaY / (currentZoom / 100);
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            updateZoomGauge();
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingImage = false;
+            zoomModalImage.classList.remove('dragging');
+            if (currentZoom > 100) {
+                const zoomControls = document.querySelector('.zoom-controls');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!imageZoomModal.classList.contains('active')) return;
+            switch(e.key) {
+                case 'Escape':
+                    closeZoomModal();
+                    break;
+                case 'ArrowRight':
+                    showNextImage();
+                    break;
+                case 'ArrowLeft':
+                    showPrevImage();
+                    break;
+                case '+':
+                case '=':
+                    setZoom(currentZoom + 10);
+                    break;
+                case '-':
+                case '_':
+                    setZoom(currentZoom - 10);
+                    break;
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+
+</body>
+</html>

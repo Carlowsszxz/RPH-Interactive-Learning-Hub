@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cry of Rebellion - URS</title>
+    <link rel="stylesheet" href="/CSS/theme.css">
+      <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="/CSS/navigation.css">
+    <style>
+        body {
+            background: var(--bg-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        main.main-content {
+            padding: 2rem 1rem;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+        }
+
+        .topic-container {
+            min-width: 0;
+        }
+
+        .topic-header {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 5px solid #FF6B35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .topic-subtitle {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .topic-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+            color: #5C3422;
+            font-weight: 500;
+        }
+
+        /* Infographic Container Styles */
+        .content-with-infographic {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-image {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .topic-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #E0E0E0;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .topic-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .topic-image figcaption {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Image Zoom Modal - Professional Lightbox */
+        .image-zoom-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleInImage {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .image-zoom-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .zoom-modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: scaleInImage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .zoom-modal-image {
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            pointer-events: auto;
+            cursor: grab;
+            transition: transform 0.1s ease;
+            transform-origin: center center;
+        }
+
+        .zoom-modal-image.dragging {
+            cursor: grabbing;
+        }
+
+        .zoom-modal-image-container {
+            width: 100%;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Zoom Controls */
+        .zoom-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 2002;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .zoom-controls.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .zoom-percentage {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .zoom-gauge-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zoom-gauge {
+            width: 150px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background 0.2s ease;
+        }
+
+        .zoom-gauge:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .zoom-gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35, #FFA566);
+            border-radius: 3px;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 8px rgba(255, 107, 53, 0.5);
+        }
+
+        .zoom-gauge-handle {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+            border: 2px solid #FF6B35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s ease;
+            z-index: 10;
+        }
+
+        .zoom-gauge-handle:active {
+            cursor: grabbing;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .zoom-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .zoom-modal-caption {
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 100%;
+            font-style: italic;
+            line-height: 1.5;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Close Button */
+        .zoom-close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: white;
+            backdrop-filter: blur(8px);
+        }
+
+        .zoom-close-btn:hover {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Navigation Buttons */
+        .zoom-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+            z-index: 2001;
+        }
+
+        .zoom-nav-btn:hover {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .zoom-nav-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .zoom-prev-btn {
+            left: 10px;
+        }
+
+        .zoom-next-btn {
+            right: 10px;
+        }
+
+        /* Image Counter */
+        .zoom-counter {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .zoom-close-btn {
+                top: 10px;
+                right: 10px;
+                background: rgba(255, 255, 255, 0.2);
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+
+            .zoom-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .zoom-prev-btn {
+                left: 10px;
+            }
+
+            .zoom-next-btn {
+                right: 10px;
+            }
+
+            .zoom-modal-image {
+                max-height: 70vh;
+            }
+
+            .zoom-modal-caption {
+                margin-top: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .zoom-counter {
+                bottom: -40px;
+                font-size: 0.8rem;
+            }
+
+            .zoom-controls {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                gap: 10px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+            }
+
+            .zoom-controls.visible {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .zoom-gauge {
+                width: 100px;
+            }
+
+            .zoom-percentage {
+                font-size: 0.85rem;
+                min-width: 40px;
+            }
+        }
+
+        .educational-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .educational-content h3 {
+            margin: 0 0 2rem 0;
+            font-size: 1.75rem;
+            color: #5C3422;
+            font-weight: 700;
+        }
+
+        .content-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .content-section h4 {
+            margin: 0 0 1rem 0;
+            font-size: 1.35rem;
+            color: #5C3422;
+            font-weight: 600;
+            border-bottom: 2px solid #F4A460;
+            padding-bottom: 0.75rem;
+        }
+
+        .content-section p {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            text-align: justify;
+        }
+
+        .content-section ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            margin: 0.5rem 0;
+        }
+
+        .key-term {
+            font-weight: 600;
+            color: #FF6B35;
+        }
+
+        .emphasis {
+            font-style: italic;
+            color: #5C3422;
+            font-weight: 500;
+        }
+
+        .highlight {
+            background: #FFF3E0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .fact-callout {
+            background: #FAF3F0;
+            border-left: 4px solid #FF6B35;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .fact-callout strong {
+            color: #5C3422;
+        }
+
+        .fact-callout.importance-high {
+            background: #FFF8F0;
+            border-left-color: #D84315;
+        }
+
+        .fact-callout.conclusion-box {
+            background: #F0F8FF;
+            border-left-color: #1976D2;
+        }
+
+        blockquote {
+            font-style: italic;
+            border-left: 4px solid #FF6B35;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            background: #FAFAFA;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        blockquote footer {
+            font-style: normal;
+            text-align: right;
+            margin-top: 0.75rem;
+            color: #5C3422;
+            font-weight: 600;
+        }
+
+        .perspective-section {
+            background: #F9F5F2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid #EDD5C5;
+        }
+
+        .perspective-label {
+            display: inline-block;
+            background: #5C3422;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .historians-perspective .perspective-label {
+            background: #8B5A3C;
+        }
+
+        .right-sidebar {
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .widget-header {
+            background: #FAF3F0;
+            padding: 1.25rem;
+            border-bottom: 1px solid #EDD5C5;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .widget-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #5C3422;
+            font-weight: 600;
+        }
+
+        .widget-content {
+            padding: 1.25rem;
+        }
+
+        .idea-card {
+            padding: 1rem;
+            background: #FAFAFA;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid #FF6B35;
+        }
+
+        .idea-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .idea-card strong {
+            color: #5C3422;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .idea-card p {
+            margin: 0;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .related-topic {
+            margin-bottom: 0.75rem;
+        }
+
+        .related-topic a {
+            color: #FF6B35;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .related-topic a:hover {
+            text-decoration: underline;
+            color: #D84315;
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .right-sidebar {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .widget {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main.main-content {
+                padding: 1rem;
+            }
+
+            .topic-header {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .topic-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .content-with-infographic,
+            .educational-content {
+                padding: 1.5rem;
+            }
+
+            .topic-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .right-sidebar {
+                display: block;
+            }
+
+            .widget {
+                margin-bottom: 1.5rem;
+            }
+
+            .prev, .next {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="has-global-sidebar">
+    <!-- Navigation -->
+    <div id="nav-container"></div>
+
+    <main class="main-content with-global-sidebar">
+        <div class="content-wrapper">
+            <!-- Left Content Area -->
+            <div class="topic-container">
+                <!-- Header -->
+                <header class="topic-header">
+                    <div class="topic-header-content">
+                        <h1>Cry of Rebellion (1896)</h1>
+                        <p class="topic-subtitle">Where Did It Happen? A Historical Debate</p>
+                        <div class="topic-meta">
+                            <span class="topic-date">📅 August 1896</span>
+                            <span class="topic-location">📍 Northeast of Manila</span>
+                        </div>
+                    </div>
+                </header>
+
+                    <!-- Image 1 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cry of Rebellion/1.png" alt="Katipunan leaders gathering">
+                        <figcaption>August 1896: Katipunan leaders gather in secret locations northeast of Manila to plan the uprising against Spanish colonial rule.</figcaption>
+                    </figure>
+
+                <!-- Educational Content Section -->
+                <div class="educational-content">
+                    <h3>Where Did the Cry of Rebellion Happen?</h3>
+                    
+                    <section class="content-section">
+                        <h4>Historical Context and Significance</h4>
+                        <p>In the late nineteenth century, <span class="emphasis">revolutionary movements spread across Spanish colonies</span>, including the Philippines. Journalists at the time used the phrase <span class="key-term">El Grito de Rebelión</span> or <span class="key-term">Cry of Rebellion</span> to signify the <span class="emphasis">symbolic beginning of uprisings against colonial rule</span>. In the Philippine context, the Cry marked the <span class="emphasis">formal declaration of resistance</span> against the Spanish colonial government and is traditionally associated with the outbreak of the <span class="key-term">Philippine Revolution</span> in <span class="highlight">August 1896</span>, northeast of Manila.</p>
+                        <p>The Cry of Rebellion is considered a <span class="emphasis">crucial turning point</span> in Philippine history because it represented the collective decision of Filipino revolutionaries to abandon peaceful reform and openly challenge Spanish authority. However, despite its importance, historians continue to debate the exact date and location of the event, making it one of the most <span class="emphasis">contested episodes in Philippine historiography</span>.</p>
+                    </section>
+
+                    <section class="content-section">
+                        <h4>The Nature of the Controversy</h4>
+                        <div class="fact-callout">
+                            <strong>Central Symbol:</strong> The <span class="key-term">cedula tearing</span> - destruction of Spanish tax certificates as a sign of severing ties with Spain
+                        </div>
+                        <p>The controversy surrounding the Cry of Rebellion arises from <span class="emphasis">conflicting eyewitness accounts</span> and later historical interpretations. Central to many narratives is the symbolic act of <span class="emphasis">tearing the cedula</span>, the residence certificate imposed by the Spanish government, which signified the rejection of Spanish sovereignty. Historian <strong>Teodoro Agoncillo</strong> emphasized this act as the <span class="emphasis">defining moment</span> of the Cry.</p>
+                        <p>Other writers, however, associated the Cry with the <span class="emphasis">first armed encounter</span> between Filipino revolutionaries and Spanish forces. Following this interpretation, <strong>Emilio Aguinaldo</strong> later commissioned the <span class="key-term">Himno de Balintawak</span> to inspire revolutionary spirit after the failure of the <span class="key-term">Pact of Biak-na-Bato</span>. A <span class="key-term">monument to the Heroes of 1896</span> was erected in what is now the intersection of EDSA and Andres Bonifacio Drive, and for many years - until 1962 - the Cry of Balintawak was officially commemorated every <span class="highlight">26 August</span>, despite uncertainty regarding why the monument site was chosen.</p>
+                    </section>
+
+                    <!-- Image 2 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cry of Rebellion/3.png" alt="Locations of Cry of Rebellion">
+                        <figcaption>The exact date and location remain debated: Balintawak, Kangkong, Pugad Lawin, or Bahay Toro? Historical sources reveal conflicting accounts of this pivotal moment.</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Multiple Locations and Dates: The Historical Debate</h4>
+                        <p>Various historians and eyewitnesses identified <span class="emphasis">different locations and dates</span> for the Cry of Rebellion, reflecting the complexity of reconstructing revolutionary events. The debate centers on <strong>four major locations</strong> and <strong>four different dates</strong>:</p>
+                        <ul style="margin-left: 20px; color: #51513E; line-height: 1.8;">
+                            <li><strong>Lt. Olegario Diaz</strong> (guardia civil): <span class="key-term">Balintawak</span>, <span class="highlight">August 25, 1896</span></li>
+                            <li><strong>Teodoro Kalaw</strong> (historian): <span class="key-term">Kangkong, Balintawak</span>, <span class="highlight">last week of August 1896</span></li>
+                            <li><strong>Santiago Alvarez</strong> (Katipunero): <span class="key-term">Bahay Toro, Quezon City</span>, <span class="highlight">August 24, 1896</span></li>
+                            <li><strong>Pio Valenzuela</strong> (Katipunero): <span class="key-term">Pugad Lawin</span>, <span class="highlight">August 23, 1896</span></li>
+                            <li><strong>Gregorio Zaide</strong> (historian): <span class="key-term">Balintawak</span>, <span class="highlight">August 26, 1896</span></li>
+                            <li><strong>Teodoro Agoncillo</strong> (historian): <span class="key-term">Pugad Lawin</span>, <span class="highlight">August 23, 1896</span></li>
+                            <li><strong>Guerrero, Encarnacion, Villegas</strong> (historians): <span class="key-term">Tandang Sora's barn, Gulod</span>, <span class="highlight">August 24, 1896</span></li>
+                        </ul>
+                    </section>
+
+                    <!-- Image 3 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cry of Rebellion/4.png" alt="Andres Bonifacio leading the revolution">
+                        <figcaption>Andres Bonifacio leads the revolutionary movement with passion and determination, inspiring thousands to join the fight for independence.</figcaption>
+                    </figure>
+
+                    <section class="content-section perspective-section historians-perspective">
+                        <div class="perspective-label">EYEWITNESS ACCOUNT 1</div>
+                        <h4>Primary Source: Guillermo Masangkay's Account</h4>
+                        <p>Guillermo Masangkay narrated that a <span class="emphasis">large meeting of Katipunan leaders</span> was held on <span class="highlight">August 26, 1896</span> at the house of Apolonio Samson in <span class="key-term">Balintawak</span>. <strong>Andres Bonifacio</strong> presided over the meeting, with <strong>Emilio Jacinto</strong> serving as secretary. The discussion centered on whether the revolution should begin immediately.</p>
+                        <blockquote>
+                            <p>If we don't start the uprising, the Spaniards will get us anyway. What then, do you say? Bonifacio asked the masses outside. <span class="emphasis">Revolt! the people shouted as one.</span> Bonifacio then called on them to destroy their cedulas as <span class="emphasis">a sign of severing ties with Spain</span> - an act that became one of the most enduring symbols of the Cry.</p>
+                            <footer>— Guillermo Masangkay</footer>
+                        </blockquote>
+                    </section>
+
+                    <section class="content-section perspective-section historians-perspective">
+                        <div class="perspective-label">EYEWITNESS ACCOUNT 2</div>
+                        <h4>Primary Source: Pio Valenzuela's Account</h4>
+                        <p><strong>Pio Valenzuela</strong> provided a more detailed chronological account of events. According to him, Katipunan leaders sought refuge in <span class="key-term">Balintawak</span> beginning <span class="highlight">August 19-20, 1896</span>. Initial meetings were held on <span class="highlight">August 22, 1896</span> at Apolonio Samson's house in <span class="key-term">Kangkong</span>, but no formal decision to revolt was made.</p>
+                        <p>Valenzuela emphasized that the <span class="emphasis">decisive meeting occurred</span> on <span class="highlight">August 23, 1896</span> at <span class="key-term">Pugad Lawin</span>, the property of Juan Ramos (son of <strong>Melchora Aquino/Tandang Sora</strong>). During this gathering of <span class="emphasis">more than 1,000 Katipuneros</span>, intense debate took place regarding the start of the revolution.</p>
+                        <blockquote>
+                            <p>Following the discussion, many of those present <span class="emphasis">tore their cedula certificates</span> and shouted, <span class="emphasis">'Long live the Philippines! Long live the Philippines!'</span></p>
+                            <footer>— Pio Valenzuela</footer>
+                        </blockquote>
+                    </section>
+
+                    <!-- Image 4 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cry of Rebellion/5.png" alt="Legacy of Cry of Rebellion">
+                        <figcaption>The legacy of the Cry of Rebellion continues to inspire generations of Filipinos in their struggle for freedom and national pride.</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Critical Analysis: Evaluating Conflicting Sources</h4>
+                        <div class="fact-callout" importance-high>
+                            <strong>Red Flag:</strong> <span class="emphasis">Valenzuela's inconsistency</span> - He first told Spanish investigators the Cry happened in Balintawak on August 26, but later wrote in his memoirs it was Pugad Lawin on August 23
+                        </div>
+                        <p>Valenzuela's testimony, in particular, must be treated with caution. In an earlier statement to Spanish investigators, he claimed that the Cry occurred in <span class="key-term">Balintawak</span> on <span class="highlight">August 26, 1896</span>, while in his later memoirs, he identified <span class="key-term">Pugad Lawin</span> on <span class="highlight">August 23, 1896</span>. <span class="emphasis">Such inconsistencies highlight the limitations of memory</span> and the need for <span class="emphasis">critical evaluation of primary sources</span>.</p>
+                        <p>According to historians <strong>Guerrero, Encarnacion, and Villegas</strong>, all the sites mentioned were part of <span class="key-term">Balintawak</span> during the Spanish period (then under Caloocan, now in Quezon City). They suggested that the <span class="emphasis">variation in dates may be explained by the continuous movement</span> of Bonifacio and his followers as they attempted to evade Spanish authorities, resulting in <span class="emphasis">multiple gatherings that were later remembered differently</span> by witnesses.</p>
+                    </section>
+
+                    <section class="content-section">
+                        <h4>Conclusion: The Significance Beyond the Debate</h4>
+                        <div class="fact-callout" conclusion-box>
+                            <strong>Key Insight:</strong> The Cry may be understood as <span class="emphasis">a series of related events</span> unfolding over several days in different locations, rather than a single dramatic moment.
+                        </div>
+                        <p>The debate over where and when the Cry of Rebellion occurred demonstrates that <span class="emphasis">historical events are often complex and difficult to pinpoint</span> with absolute certainty. Rather than a single dramatic moment, the Cry may be understood as a <span class="emphasis">series of related events</span> that unfolded over several days in different locations.</p>
+                        <p>This case study underscores the importance of <span class="emphasis">critical historical inquiry</span>, showing how historians analyze conflicting accounts, assess source reliability, and contextualize evidence. Ultimately, the <span class="key-term">Cry of Rebellion</span> remains a powerful symbol of <span class="emphasis">Filipino resistance</span> and the collective resolve to fight for independence, regardless of the continuing debate over its exact date and place.</p>
+                    </section>
+
+                    <!-- Image 5 -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/Cry of Rebellion/6.png" alt="Philippine Revolution impact">
+                        <figcaption>The Cry of Rebellion marked the beginning of the Philippine Revolution, leading to years of struggle and eventual independence.</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <aside class="right-sidebar">
+                <!-- Key Facts Section -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <i data-lucide="lightbulb" style="width: 20px; height: 20px; color: #FF6B35;"></i>
+                        <h3>Key Facts</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        <div class="idea-card">
+                            <strong>📅 Date</strong>
+                            <p>August 1896</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>📍 Locations</strong>
+                            <p>Balintawak, Pugad Lawin, Kangkong, Bahay Toro</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>👤 Leaders</strong>
+                            <p>Andres Bonifacio, Emilio Jacinto</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>🔑 Symbol</strong>
+                            <p>Cedula Tearing - rejection of Spanish rule</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>⚔️ Event</strong>
+                            <p>Beginning of Philippine Revolution</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Topics Section -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <i data-lucide="bookmark" style="width: 20px; height: 20px; color: #FF6B35;"></i>
+                        <h3>Related Topics</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameFirstMassDetail.html">The First Mass</a>
+                        </div>
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameCaviteMutinyDetail.html">Cavite Mutiny</a>
+                        </div>
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameRizalRetractionDetail.html">Rizal's Retraction</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Image Zoom Modal -->
+    <div class="image-zoom-modal" id="imageZoomModal">
+        <div class="zoom-modal-content">
+            <button class="zoom-close-btn" id="zoomCloseBtn" aria-label="Close image">✕</button>
+            <button class="zoom-nav-btn zoom-prev-btn" id="zoomPrevBtn" aria-label="Previous image">❮</button>
+            <div class="zoom-modal-image-container" id="zoomImageContainer">
+                <img class="zoom-modal-image" id="zoomModalImage" src="" alt="" draggable="false">
+            </div>
+            <button class="zoom-nav-btn zoom-next-btn" id="zoomNextBtn" aria-label="Next image">❯</button>
+            <div class="zoom-controls">
+                <span class="zoom-label">Zoom</span>
+                <div class="zoom-gauge-container">
+                    <div class="zoom-gauge" id="zoomGauge">
+                        <div class="zoom-gauge-fill" id="zoomGaugeFill"></div>
+                        <div class="zoom-gauge-handle" id="zoomGaugeHandle"></div>
+                    </div>
+                </div>
+                <span class="zoom-percentage" id="zoomPercentage">100%</span>
+            </div>
+            <div class="zoom-counter" id="zoomCounter"></div>
+        </div>
+    </div>
+
+    <!-- Navigation & Auth Scripts -->
+    <script type="module">
+        import { loadNavigation } from '/JS/navigation-loader.js';
+        loadNavigation('nav-container');
+    </script>
+
+    <script>
+        // Professional Lightbox Implementation with Zoom Controls
+        const imageZoomModal = document.getElementById('imageZoomModal');
+        const zoomModalImage = document.getElementById('zoomModalImage');
+        const zoomImageContainer = document.getElementById('zoomImageContainer');
+        const zoomCloseBtn = document.getElementById('zoomCloseBtn');
+        const zoomPrevBtn = document.getElementById('zoomPrevBtn');
+        const zoomNextBtn = document.getElementById('zoomNextBtn');
+        const zoomCounter = document.getElementById('zoomCounter');
+        const zoomGauge = document.getElementById('zoomGauge');
+        const zoomGaugeFill = document.getElementById('zoomGaugeFill');
+        const zoomGaugeHandle = document.getElementById('zoomGaugeHandle');
+        const zoomPercentage = document.getElementById('zoomPercentage');
+        const topicImages = Array.from(document.querySelectorAll('.topic-image img'));
+
+        let currentImageIndex = 0;
+        let currentZoom = 100;
+        const minZoom = 100;
+        const maxZoom = 300;
+        let isDraggingGauge = false;
+        let isDraggingImage = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+        let hideControlsTimeout;
+
+        const updateZoomGauge = () => {
+            const zoomPercent = ((currentZoom - minZoom) / (maxZoom - minZoom)) * 100;
+            zoomGaugeFill.style.width = zoomPercent + '%';
+            zoomGaugeHandle.style.left = zoomPercent + '%';
+            zoomPercentage.textContent = currentZoom + '%';
+            
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (currentZoom > 100) {
+                zoomControls.classList.add('visible');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            } else {
+                zoomControls.classList.remove('visible');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            }
+            
+            const scale = currentZoom / 100;
+            zoomModalImage.style.transform = `scale(${scale}) translate(${dragOffsetX}px, ${dragOffsetY}px)`;
+        };
+
+        const setZoom = (percent) => {
+            currentZoom = Math.max(minZoom, Math.min(maxZoom, percent));
+            updateZoomGauge();
+        };
+
+        const openZoomModal = (index) => {
+            currentImageIndex = index;
+            currentZoom = 100;
+            dragOffsetX = 0;
+            dragOffsetY = 0;
+            
+            const img = topicImages[index];
+            zoomModalImage.src = img.src;
+            zoomModalImage.alt = img.alt;
+            
+            zoomCounter.textContent = `${index + 1} / ${topicImages.length}`;
+            
+            imageZoomModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            updateZoomGauge();
+            updateNavButtonVisibility();
+        };
+
+        const closeZoomModal = () => {
+            imageZoomModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        const updateNavButtonVisibility = () => {
+            zoomPrevBtn.style.opacity = currentImageIndex === 0 ? '0.3' : '1';
+            zoomPrevBtn.disabled = currentImageIndex === 0;
+            zoomNextBtn.style.opacity = currentImageIndex === topicImages.length - 1 ? '0.3' : '1';
+            zoomNextBtn.disabled = currentImageIndex === topicImages.length - 1;
+        };
+
+        const showNextImage = () => {
+            if (currentImageIndex < topicImages.length - 1) {
+                openZoomModal(currentImageIndex + 1);
+            }
+        };
+
+        const showPrevImage = () => {
+            if (currentImageIndex > 0) {
+                openZoomModal(currentImageIndex - 1);
+            }
+        };
+
+        topicImages.forEach((img, index) => {
+            img.addEventListener('click', () => openZoomModal(index));
+        });
+
+        zoomCloseBtn.addEventListener('click', closeZoomModal);
+        zoomNextBtn.addEventListener('click', showNextImage);
+        zoomPrevBtn.addEventListener('click', showPrevImage);
+
+        imageZoomModal.addEventListener('click', (e) => {
+            if (e.target === imageZoomModal) {
+                closeZoomModal();
+            }
+        });
+
+        const handleGaugeDrag = (e) => {
+            if (!isDraggingGauge) return;
+            const gaugeRect = zoomGauge.getBoundingClientRect();
+            const percentage = Math.max(0, Math.min(100, ((e.clientX - gaugeRect.left) / gaugeRect.width) * 100));
+            const newZoom = minZoom + (percentage / 100) * (maxZoom - minZoom);
+            setZoom(newZoom);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+        };
+
+        zoomGaugeHandle.addEventListener('mousedown', () => {
+            isDraggingGauge = true;
+            zoomGaugeHandle.style.transform = 'translateY(-50%) scale(1.2)';
+        });
+
+        document.addEventListener('mousemove', handleGaugeDrag);
+
+        document.addEventListener('mouseup', () => {
+            isDraggingGauge = false;
+            zoomGaugeHandle.style.transform = 'translateY(-50%)';
+        });
+
+        zoomGauge.addEventListener('click', (e) => {
+            const gaugeRect = zoomGauge.getBoundingClientRect();
+            const percentage = ((e.clientX - gaugeRect.left) / gaugeRect.width) * 100;
+            const newZoom = minZoom + (percentage / 100) * (maxZoom - minZoom);
+            setZoom(newZoom);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            hideControlsTimeout = setTimeout(() => {
+                zoomControls.classList.remove('visible');
+            }, 2000);
+        });
+
+        zoomImageContainer.addEventListener('wheel', (e) => {
+            if (!imageZoomModal.classList.contains('active')) return;
+            e.preventDefault();
+            const zoomDelta = e.deltaY > 0 ? -10 : 10;
+            setZoom(currentZoom + zoomDelta);
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            if (currentZoom > 100) {
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            }
+        }, { passive: false });
+
+        zoomModalImage.addEventListener('mousedown', (e) => {
+            if (currentZoom === 100) return;
+            isDraggingImage = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            zoomModalImage.classList.add('dragging');
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDraggingImage) return;
+            const deltaX = e.clientX - dragStartX;
+            const deltaY = e.clientY - dragStartY;
+            dragOffsetX += deltaX / (currentZoom / 100);
+            dragOffsetY += deltaY / (currentZoom / 100);
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            updateZoomGauge();
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingImage = false;
+            zoomModalImage.classList.remove('dragging');
+            if (currentZoom > 100) {
+                const zoomControls = document.querySelector('.zoom-controls');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!imageZoomModal.classList.contains('active')) return;
+            switch(e.key) {
+                case 'Escape':
+                    closeZoomModal();
+                    break;
+                case 'ArrowRight':
+                    showNextImage();
+                    break;
+                case 'ArrowLeft':
+                    showPrevImage();
+                    break;
+                case '+':
+                case '=':
+                    setZoom(currentZoom + 10);
+                    break;
+                case '-':
+                case '_':
+                    setZoom(currentZoom - 10);
+                    break;
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+
+</body>
+</html>

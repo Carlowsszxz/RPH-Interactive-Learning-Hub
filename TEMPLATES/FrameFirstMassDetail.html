@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Mass - URS</title>
+      <link rel="icon" href="/IMAGES/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="/CSS/theme.css">
+    <link rel="stylesheet" href="/CSS/navigation.css">
+    <style>
+        body {
+            background: var(--bg-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        main.main-content {
+            padding: 2rem 1rem;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+        }
+
+        .topic-container {
+            min-width: 0;
+        }
+
+        .topic-header {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 5px solid #FF6B35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .topic-subtitle {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .topic-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+            color: #5C3422;
+            font-weight: 500;
+        }
+
+        .educational-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .content-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .content-section h4 {
+            margin: 0 0 1rem 0;
+            font-size: 1.35rem;
+            color: #5C3422;
+            font-weight: 600;
+            border-bottom: 2px solid #F4A460;
+            padding-bottom: 0.75rem;
+        }
+
+        .content-section p {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            text-align: justify;
+        }
+
+        .content-section ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            margin: 0.5rem 0;
+        }
+
+        .key-term {
+            font-weight: 600;
+            color: #FF6B35;
+        }
+
+        .emphasis {
+            font-style: italic;
+            color: #5C3422;
+            font-weight: 500;
+        }
+
+        .highlight {
+            background: #FFF3E0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .fact-callout {
+            background: #FAF3F0;
+            border-left: 4px solid #FF6B35;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .fact-callout strong {
+            color: #5C3422;
+        }
+
+        .fact-callout.importance-high {
+            background: #FFF8F0;
+            border-left-color: #D84315;
+        }
+
+        .fact-callout.conclusion-box {
+            background: #F0F8FF;
+            border-left-color: #1976D2;
+        }
+
+        blockquote {
+            font-style: italic;
+            border-left: 4px solid #FF6B35;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            background: #FAFAFA;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        blockquote footer {
+            font-style: normal;
+            text-align: right;
+            margin-top: 0.75rem;
+            color: #5C3422;
+            font-weight: 600;
+        }
+
+        .perspective-section {
+            background: #F9F5F2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid #EDD5C5;
+        }
+
+        .perspective-label {
+            display: inline-block;
+            background: #5C3422;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .historians-perspective .perspective-label {
+            background: #8B5A3C;
+        }
+
+        .topic-image {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .topic-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #E0E0E0;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .topic-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .topic-image figcaption {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Image Zoom Modal - Professional Lightbox */
+        .image-zoom-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleInImage {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .image-zoom-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .zoom-modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: scaleInImage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .zoom-modal-image {
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            pointer-events: auto;
+            cursor: grab;
+            transition: transform 0.1s ease;
+            transform-origin: center center;
+        }
+
+        .zoom-modal-image.dragging {
+            cursor: grabbing;
+        }
+
+        .zoom-modal-image-container {
+            width: 100%;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .zoom-modal-caption {
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 100%;
+            font-style: italic;
+            line-height: 1.5;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Close Button */
+        .zoom-close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: white;
+            backdrop-filter: blur(8px);
+        }
+
+        .zoom-close-btn:hover {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Navigation Buttons */
+        .zoom-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+            z-index: 2001;
+        }
+
+        .zoom-nav-btn:hover {
+            background: #FF6B35;
+            border-color: #FF6B35;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .zoom-nav-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .zoom-prev-btn {
+            left: 10px;
+        }
+
+        .zoom-next-btn {
+            right: 10px;
+        }
+
+        /* Zoom Controls */
+        .zoom-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 2002;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .zoom-controls.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .zoom-percentage {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .zoom-gauge-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zoom-gauge {
+            width: 150px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background 0.2s ease;
+        }
+
+        .zoom-gauge:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .zoom-gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35, #FFA566);
+            border-radius: 3px;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 8px rgba(255, 107, 53, 0.5);
+        }
+
+        .zoom-gauge-handle {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+            border: 2px solid #FF6B35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s ease;
+            z-index: 10;
+        }
+
+        .zoom-gauge-handle:active {
+            cursor: grabbing;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .zoom-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        /* Image Counter */
+        .zoom-counter {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .zoom-close-btn {
+                top: 10px;
+                right: 10px;
+                background: rgba(255, 255, 255, 0.2);
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+
+            .zoom-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .zoom-prev-btn {
+                left: 10px;
+            }
+
+            .zoom-next-btn {
+                right: 10px;
+            }
+
+            .zoom-modal-image {
+                max-height: 70vh;
+            }
+
+            .zoom-modal-caption {
+                margin-top: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .zoom-counter {
+                bottom: -40px;
+                font-size: 0.8rem;
+            }
+
+            .zoom-controls {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                gap: 10px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+            }
+
+            .zoom-controls.visible {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .zoom-gauge {
+                width: 100px;
+            }
+
+            .zoom-percentage {
+                font-size: 0.85rem;
+                min-width: 40px;
+            }
+        }
+
+        .right-sidebar {
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .widget-header {
+            background: #FAF3F0;
+            padding: 1.25rem;
+            border-bottom: 1px solid #EDD5C5;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .widget-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #5C3422;
+            font-weight: 600;
+        }
+
+        .widget-content {
+            padding: 1.25rem;
+        }
+
+        .idea-card {
+            padding: 1rem;
+            background: #FAFAFA;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid #FF6B35;
+        }
+
+        .idea-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .idea-card strong {
+            color: #5C3422;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .idea-card p {
+            margin: 0;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .related-topic {
+            margin-bottom: 0.75rem;
+        }
+
+        .related-topic a {
+            color: #FF6B35;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .related-topic a:hover {
+            text-decoration: underline;
+            color: #D84315;
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .right-sidebar {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .widget {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main.main-content {
+                padding: 1rem;
+            }
+
+            .topic-header {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .topic-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .educational-content {
+                padding: 1.5rem;
+            }
+
+            .topic-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .right-sidebar {
+                display: block;
+            }
+
+            .widget {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="has-global-sidebar">
+    <!-- Navigation -->
+    <div id="nav-container"></div>
+
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Left Content Area -->
+            <div class="topic-container">
+                <!-- Header -->
+                <header class="topic-header">
+                    <div class="topic-header-content">
+                        <h1>Where Did the First Mass Take Place?</h1>
+                        <p class="topic-subtitle">A historiographical exploration of the Philippine First Catholic Mass</p>
+                        <div class="topic-meta">
+                            <span class="topic-date">📅 March 31, 1521</span>
+                            <span class="topic-location">📍 Limasawa Island</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Educational Content Section -->
+                <div class="educational-content">
+                    <section class="content-section">
+                        <h4>Historical Context: Beyond the "Firsts"</h4>
+                        <p>The obsession with identifying historical <span class="key-term">"firsts"</span> often leads to oversimplification of complex events. However, this case study transcends mere trivia. Rather than focusing on the symbolic prestige of the location, we examine the <span class="emphasis">First Catholic Mass as a historiographical exercise</span>—demonstrating how historians use <span class="emphasis">evidence, compare sources, and apply critical interpretation</span> in reconstructing the past. The question of where the Mass occurred reveals the <span class="emphasis">evolving nature of historical scholarship</span> and the importance of rigorous source analysis.</p>
+                    </section>
+
+                    <section class="content-section">
+                        <h4>The Three-Century Butuan Claim</h4>
+                        <p>For more than <span class="highlight">three centuries</span>, Butuan was accepted as the site of the first Catholic Mass in the Philippines. This widespread belief culminated in the erection of a <span class="emphasis">monument in 1872</span> near the Agusan River, commemorating the arrival of Magellan's expedition and the celebration of Mass on <span class="highlight">April 8, 1521</span>. The Butuan claim was based largely on an <span class="emphasis">elementary reading of primary sources</span> that was accepted and repeated in historical narratives.</p>
+                        <p>However, as historical research methods improved toward the <span class="emphasis">end of the nineteenth century and the beginning of the twentieth century</span>, scholars began to reexamine these sources more critically. This reassessment challenged the long-accepted interpretation and opened a significant debate between <span class="key-term">Butuan and Limasawa</span> as the possible site of the first Mass.</p>
+                    </section>
+
+                    <!-- Image 1 - Early representation -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/First Mass/6.png" alt="Historical representation of Magellan's expedition">
+                        <figcaption>Magellan's expedition route and early exploration of the Philippine archipelago</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Primary Sources: The Foundation of the Debate</h4>
+                        <p>Historians rely on only <span class="highlight">two major primary sources</span> to determine the site of the first Catholic Mass in the Philippines:</p>
+                        <div class="fact-callout">
+                            <strong>Source 1:</strong> <span class="key-term">Francisco Albo's Log</span> — A pilot who survived the circumnavigation and recorded navigational details, distances, and latitudes.
+                        </div>
+                        <div class="fact-callout">
+                            <strong>Source 2:</strong> <span class="key-term">Antonio Pigafetta's Account</span> — The most detailed narrative, "Primo viaggio intorno al mondo" (First Voyage Around the World), providing eyewitness testimony of events and activities during the voyage.
+                        </div>
+                        <p>Both sources were written by <span class="emphasis">members of Magellan's expedition who witnessed the events firsthand</span>. Analyzing these accounts provides crucial insights into where the Mass actually occurred.</p>
+                    </section>
+
+                    <!-- Image 2 - Geographic evidence -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/First Mass/7.png" alt="Geographic comparison of Butuan and Limasawa">
+                        <figcaption>Geographical features and location comparison of proposed sites</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Albo's Geographical Evidence</h4>
+                        <p>Francisco Albo's log describes the expedition's movement from the Ladrones (Marianas) to Suluan, then to Homonhon, and later to an island called <span class="key-term">Mazava</span>, located at approximately <span class="highlight">9°40' North latitude</span>. In Mazava, Albo noted the <span class="emphasis">planting of a cross on a mountain-top</span> from which three islands to the west and southwest could be seen.</p>
+                        <p>Critically, Albo's geographical descriptions <span class="emphasis">strongly correspond to the location of Limasawa</span>, situated at the southern tip of Leyte. His account does <span class="emphasis">not align with Butuan's riverine geography</span>, as <span class="key-term">no river was mentioned</span> in relation to Mazava—a striking omission for a site as geographically significant as Butuan.</p>
+                    </section>
+
+                    <section class="content-section perspective-section historians-perspective">
+                        <div class="perspective-label">📜 EYEWITNESS ACCOUNT 1</div>
+                        <h4>📄 Pigafetta on the Route and Arrival at Mazaua</h4>
+                        <p>Antonio Pigafetta provided the most detailed narrative of the expedition's movements. He documented that the expedition traveled from <span class="key-term">Homonhon</span> (reached on <span class="highlight">March 17, 1521</span>) westward toward Leyte, then southward, and finally to an island called <span class="key-term">Mazaua</span> on <span class="highlight">March 28, 1521</span> (Holy Thursday).</p>
+                        <blockquote>
+                            <p>"It is twenty-five leagues from the Acquada, and is called Mazaua. It lies at a latitude of nine and two-thirds degrees towards the Arctic Pole (i.e., North)."</p>
+                            <footer>— Antonio Pigafetta</footer>
+                        </blockquote>
+                        <p>Pigafetta's geographical descriptions—particularly the <span class="emphasis">island setting, coastal features, and proximity to Leyte and Cebu</span>—corroborate Albo's log and further support the identification of Mazaua as <span class="key-term">Limasawa</span>.</p>
+                    </section>
+
+                    <!-- Image 3 - Historical timeline -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/First Mass/8.png" alt="Timeline of the First Mass debate">
+                        <figcaption>Timeline of historical scholarship and the debate over the First Mass location</figcaption>
+                    </figure>
+
+                    <section class="content-section perspective-section historians-perspective">
+                        <div class="perspective-label">📜 EYEWITNESS ACCOUNT 2</div>
+                        <h4>📄 Pigafetta's Account: Easter Sunday and the First Mass</h4>
+                        <p>Pigafetta provided crucial details about the celebration of the Mass. On <span class="highlight">Sunday, March 31, 1521 (Easter Sunday)</span>, Magellan sent a priest ashore in the early morning to prepare for the celebration. Later that day:</p>
+                        <blockquote>
+                            <p>"Early in the morning of Sunday, the last of March and Easter day, Magellan sent the priest ashore with some men to prepare for the Mass. Later in the morning Magellan landed with some fifty men and Mass was celebrated, after which a cross was venerated. In the afternoon they returned ashore to plant the cross on the summit of the highest hill. In attendance both at the Mass and at the planting of the cross were the king of Mazaua and the king of Butuan."</p>
+                            <footer>— Antonio Pigafetta</footer>
+                        </blockquote>
+                        <p>This detailed description <span class="emphasis">firmly situates the celebration of the Mass on an island</span>, further weakening the claim that it occurred in Butuan, which was a settlement located <span class="key-term">along a river</span>.</p>
+                    </section>
+
+                    <section class="content-section">
+                        <h4>Critical Analysis: The River Question</h4>
+                        <div class="fact-callout importance-high">
+                            <strong>Key Evidence:</strong> The <span class="emphasis">absence of any mention of a river</span> in Pigafetta's account of Mazaua undermines the Butuan claim. Butuan was a riverine settlement along the Agusan River—a geographical feature too significant to overlook.
+                        </div>
+                        <p>Jesuit historian <strong>Miguel A. Bernad</strong>, in his work "Butuan or Limasawa? The Site of the First Mass in the Philippines: A Reexamination of Evidence" (1981), emphasized a critical omission in Pigafetta's account that undermines the Butuan hypothesis. Pigafetta <span class="emphasis">made no reference to a river</span> in describing Mazaua or the activities there. This silence is particularly significant because:</p>
+                        <ul>
+                            <li>Butuan's defining geographical feature was the <span class="key-term">Agusan River</span>, where it was situated</li>
+                            <li>A riverine environment would have been <span class="emphasis">difficult for an eyewitness to overlook</span></li>
+                            <li>Pigafetta later described a <span class="emphasis">river journey to Mindanao after Magellan's death</span>, demonstrating that he was attentive to riverine environments when present</li>
+                        </ul>
+                        <p>This contrast strongly supports the conclusion that <span class="key-term">Mazaua was not Butuan but Limasawa</span>.</p>
+                    </section>
+
+                    <!-- Image 4 - Scholarly analysis -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/First Mass/9.png" alt="Scholarly analysis of primary sources">
+                        <figcaption>Analysis of Albo and Pigafetta's accounts demonstrating the Limasawa identification</figcaption>
+                    </figure>
+
+                    <section class="content-section">
+                        <h4>Conclusion: Methodology Over Tradition</h4>
+                        <div class="fact-callout conclusion-box">
+                            <strong>Central Insight:</strong> The question of where the first Catholic Mass occurred demonstrates that <span class="emphasis">history is not fixed by tradition but refined through disciplined analysis of evidence</span>.
+                        </div>
+                        <p>While Butuan was long accepted as the site due to tradition and commemoration, <span class="emphasis">careful reexamination of primary sources</span>—particularly the accounts of Francisco Albo and Antonio Pigafetta—demonstrates that <span class="key-term">Limasawa</span> more accurately fits the geographical and narrative evidence. The shift from Butuan to Limasawa as the scholarly consensus illustrates the <span class="emphasis">evolving nature of historical knowledge</span>.</p>
+                        <p>More importantly, this case study shows that history is not merely about celebrating "firsts" or identifying locations. Instead, it is about <span class="emphasis">understanding how historical knowledge is constructed, challenged, and refined</span> through disciplined analysis of evidence. The First Catholic Mass in the Philippines remains a powerful moment in Philippine history—and examining where it took place teaches us how to be better historians.</p>
+                    </section>
+
+                    <!-- Image 5 - Final representation -->
+                    <figure class="topic-image">
+                        <img src="/IMAGES/First Mass/10.png" alt="Monument and legacy of the First Mass">
+                        <figcaption>Historical monuments and the enduring legacy of the First Mass in Philippine history</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <aside class="right-sidebar">
+                <!-- Key Facts Section -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <i data-lucide="lightbulb" style="width: 20px; height: 20px; color: #FF6B35;"></i>
+                        <h3>Key Facts</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        <div class="idea-card">
+                            <strong>📅 Date</strong>
+                            <p>March 31, 1521 (Easter Sunday)</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>📍 Location</strong>
+                            <p>Limasawa Island</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>👥 Key Figures</strong>
+                            <p>Father Pedro Valderama, Rajah Humabon</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>📜 Primary Sources</strong>
+                            <p>Albo's Log & Pigafetta's Account</p>
+                        </div>
+
+                        <div class="idea-card">
+                            <strong>🏛️ Historical Debate</strong>
+                            <p>Butuan vs. Limasawa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Topics Section -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <i data-lucide="bookmark" style="width: 20px; height: 20px; color: #FF6B35;"></i>
+                        <h3>Related Topics</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameCaviteMutinyDetail.html">Cavite Mutiny</a>
+                        </div>
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameCryofRebellionDetail.html">Cry of Rebellion</a>
+                        </div>
+                        <div class="related-topic">
+                            <a href="/TEMPLATES/FrameRizalRetractionDetail.html">Rizal's Retraction</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Image Zoom Modal -->
+    <div class="image-zoom-modal" id="imageZoomModal">
+        <div class="zoom-modal-content">
+            <button class="zoom-close-btn" id="zoomCloseBtn" aria-label="Close image">✕</button>
+            <button class="zoom-nav-btn zoom-prev-btn" id="zoomPrevBtn" aria-label="Previous image">❮</button>
+            <div class="zoom-modal-image-container" id="zoomImageContainer">
+                <img class="zoom-modal-image" id="zoomModalImage" src="" alt="" draggable="false">
+            </div>
+            <button class="zoom-nav-btn zoom-next-btn" id="zoomNextBtn" aria-label="Next image">❯</button>
+            <div class="zoom-controls">
+                <span class="zoom-label">Zoom</span>
+                <div class="zoom-gauge-container">
+                    <div class="zoom-gauge" id="zoomGauge">
+                        <div class="zoom-gauge-fill" id="zoomGaugeFill"></div>
+                        <div class="zoom-gauge-handle" id="zoomGaugeHandle"></div>
+                    </div>
+                </div>
+                <span class="zoom-percentage" id="zoomPercentage">100%</span>
+            </div>
+            <div class="zoom-counter" id="zoomCounter"></div>
+        </div>
+    </div>
+
+    <!-- Navigation & Auth Scripts -->
+    <script type="module">
+        import { loadNavigation } from '/JS/navigation-loader.js';
+        loadNavigation('nav-container');
+    </script>
+
+    <script>
+        // Professional Lightbox Implementation with Zoom Controls
+        const imageZoomModal = document.getElementById('imageZoomModal');
+        const zoomModalImage = document.getElementById('zoomModalImage');
+        const zoomImageContainer = document.getElementById('zoomImageContainer');
+        const zoomCloseBtn = document.getElementById('zoomCloseBtn');
+        const zoomPrevBtn = document.getElementById('zoomPrevBtn');
+        const zoomNextBtn = document.getElementById('zoomNextBtn');
+        const zoomCounter = document.getElementById('zoomCounter');
+        const zoomGauge = document.getElementById('zoomGauge');
+        const zoomGaugeFill = document.getElementById('zoomGaugeFill');
+        const zoomGaugeHandle = document.getElementById('zoomGaugeHandle');
+        const zoomPercentage = document.getElementById('zoomPercentage');
+        const topicImages = Array.from(document.querySelectorAll('.topic-image img'));
+
+        let currentImageIndex = 0;
+        let currentZoom = 100; // Percentage
+        const minZoom = 100;
+        const maxZoom = 300;
+        let isDraggingGauge = false;
+        let isDraggingImage = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+
+        let hideControlsTimeout;
+
+        const updateZoomGauge = () => {
+            const zoomPercent = ((currentZoom - minZoom) / (maxZoom - minZoom)) * 100;
+            zoomGaugeFill.style.width = zoomPercent + '%';
+            zoomGaugeHandle.style.left = zoomPercent + '%';
+            zoomPercentage.textContent = currentZoom + '%';
+            
+            // Show controls when zoomed
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (currentZoom > 100) {
+                zoomControls.classList.add('visible');
+                
+                // Clear existing timeout
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+                
+                // Auto-hide after 2 seconds of inactivity
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            } else {
+                zoomControls.classList.remove('visible');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            }
+            
+            // Update zoom transform
+            const scale = currentZoom / 100;
+            zoomModalImage.style.transform = `scale(${scale}) translate(${dragOffsetX}px, ${dragOffsetY}px)`;
+        };
+
+        const setZoom = (percent) => {
+            currentZoom = Math.max(minZoom, Math.min(maxZoom, percent));
+            updateZoomGauge();
+        };
+
+        const openZoomModal = (index) => {
+            currentImageIndex = index;
+            currentZoom = 100;
+            dragOffsetX = 0;
+            dragOffsetY = 0;
+            
+            const img = topicImages[index];
+            zoomModalImage.src = img.src;
+            zoomModalImage.alt = img.alt;
+            
+            // Update counter
+            zoomCounter.textContent = `${index + 1} / ${topicImages.length}`;
+            
+            imageZoomModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            updateZoomGauge();
+            updateNavButtonVisibility();
+        };
+
+        const closeZoomModal = () => {
+            imageZoomModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        const updateNavButtonVisibility = () => {
+            zoomPrevBtn.style.opacity = currentImageIndex === 0 ? '0.3' : '1';
+            zoomPrevBtn.disabled = currentImageIndex === 0;
+            zoomNextBtn.style.opacity = currentImageIndex === topicImages.length - 1 ? '0.3' : '1';
+            zoomNextBtn.disabled = currentImageIndex === topicImages.length - 1;
+        };
+
+        const showNextImage = () => {
+            if (currentImageIndex < topicImages.length - 1) {
+                openZoomModal(currentImageIndex + 1);
+            }
+        };
+
+        const showPrevImage = () => {
+            if (currentImageIndex > 0) {
+                openZoomModal(currentImageIndex - 1);
+            }
+        };
+
+        // Add click listeners to all images
+        topicImages.forEach((img, index) => {
+            img.addEventListener('click', () => openZoomModal(index));
+        });
+
+        // Close button
+        zoomCloseBtn.addEventListener('click', closeZoomModal);
+
+        // Navigation buttons
+        zoomNextBtn.addEventListener('click', showNextImage);
+        zoomPrevBtn.addEventListener('click', showPrevImage);
+
+        // Close on backdrop click
+        imageZoomModal.addEventListener('click', (e) => {
+            if (e.target === imageZoomModal) {
+                closeZoomModal();
+            }
+        });
+
+        // Zoom Gauge Controls
+        const handleGaugeDrag = (e) => {
+            if (!isDraggingGauge) return;
+            
+            const gaugeRect = zoomGauge.getBoundingClientRect();
+            const percentage = Math.max(0, Math.min(100, ((e.clientX - gaugeRect.left) / gaugeRect.width) * 100));
+            const newZoom = minZoom + (percentage / 100) * (maxZoom - minZoom);
+            setZoom(newZoom);
+            
+            // Keep controls visible while dragging
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+        };
+
+        zoomGaugeHandle.addEventListener('mousedown', () => {
+            isDraggingGauge = true;
+            zoomGaugeHandle.style.transform = 'translateY(-50%) scale(1.2)';
+        });
+
+        document.addEventListener('mousemove', handleGaugeDrag);
+
+        document.addEventListener('mouseup', () => {
+            isDraggingGauge = false;
+            zoomGaugeHandle.style.transform = 'translateY(-50%)';
+        });
+
+        // Gauge click to set zoom
+        zoomGauge.addEventListener('click', (e) => {
+            const gaugeRect = zoomGauge.getBoundingClientRect();
+            const percentage = ((e.clientX - gaugeRect.left) / gaugeRect.width) * 100;
+            const newZoom = minZoom + (percentage / 100) * (maxZoom - minZoom);
+            setZoom(newZoom);
+            
+            // Keep controls visible
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            hideControlsTimeout = setTimeout(() => {
+                zoomControls.classList.remove('visible');
+            }, 2000);
+        });
+
+        // Mouse wheel zoom on image
+        zoomImageContainer.addEventListener('wheel', (e) => {
+            if (!imageZoomModal.classList.contains('active')) return;
+            e.preventDefault();
+            
+            const zoomDelta = e.deltaY > 0 ? -10 : 10;
+            setZoom(currentZoom + zoomDelta);
+            
+            // Keep controls visible while scrolling
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+            if (currentZoom > 100) {
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            }
+        }, { passive: false });
+
+        // Image dragging
+        zoomModalImage.addEventListener('mousedown', (e) => {
+            if (currentZoom === 100) return; // Only allow drag when zoomed
+            isDraggingImage = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            zoomModalImage.classList.add('dragging');
+            
+            // Keep controls visible while dragging
+            const zoomControls = document.querySelector('.zoom-controls');
+            if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDraggingImage) return;
+            
+            const deltaX = e.clientX - dragStartX;
+            const deltaY = e.clientY - dragStartY;
+            
+            dragOffsetX += deltaX / (currentZoom / 100);
+            dragOffsetY += deltaY / (currentZoom / 100);
+            
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            
+            updateZoomGauge();
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingImage = false;
+            zoomModalImage.classList.remove('dragging');
+            
+            // Auto-hide controls after dragging
+            if (currentZoom > 100) {
+                const zoomControls = document.querySelector('.zoom-controls');
+                if (hideControlsTimeout) clearTimeout(hideControlsTimeout);
+                hideControlsTimeout = setTimeout(() => {
+                    zoomControls.classList.remove('visible');
+                }, 2000);
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (!imageZoomModal.classList.contains('active')) return;
+            
+            switch(e.key) {
+                case 'Escape':
+                    closeZoomModal();
+                    break;
+                case 'ArrowRight':
+                    showNextImage();
+                    break;
+                case 'ArrowLeft':
+                    showPrevImage();
+                    break;
+                case '+':
+                case '=':
+                    setZoom(currentZoom + 10);
+                    break;
+                case '-':
+                case '_':
+                    setZoom(currentZoom - 10);
+                    break;
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+
+</body>
+</html>
