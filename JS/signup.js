@@ -1,190 +1,118 @@
 import { supabase } from './supabase-auth.js';
 
-// Helper: Show alert message
-function showAlert(message, type = 'error') {
-	const container = document.getElementById('alertContainer');
-	if (!container) return;
-	
-	const alert = document.createElement('div');
-	alert.className = `alert-message ${type}`;
-	
-	// Create icon element
-	const iconMap = {
-		success: 'check-circle',
-		error: 'alert-circle',
-		warning: 'alert-triangle'
-	};
-	
-	const iconName = iconMap[type] || 'info';
-	const icon = document.createElement('i');
-	icon.setAttribute('data-lucide', iconName);
-	icon.style.width = '16px';
-	icon.style.height = '16px';
-	icon.style.marginRight = '8px';
-	
-	const messageSpan = document.createElement('span');
-	messageSpan.textContent = message;
-	
-	alert.appendChild(icon);
-	alert.appendChild(messageSpan);
-	container.appendChild(alert);
-	
-	// Render lucide icons
-	if (window.lucide) {
-		window.lucide.createIcons();
-	}
-	
-	// Auto-remove after 5 seconds
-	setTimeout(() => alert.remove(), 5000);
+// Clear all errors
+function clearErrors() {
+  const inputs = document.querySelectorAll('input, select');
+  inputs.forEach(input => {
+    input.classList.remove('error');
+    const errorId = input.id + 'Error';
+    const errorEl = document.getElementById(errorId);
+    if (errorEl) {
+      errorEl.classList.remove('show');
+      errorEl.textContent = '';
+    }
+  });
+  const errorContainer = document.getElementById('errorContainer');
+  if (errorContainer) {
+    errorContainer.classList.remove('show');
+    errorContainer.textContent = '';
+  }
 }
 
-// Helper: Clear all alerts
-function clearAlerts() {
-	const container = document.getElementById('alertContainer');
-	if (container) container.innerHTML = '';
+// Show field error
+function showFieldError(fieldId, message) {
+  const input = document.getElementById(fieldId);
+  const errorEl = document.getElementById(fieldId + 'Error');
+  if (input) input.classList.add('error');
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.classList.add('show');
+  }
 }
 
-// Helper: Calculate password strength
-function calculatePasswordStrength(password) {
-	if (!password) return 'none';
-	let strength = 0;
-	if (password.length >= 8) strength++;
-	if (password.length >= 12) strength++;
-	if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-	if (/\d/.test(password)) strength++;
-	if (/[^a-zA-Z\d]/.test(password)) strength++;
-	
-	if (strength <= 1) return 'weak';
-	if (strength <= 3) return 'fair';
-	return 'strong';
-}
-
-// Helper: Update password strength meter
-function updatePasswordStrength(password) {
-	const meter = document.getElementById('strengthMeter');
-	const fill = document.getElementById('strengthFill');
-	const text = document.getElementById('strengthText');
-	
-	if (!meter || !password) {
-		meter?.classList.remove('show');
-		return;
-	}
-	
-	const strength = calculatePasswordStrength(password);
-	meter.classList.add('show');
-	
-	fill.classList.remove('weak', 'fair', 'strong');
-	fill.classList.add(strength);
-	
-	const strengthLabels = {
-		weak: 'Weak - Add more characters or complexity',
-		fair: 'Fair - Mix uppercase, numbers, symbols',
-		strong: 'Strong password'
-	};
-	
-	text.textContent = strengthLabels[strength] || '';
-}
-
-// Helper: Handle password visibility toggles
-function setupPasswordToggles() {
-	const passwordInput = document.getElementById('password');
-	const confirmInput = document.getElementById('confirmPassword');
-	const toggleBtn = document.getElementById('passwordToggle');
-	const confirmToggleBtn = document.getElementById('confirmPasswordToggle');
-	
-	if (toggleBtn && passwordInput) {
-		toggleBtn.addEventListener('click', (e) => {
-			e.preventDefault();
-			const isPassword = passwordInput.type === 'password';
-			passwordInput.type = isPassword ? 'text' : 'password';
-			
-			// Toggle icon
-			const icon = toggleBtn.querySelector('i');
-			if (icon) {
-				icon.setAttribute('data-lucide', isPassword ? 'eye-off' : 'eye');
-				if (window.lucide) {
-					window.lucide.createIcons();
-				}
-			}
-		});
-		
-		// Update strength meter as user types
-		passwordInput.addEventListener('input', () => {
-			updatePasswordStrength(passwordInput.value);
-		});
-	}
-	
-	if (confirmToggleBtn && confirmInput) {
-		confirmToggleBtn.addEventListener('click', (e) => {
-			e.preventDefault();
-			const isPassword = confirmInput.type === 'password';
-			confirmInput.type = isPassword ? 'text' : 'password';
-			
-			// Toggle icon
-			const icon = confirmToggleBtn.querySelector('i');
-			if (icon) {
-				icon.setAttribute('data-lucide', isPassword ? 'eye-off' : 'eye');
-				if (window.lucide) {
-					window.lucide.createIcons();
-				}
-			}
-		});
-	}
+// Show general error
+function showGeneralError(message) {
+  const errorContainer = document.getElementById('errorContainer');
+  if (errorContainer) {
+    errorContainer.textContent = message;
+    errorContainer.classList.add('show');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function(){
   const form = document.getElementById('signupForm');
   if (!form) return;
 
-  setupPasswordToggles();
-
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    clearAlerts();
+    clearErrors();
+    
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const fullname = `${firstName} ${lastName}`.trim();
     
     const payload = {
-      fullname: document.getElementById('fullname').value,
-      email: document.getElementById('email').value,
-      username: document.getElementById('username').value,
-      studentId: document.getElementById('studentId') ? document.getElementById('studentId').value : null,
+      firstName: firstName,
+      lastName: lastName,
+      fullname: fullname,
+      email: document.getElementById('email').value.trim(),
+      username: document.getElementById('username').value.trim(),
+      studentId: document.getElementById('studentId') ? document.getElementById('studentId').value.trim() : null,
       password: document.getElementById('password').value,
       confirmPassword: document.getElementById('confirmPassword').value,
-      role: document.getElementById('role').value, // Capture the role
+      role: document.getElementById('role').value,
       terms: document.getElementById('terms').checked
     };
     
-    // Basic client-side validation
-    if (!payload.fullname) {
-      showAlert('Please enter your full name.', 'error');
-      return;
+    // Client-side validation with field-level errors
+    let hasError = false;
+    
+    if (!payload.firstName) {
+      showFieldError('firstName', 'First name is required');
+      hasError = true;
+    }
+    if (!payload.lastName) {
+      showFieldError('lastName', 'Last name is required');
+      hasError = true;
     }
     if (!payload.email) {
-      showAlert('Please provide an email address.', 'error');
-      return;
+      showFieldError('email', 'Email address is required');
+      hasError = true;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+      showFieldError('email', 'Please enter a valid email address');
+      hasError = true;
     }
     if (!payload.username) {
-      showAlert('Please choose a username.', 'error');
-      return;
+      showFieldError('username', 'Username is required');
+      hasError = true;
     }
     if (!payload.password) {
-      showAlert('Please provide a password.', 'error');
-      return;
+      showFieldError('password', 'Password is required');
+      hasError = true;
+    } else if (payload.password.length < 8) {
+      showFieldError('password', 'Password must be at least 8 characters');
+      hasError = true;
     }
     if (payload.password !== payload.confirmPassword) {
-      showAlert("Passwords don't match.", 'error');
-      return;
+      showFieldError('confirmPassword', 'Passwords do not match');
+      hasError = true;
+    }
+    if (!payload.role) {
+      showFieldError('role', 'Please select a role');
+      hasError = true;
     }
     if (!payload.terms) {
-      showAlert('You must agree to the terms to sign up.', 'error');
-      return;
+      showFieldError('terms', 'You must agree to the terms to sign up');
+      hasError = true;
     }
+    
+    if (hasError) return;
 
     // Save pending profile so we can finish creating it after email confirmation/sign-in
-    try { localStorage.setItem('pendingProfile', JSON.stringify({ fullname: payload.fullname, username: payload.username, studentId: payload.studentId, email: payload.email, role: payload.role })); } catch(e){/* ignore */}
+    try { localStorage.setItem('pendingProfile', JSON.stringify({ firstName: payload.firstName, lastName: payload.lastName, fullname: payload.fullname, username: payload.username, studentId: payload.studentId, email: payload.email, role: payload.role })); } catch(e){/* ignore */}
 
     // Perform sign up with Supabase
     const signupBtn = document.getElementById('signupBtn');
-    signupBtn.classList.add('loading');
     signupBtn.disabled = true;
     
     (async () => {
@@ -192,9 +120,8 @@ document.addEventListener('DOMContentLoaded', function(){
         const { data, error } = await supabase.auth.signUp({ email: payload.email, password: payload.password });
         if (error) {
           console.error('Sign up error', error);
-          signupBtn.classList.remove('loading');
           signupBtn.disabled = false;
-          showAlert(error.message || 'Sign up failed', 'error');
+          showGeneralError(error.message || 'Sign up failed');
           return;
         }
 
@@ -212,52 +139,24 @@ document.addEventListener('DOMContentLoaded', function(){
             avatar_url: null,
             username: payload.username || null,
             student_id: payload.studentId || null,
-            role: payload.role // Save the role in the profile
+            role: payload.role
           };
           const { error: profileError } = await supabase.from('user_profiles').insert([profile]);
           if (profileError) {
             console.error('Failed to create user_profiles row', profileError);
-            // Not a fatal error for the user; inform for debugging
           }
-        } else {
-          // If user isn't immediately available (email confirmation flow), inform the user
-          showAlert('Registration submitted. Please check your email to confirm your account. Your profile will be created after confirmation.', 'success');
         }
 
-        // Show confirmation message and hide form
-        const form = document.getElementById('signupForm');
-        const confirmationMsg = document.getElementById('confirmationMessage');
-        const confirmationEmail = document.getElementById('confirmationEmail');
-        
-        if (form && confirmationMsg) {
-          form.style.display = 'none';
-          confirmationMsg.style.display = 'block';
-          if (confirmationEmail) {
-            confirmationEmail.textContent = payload.email;
-          }
-          
-          // Setup back to login button
-          const backBtn = document.getElementById('backToLoginBtn');
-          if (backBtn) {
-            backBtn.addEventListener('click', () => {
-              window.location.href = '/TEMPLATES/FrameLogin.html';
-            });
-          }
+        // Redirect based on role
+        if (payload.role === 'instructor') {
+          window.location.href = window.location.origin + '/TEMPLATES/FrameInstructorDashboard.html';
+        } else {
+          window.location.href = window.location.origin + '/TEMPLATES/FrameHome.html';
         }
-        
-        // Optional: Auto-redirect after 5 seconds if user doesn't click button
-        setTimeout(() => {
-          if (payload.role === 'instructor') {
-            window.location.href = window.location.origin + '/TEMPLATES/FrameInstructorDashboard.html';
-          } else {
-            window.location.href = window.location.origin + '/TEMPLATES/FrameHome.html';
-          }
-        }, 5000);
       } catch (err) {
         console.error('Unexpected signup error', err);
-        signupBtn.classList.remove('loading');
         signupBtn.disabled = false;
-        showAlert('An unexpected error occurred. Check the console.', 'error');
+        showGeneralError('An unexpected error occurred. Check the console.');
       }
     })();
   });
@@ -395,17 +294,4 @@ document.addEventListener('DOMContentLoaded', function(){
       console.error('onAuthStateChange handler error', err);
     }
   });
-});
-
-// Initialize password strength meter on page load if password field exists
-document.addEventListener('DOMContentLoaded', () => {
-  const passwordInput = document.getElementById('password');
-  if (passwordInput && passwordInput.value) {
-    updatePasswordStrength(passwordInput.value);
-  }
-  
-  // Render lucide icons
-  if (window.lucide) {
-    window.lucide.createIcons();
-  }
 });

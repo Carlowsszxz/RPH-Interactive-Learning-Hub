@@ -1,90 +1,109 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Sign Up - Readings in Philippine History</title>
-  <link rel="icon" href="../IMAGES/favicon.png" type="image/png">
-  <link rel="stylesheet" href="../CSS/theme.css">
-  <link rel="stylesheet" href="../CSS/signup.css">
-  <script src="https://unpkg.com/lucide@latest"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Sign Up - Readings in Philippine History</title>
+	<link rel="icon" href="../IMAGES/favicon.png" type="image/png">
+	<link rel="stylesheet" href="../CSS/signup.css">
 </head>
 <body>
-  <div class="login-container">
-    <form id="signupForm" class="login-form" action="#" method="post" novalidate>
-      <h1 class="login-title">Create account</h1>
+	<div class="signup-background">
+		<div class="signup-container">
+			<div class="signup-card">
+				<div class="card-logo">
+				<a href="FrameHero.html" class="logo-link">
+					<img src="../IMAGES/favicon.png" alt="Logo" />
+				</a>			</div>
+				<div class="signup-header">
+					<h1 class="signup-title">Create Account</h1>
+					<p class="signup-subtitle">Join us to explore Philippine history with interactive lessons and challenges</p>
+				</div>
 
-      <div id="alertContainer"></div>
+				<div id="errorContainer" class="error-container"></div>
 
-      <div class="input-group">
-        <label for="fullname">Full name</label>
-        <input id="fullname" name="fullname" type="text" required autocomplete="name">
-      </div>
+				<form id="signupForm" method="post" novalidate>
+					<!-- Name Fields in Two Columns -->
+					<div class="form-row">
+						<div class="form-group">
+							<label for="firstName">First Name</label>
+							<input id="firstName" name="firstName" type="text" placeholder="James" required />
+							<span class="error-message" id="firstNameError"></span>
+						</div>
+						<div class="form-group">
+							<label for="lastName">Last Name</label>
+							<input id="lastName" name="lastName" type="text" placeholder="Carter" required />
+							<span class="error-message" id="lastNameError"></span>
+						</div>
+					</div>
 
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" required autocomplete="email">
-      </div>
+					<!-- Email Field -->
+					<div class="form-group">
+						<label for="email">Email Address</label>
+						<input id="email" name="email" type="email" placeholder="you@example.com" required />
+						<span class="error-message" id="emailError"></span>
+					</div>
 
-      <div class="input-group">
-        <label for="username">Username</label>
-        <input id="username" name="username" type="text" required autocomplete="username">
-      </div>
+					<!-- Username Field -->
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input id="username" name="username" type="text" placeholder="Choose your username" required />
+						<span class="error-message" id="usernameError"></span>
+					</div>
 
-      <div class="input-group">
-        <label for="studentId">Student ID</label>
-        <input id="studentId" name="studentId" type="text" placeholder="e.g. 2023-0001" autocomplete="off">
-      </div>
+					<!-- Student ID Field -->
+					<div class="form-group">
+						<label for="studentId">Student ID <span class="optional">(optional)</span></label>
+						<input id="studentId" name="studentId" type="text" placeholder="e.g. 2023-0001" />
+						<span class="error-message" id="studentIdError"></span>
+					</div>
 
-      <div class="input-group with-trailing-icon">
-        <label for="password">Password</label>
-        <input id="password" name="password" type="password" required autocomplete="new-password">
-        <button type="button" class="password-toggle" id="passwordToggle" title="Show/hide password">
-          <i data-lucide="eye"></i>
-        </button>
-      </div>
-      <div class="password-strength" id="strengthMeter">
-        <div class="strength-bar">
-          <div class="strength-fill" id="strengthFill"></div>
-        </div>
-        <span class="strength-text" id="strengthText"></span>
-      </div>
+					<!-- Password Field -->
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input id="password" name="password" type="password" placeholder="Create a strong password" required />
+						<span class="error-message" id="passwordError"></span>
+					</div>
 
-      <div class="input-group with-trailing-icon">
-        <label for="confirmPassword">Confirm password</label>
-        <input id="confirmPassword" name="confirmPassword" type="password" required autocomplete="new-password">
-        <button type="button" class="password-toggle" id="confirmPasswordToggle" title="Show/hide password">
-          <i data-lucide="eye"></i>
-        </button>
-      </div>
+					<!-- Confirm Password Field -->
+					<div class="form-group">
+						<label for="confirmPassword">Confirm Password</label>
+						<input id="confirmPassword" name="confirmPassword" type="password" placeholder="Re-enter your password" required />
+						<span class="error-message" id="confirmPasswordError"></span>
+					</div>
 
-      <div class="input-group">
-        <label for="role">Role</label>
-        <select id="role" name="role" required>
-          <option value="student">Student</option>
-          <option value="instructor">Instructor</option>
-        </select>
-      </div>
+					<!-- Role Selection -->
+					<div class="form-group">
+						<label for="role">Role</label>
+						<select id="role" name="role" required>
+							<option value="">Select a role</option>
+							<option value="student">Student</option>
+							<option value="instructor">Instructor</option>
+						</select>
+						<span class="error-message" id="roleError"></span>
+					</div>
 
-      <div class="options">
-        <label class="terms"><input type="checkbox" id="terms" name="terms"> I agree to the terms</label>
-      </div>
+					<!-- Terms Checkbox -->
+					<div class="form-group terms-group">
+						<label class="checkbox-label">
+							<input id="terms" name="terms" type="checkbox" required />
+							<span>I agree to the <a href="#" class="link">terms of service</a> and <a href="#" class="link">privacy policy</a></span>
+						</label>
+						<span class="error-message" id="termsError"></span>
+					</div>
 
-      <button type="submit" id="signupBtn" class="btn">Sign up</button>
+					<!-- Submit Button -->
+					<button type="submit" id="signupBtn" class="btn-submit">Create Account</button>
+				</form>
 
-      <p class="form-foot">Already have an account? <a href="FrameLogin.html">Log in</a></p>
-    </form>
+				<!-- Login Link -->
+				<div class="signup-footer">
+					Already have an account? <a href="FrameLogin.html" class="link">Log in</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div id="confirmationMessage" class="confirmation-message" style="display: none;">
-      <div class="confirmation-icon">
-        <i data-lucide="mail-check"></i>
-      </div>
-      <h2 class="confirmation-title">Check your email</h2>
-      <p class="confirmation-text">We've sent a confirmation link to <strong id="confirmationEmail"></strong></p>
-      <p class="confirmation-subtitle">Please click the link in your email to verify your account and complete the signup process.</p>
-      <button type="button" id="backToLoginBtn" class="btn btn-secondary">Back to Login</button>
-    </div>
-
-  <script type="module" src="../JS/signup.js"></script>
+	<script type="module" src="../JS/signup.js"></script>
 </body>
 </html>
